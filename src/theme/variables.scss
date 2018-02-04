@@ -54,7 +54,9 @@ $colors: (
 // --------------------------------------------------
 // Material Design only Sass variables can go here
 
-
+$toolbar-md-background:  color($colors, primary);
+$tabs-md-background:  color($colors, primary);
+$tabs-md-tab-color-active: white;
 
 
 // App Windows Variables

@@ -1,3 +1,6 @@
+import { SignUpPage } from './../pages/sign-up/sign-up';
+import { LogInPage } from './../pages/log-in/log-in';
+import { WelcomePage } from './../pages/welcome/welcome';
 import { UploadMediaPage } from './../pages/upload-media/upload-media';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -19,7 +22,10 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     ContactPage,
     HomePage,
     TabsPage,
-    UploadMediaPage
+    UploadMediaPage,
+    WelcomePage,
+    LogInPage,
+    SignUpPage
   ],
   imports: [
     BrowserModule,
@@ -32,7 +38,10 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     ContactPage,
     HomePage,
     TabsPage,
-    UploadMediaPage
+    UploadMediaPage,
+    WelcomePage,
+    LogInPage,
+    SignUpPage
   ],
   providers: [
     StatusBar,

@@ -1,0 +1,29 @@
+page-welcome {
+
+}
+@keyframes rotate {
+  from {
+    transform-origin: center;
+  }
+
+  to {
+    transform-origin: center;
+    transform: rotate3d(0, 0, 1, 360deg);
+  }
+}
+
+#Group_{
+    animation: rotate 2s linear infinite;
+}
+#Layer_1{
+    margin-top: 15px;
+    padding: 15px;    
+}
+
+h2{
+    margin-bottom: 40px;
+}
+ion-row{
+    align-items: center;
+    text-align: center;
+}

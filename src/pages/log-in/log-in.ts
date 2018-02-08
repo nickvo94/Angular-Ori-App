@@ -1,3 +1,4 @@
+import { UserProvider } from './../../providers/user/user';
 import { TabsPage } from './../tabs/tabs';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
@@ -18,14 +19,22 @@ export class LogInPage {
 
   tabsPage = TabsPage;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private userProvider: UserProvider) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad LogInPage');
+     if (localStorage.getItem('token')) {
+      this.userProvider.hasValidToken().subscribe(response => {
+        this.navCtrl.push(this.tabsPage);
+      }, err => {
+        console.log('error validate login token');
+      });
+    }
   }
 
   goToHomePage() {
+    this.userProvider.login();
     this.navCtrl.push(this.tabsPage);
   }
 

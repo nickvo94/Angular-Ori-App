@@ -1,5 +1,5 @@
 {
-  "name": "myApp",
+  "name": "Ori",
   "version": "0.0.1",
   "author": "Ionic Framework",
   "homepage": "http://ionicframework.com/",
@@ -34,7 +34,8 @@
     "ionicons": "3.0.0",
     "rxjs": "5.5.2",
     "sw-toolbox": "3.6.0",
-    "zone.js": "0.8.18"
+    "zone.js": "0.8.18",
+    "cordova-android": "~7.0.0"
   },
   "devDependencies": {
     "@angular/cli": "^1.6.6",
@@ -50,6 +51,8 @@
       "cordova-plugin-splashscreen": {},
       "cordova-plugin-ionic-webview": {}
     },
-    "platforms": []
+    "platforms": [
+      "android"
+    ]
   }
 }

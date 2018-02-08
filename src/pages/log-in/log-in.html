@@ -1,4 +1,3 @@
-
 <ion-content class="login-content" padding>
   <!-- <button ion-button (click)="goToHomePage()">Log In</button> -->
   <ion-row class="logo-row">
@@ -26,17 +25,17 @@
     </ion-col>
   </ion-row>
   <div class="login-box">
-    <form (ngSubmit)="userProvider.login()" #registerForm="ngForm">
+    <form (ngSubmit)="login()" #registerForm="ngForm">
       <ion-row>
         <ion-col>
           <ion-list inset>
 
             <ion-item>
-              <ion-input type="text" placeholder="Username" name="username" [(ngModel)]="userProvider.username" required></ion-input>
+              <ion-input type="text" placeholder="Username" name="username" [(ngModel)]="user.username" required></ion-input>
             </ion-item>
 
             <ion-item>
-              <ion-input type="password" placeholder="Password" name="password" [(ngModel)]="userProvider.password" required></ion-input>
+              <ion-input type="password" placeholder="Password" name="password" [(ngModel)]="user.password" required></ion-input>
             </ion-item>
 
           </ion-list>
@@ -45,9 +44,10 @@
       <ion-row>
         <ion-col class="signup-col">
           <button ion-button round class="submit-btn" full type="submit" [disabled]="!registerForm.form.valid">Login</button>
-          <button ion-button class="register-btn" block clear (click)="createAccount()">Create New Account</button>
         </ion-col>
       </ion-row>
     </form>
+    <button ion-button class="register-btn" block clear (click)="createAccount()">Create New Account</button>
+
   </div>
 </ion-content>

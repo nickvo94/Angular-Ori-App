@@ -1,4 +1,3 @@
-
 <ion-content class="login-content" padding>
   <ion-row class="logo-row">
     <ion-col>
@@ -25,21 +24,21 @@
     </ion-col>
   </ion-row>
   <div class="login-box">
-    <form (ngSubmit)="userProvider.register()" #registerForm="ngForm">
+    <form (ngSubmit)="register()" #registerForm="ngForm">
       <ion-row>
         <ion-col>
           <ion-list inset>
 
             <ion-item>
-              <ion-input type="text" placeholder="Username" name="username" [(ngModel)]="userProvider.username" required></ion-input>
+              <ion-input type="text" placeholder="Username" name="username" [(ngModel)]="user.username" required></ion-input>
             </ion-item>
 
             <ion-item>
-              <ion-input type="email" placeholder="Email" name="email" [(ngModel)]="userProvider.email" required></ion-input>
+              <ion-input type="email" placeholder="Email" name="email" [(ngModel)]="user.email" required></ion-input>
             </ion-item>
 
             <ion-item>
-              <ion-input type="password" placeholder="Password" name="password" [(ngModel)]="userProvider.password" required></ion-input>
+              <ion-input type="password" placeholder="Password" name="password" [(ngModel)]="user.password" required></ion-input>
             </ion-item>
 
           </ion-list>
@@ -48,9 +47,10 @@
       <ion-row>
         <ion-col class="signup-col">
           <button ion-button round class="submit-btn" full type="submit" [disabled]="!registerForm.form.valid">Register</button>
-          <button ion-button class="register-btn" block clear (click)="backLogin()">Already have one - Login</button>
         </ion-col>
       </ion-row>
     </form>
+    <button ion-button class="register-btn" block clear (click)="backLogin()">Already have one - Login</button>
+
   </div>
 </ion-content>

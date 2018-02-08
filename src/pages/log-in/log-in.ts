@@ -1,8 +1,9 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { SignUpPage } from './../sign-up/sign-up';
 import { UserProvider } from './../../providers/user/user';
 import { TabsPage } from './../tabs/tabs';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { AlertController, IonicPage, NavController, NavParams } from 'ionic-angular';
 
 /**
  * Generated class for the LogInPage page.
@@ -20,29 +21,42 @@ export class LogInPage {
 
   tabsPage = TabsPage;
   signUpPage = SignUpPage;
+  user = { username: '', password: '' };
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private userProvider: UserProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private userProvider: UserProvider, private alertCtrl: AlertController) {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad LogInPage');
-     if (localStorage.getItem('token')) {
-      this.userProvider.hasValidToken().subscribe(response => {
-        this.navCtrl.push(this.tabsPage);
-      }, err => {
-        console.log('error validate login token');
-      });
-    }
+
   }
 
-createAccount() {
+  createAccount() {
     this.navCtrl.push(this.signUpPage);
   }
 
-
-  goToHomePage() {
-    this.userProvider.login();
-    this.navCtrl.push(this.tabsPage);
+  login() {
+    this.userProvider.login(this.user).subscribe(response => {
+     
+        console.log(response['token']);
+        this.navCtrl.push(this.tabsPage);
+        localStorage.setItem('token', response['token']);
+      
+     
+    }, (error: HttpErrorResponse) => {
+      console.log(error.error.message);
+      this.showError("Wrong username or password");
+    });
   }
+
+  showError(text) {
+
+    let alert = this.alertCtrl.create({
+      title: 'Fail',
+      subTitle: text,
+      buttons: ['OK']
+    });
+    alert.present();
+  }
+
 
 }

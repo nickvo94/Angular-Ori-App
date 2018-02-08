@@ -6,7 +6,7 @@ page-log-in {
     background: linear-gradient(to left,  color($colors, secondary) ,  color($colors, primary));
  
     .logo-row {
-      padding-top: 50px;
+      padding-top: 5px;
       padding-bottom: 20px;
     }
     
@@ -18,8 +18,8 @@ page-log-in {
  
     .login-box {
       background: transparent;
-      padding: 20px 20px 0px 20px;
-      margin-top: 30px;
+      padding: 0px 20px;
+      margin-top: 10px;
     }
  
     ion-row {
@@ -41,7 +41,6 @@ page-log-in {
  
     .signup-col {
        margin: 0px 16px 0px 16px;
-       padding-bottom: 20px;
     }
  
     .item-inner {
@@ -61,6 +60,8 @@ page-log-in {
        color: #ffffff;
        font-size: 14px;
         font-family: $text;
+        padding-bottom: 20px;
+
 
     }
   }
@@ -81,6 +82,6 @@ page-log-in {
     animation: rotate 2s linear infinite;
 }
 #Layer_1{
-    margin-top: 15px;
+    margin-top: 10px;
     padding: 15px;    
 }

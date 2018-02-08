@@ -1,3 +1,4 @@
+import { SignUpPage } from './../sign-up/sign-up';
 import { UserProvider } from './../../providers/user/user';
 import { TabsPage } from './../tabs/tabs';
 import { Component } from '@angular/core';
@@ -18,6 +19,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 export class LogInPage {
 
   tabsPage = TabsPage;
+  signUpPage = SignUpPage;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private userProvider: UserProvider) {
   }
@@ -32,6 +34,11 @@ export class LogInPage {
       });
     }
   }
+
+createAccount() {
+    this.navCtrl.push(this.signUpPage);
+  }
+
 
   goToHomePage() {
     this.userProvider.login();

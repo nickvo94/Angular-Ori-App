@@ -1,3 +1,86 @@
-page-sign-up {
+@import "../../theme/variables";
 
+
+page-sign-up {
+.login-content {
+    background: linear-gradient(to left,  color($colors, secondary) ,  color($colors, primary));
+ 
+    .logo-row {
+      padding-top: 50px;
+      padding-bottom: 20px;
+    }
+    
+    h2 {
+        font-size: 35px;
+        color: white;
+        font-family: $title;
+    }
+ 
+    .login-box {
+      background: transparent;
+      padding: 20px 20px 0px 20px;
+      margin-top: 10px;
+    }
+ 
+    ion-row {
+       align-items: center;
+       text-align: center;
+    }
+ 
+    ion-item {
+         border-radius: 30px !important;
+         padding-left: 30px !important;
+         font-size: 16px;
+         font-family: $text;
+         color: color($colors, dark);
+         margin-bottom: 10px;
+         border: 1px solid #ffffff;
+         border-bottom: 0px !important;
+         box-shadow: none !important;
+    }
+ 
+    .signup-col {
+       margin: 0px 16px 0px 16px;
+       padding-bottom: 20px;
+    }
+ 
+    .item-inner {
+       border-bottom-color: white !important;
+       box-shadow: none !important;
+    }
+ 
+    .submit-btn {
+       background: transparent;
+       border: 2px solid #ffffff;
+       font-size: 20px;
+       height: 45px;
+       font-family: $text;
+    }
+ 
+    .register-btn {
+       color: #ffffff;
+       font-size: 14px;
+        font-family: $text;
+
+    }
+  }
+}
+
+@keyframes rotate {
+  from {
+    transform-origin: center;
+  }
+
+  to {
+    transform-origin: center;
+    transform: rotate3d(0, 0, 1, 360deg);
+  }
+}
+
+#Group_{
+    animation: rotate 2s linear infinite;
+}
+#Layer_1{
+    margin-top: 15px;
+    padding: 15px;    
 }

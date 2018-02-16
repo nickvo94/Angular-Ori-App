@@ -40,7 +40,7 @@ export class HomePage {
       this.getNumberOfComment();
       this.getNumberOfLike();
       for (let user of this.medias) {
-        this.mediaProvider.getUserInfo(user.user_id, localStorage.getItem('token')).subscribe(res => {
+        this.mediaProvider.getUserInfo(user.user_id).subscribe(res => {
           for (let i in this.medias) {
             if (this.medias[i].user_id == res.user_id) {
               this.medias[i].username = res.username;
@@ -54,7 +54,6 @@ export class HomePage {
   getNumberOfComment() {
     for (let file of this.medias) {
       this.mediaProvider.getComment(file.file_id).subscribe(res => {
-        console.log(res);
         this.numberOfComment = res.length;
         file.numberOfComment = this.numberOfComment;
       })
@@ -64,7 +63,6 @@ export class HomePage {
   getNumberOfLike() {
     for (let file of this.medias) {
       this.mediaProvider.getLike(file.file_id).subscribe(res => {
-        console.log(res);
         this.numberOfLike = res.length;
         file.numberOfLike = this.numberOfLike;
       })

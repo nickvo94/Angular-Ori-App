@@ -26,9 +26,16 @@ export class MediaProvider {
     return this.http.get(this.baseUrl + 'media/' + id);
   }
 
-  getUserInfo(userId, token) {
+  deleteMedia(fileId) {
     const settings = {
-      headers: new HttpHeaders().set('x-access-token', token)
+      headers: new HttpHeaders().set('x-access-token', localStorage.getItem('token'))
+    };
+    return this.http.delete(this.baseUrl + 'media/' + fileId, settings)
+  }
+
+  getUserInfo(userId) {
+    const settings = {
+      headers: new HttpHeaders().set('x-access-token', localStorage.getItem('token'))
     };
     return this.http.get(this.baseUrl + 'users/' + userId, settings);
   }

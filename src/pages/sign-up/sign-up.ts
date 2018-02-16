@@ -1,3 +1,4 @@
+import { User } from './../../app/models/user';
 import { LogInPage } from './../log-in/log-in';
 import { UserProvider } from './../../providers/user/user';
 import { Component } from '@angular/core';
@@ -18,7 +19,7 @@ import { AlertController, IonicPage, NavController, NavParams } from 'ionic-angu
 export class SignUpPage {
 
   logInPage = LogInPage;
-  user = { username: '', email: '', password: '' };
+  user: User = { username: '', email: '', password: '' };
   createSuccess = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private userProvider: UserProvider, private alertCtrl: AlertController) {
@@ -35,7 +36,7 @@ export class SignUpPage {
       
       },
       error => {
-        this.showPopup("Error", error);
+        this.showPopup("Error", "username already exists");
     });
   }
 

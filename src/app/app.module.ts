@@ -1,7 +1,7 @@
+import { DetailMediaPage } from './../pages/detail-media/detail-media';
 import { HttpClientModule } from '@angular/common/http';
 import { SignUpPage } from './../pages/sign-up/sign-up';
 import { LogInPage } from './../pages/log-in/log-in';
-import { WelcomePage } from './../pages/welcome/welcome';
 import { UploadMediaPage } from './../pages/upload-media/upload-media';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -27,9 +27,9 @@ import { MediaProvider } from '../providers/media/media';
     HomePage,
     TabsPage,
     UploadMediaPage,
-    WelcomePage,
     LogInPage,
-    SignUpPage
+    SignUpPage,
+    DetailMediaPage
   ],
   imports: [
     BrowserModule,
@@ -44,9 +44,9 @@ import { MediaProvider } from '../providers/media/media';
     HomePage,
     TabsPage,
     UploadMediaPage,
-    WelcomePage,
     LogInPage,
-    SignUpPage
+    SignUpPage,
+    DetailMediaPage
   ],
   providers: [
     StatusBar,

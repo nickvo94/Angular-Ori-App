@@ -9,7 +9,15 @@
     <ion-card-title>
       <h1>{{media.title}}</h1>
     </ion-card-title>
-    <p>By {{media.author}}</p>
+    <p>By {{media.username}}</p>
     <img *ngIf="media.media_type == 'image'" [src]="mediaProvider.mediaUrl + media.filename" [alt]="media.title" (click)="openDetailMedia(media.file_id)">
+    <ion-row>
+      <ion-col>
+        <p> {{media.numberOfLike}} Like</p>
+      </ion-col>
+      <ion-col>
+        <p>{{media.numberOfComment}} Comment</p>
+      </ion-col>
+    </ion-row>
   </ion-card>
 </ion-content>

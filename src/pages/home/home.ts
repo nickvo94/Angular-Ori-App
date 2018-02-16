@@ -12,7 +12,9 @@ import { NavController } from 'ionic-angular';
 export class HomePage {
 
   medias: any[];
-  userId;
+  numberOfComment: any;
+  numberOfLike: any;
+
 
   constructor(public navCtrl: NavController, private mediaProvider: MediaProvider, private userProvider: UserProvider) {
 
@@ -28,21 +30,48 @@ export class HomePage {
           console.log(error);
         });
     }
-      this.getAllMedia();
+    this.getAllMedia();
   }
 
   getAllMedia() {
-    this.mediaProvider.getAllMedia().subscribe((data: any) =>{
+    this.mediaProvider.getAllMedia().subscribe((data: any) => {
       console.log(data['user_id']);
       this.medias = data;
-      this.userId = data['user_id'];
-      // this.mediaProvider.getUserInfo(this.userId, localStorage.getItem('token')).subscribe(res => {
-      //   console.log(res);
-      // })
+      this.getNumberOfComment();
+      this.getNumberOfLike();
+      for (let user of this.medias) {
+        this.mediaProvider.getUserInfo(user.user_id, localStorage.getItem('token')).subscribe(res => {
+          for (let i in this.medias) {
+            if (this.medias[i].user_id == res.user_id) {
+              this.medias[i].username = res.username;
+            }
+          }
+        })
+      }
     });
   }
 
-  openDetailMedia(id){
+  getNumberOfComment() {
+    for (let file of this.medias) {
+      this.mediaProvider.getComment(file.file_id).subscribe(res => {
+        console.log(res);
+        this.numberOfComment = res.length;
+        file.numberOfComment = this.numberOfComment;
+      })
+    }
+  }
+
+  getNumberOfLike() {
+    for (let file of this.medias) {
+      this.mediaProvider.getLike(file.file_id).subscribe(res => {
+        console.log(res);
+        this.numberOfLike = res.length;
+        file.numberOfLike = this.numberOfLike;
+      })
+    }
+  }
+
+  openDetailMedia(id) {
     this.navCtrl.push(DetailMediaPage, {
       mediaId: id
     })

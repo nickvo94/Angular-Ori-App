@@ -20,6 +20,7 @@ export class UserProvider {
     console.log('Hello UserProvider Provider');
   }
 
+
   getUserData(token) {
     const settings = {
       headers: new HttpHeaders().set('x-access-token', token)
@@ -40,5 +41,9 @@ export class UserProvider {
    
       return this.http.post(this.baseUrl + 'login', user, settings);
     }
+
+  logout() {
+    localStorage.removeItem('token');
+  }
 
 }

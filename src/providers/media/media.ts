@@ -33,4 +33,12 @@ export class MediaProvider {
     return this.http.get(this.baseUrl + 'users/' + userId, settings);
   }
 
+  getComment(fileId) {
+    return this.http.get(this.baseUrl + 'comments/file/' + fileId);
+  }
+
+  getLike(fileId) {
+    return this.http.get(this.baseUrl + 'favourites/file/' + fileId);
+  }
+
 }

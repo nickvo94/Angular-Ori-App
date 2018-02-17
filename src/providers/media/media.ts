@@ -18,6 +18,7 @@ export class MediaProvider {
     console.log('Hello MediaProvider Provider');
   }
 
+
   public uploadFile(media){
     const settings = {
       headers: new HttpHeaders().set('x-access-token', localStorage.getItem('token')),
@@ -55,6 +56,7 @@ export class MediaProvider {
 
   getLike(fileId) {
     return this.http.get(this.baseUrl + 'favourites/file/' + fileId);
+
   }
 
 }

@@ -1,14 +1,8 @@
 import { NgModule } from '@angular/core';
-import { PagesMainComponent } from './pages-main/pages-main';
-import { PagesUploadComponent } from './pages-upload/pages-upload';
 import { MediaComponent } from './media/media';
 @NgModule({
-	declarations: [PagesMainComponent,
-    PagesUploadComponent,
-    MediaComponent],
+	declarations: [MediaComponent],
 	imports: [],
-	exports: [PagesMainComponent,
-    PagesUploadComponent,
-    MediaComponent]
+	exports: [MediaComponent]
 })
 export class ComponentsModule {}

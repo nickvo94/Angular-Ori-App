@@ -16,5 +16,4 @@ export class MediaComponent {
     public title: string,
     public description: string,
 ){};
-
 }

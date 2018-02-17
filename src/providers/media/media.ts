@@ -18,6 +18,15 @@ export class MediaProvider {
     console.log('Hello MediaProvider Provider');
   }
 
+  public uploadFile(media){
+    const settings = {
+      headers: new HttpHeaders().set('x-access-token', localStorage.getItem('token')),
+    };
+    console.log(settings);
+    console.log(this.http.post(this.baseUrl + 'media', media, settings));
+    return this.http.post(this.baseUrl + 'media', media, settings);
+  }
+
   getAllMedia() {
     return this.http.get(this.baseUrl + 'media');
   }

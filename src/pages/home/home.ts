@@ -42,8 +42,8 @@ export class HomePage {
       for (let user of this.medias) {
         this.mediaProvider.getUserInfo(user.user_id).subscribe(res => {
           for (let i in this.medias) {
-            if (this.medias[i].user_id == res.user_id) {
-              this.medias[i].username = res.username;
+            if (this.medias[i].user_id == res['user_id']) {
+              this.medias[i].username = res['username'];
             }
           }
         })
@@ -54,7 +54,7 @@ export class HomePage {
   getNumberOfComment() {
     for (let file of this.medias) {
       this.mediaProvider.getComment(file.file_id).subscribe(res => {
-        this.numberOfComment = res.length;
+        this.numberOfComment = file.length;
         file.numberOfComment = this.numberOfComment;
       })
     }
@@ -63,7 +63,7 @@ export class HomePage {
   getNumberOfLike() {
     for (let file of this.medias) {
       this.mediaProvider.getLike(file.file_id).subscribe(res => {
-        this.numberOfLike = res.length;
+        this.numberOfLike = file.length;
         file.numberOfLike = this.numberOfLike;
       })
     }

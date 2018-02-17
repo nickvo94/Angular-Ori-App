@@ -1,5 +1,4 @@
 import { LogInPage } from './../pages/log-in/log-in';
-import { WelcomePage } from './../pages/welcome/welcome';
 import { Component } from '@angular/core';
 import { Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';

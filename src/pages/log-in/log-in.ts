@@ -1,3 +1,5 @@
+import { HomePage } from './../home/home';
+import { User } from './../../app/models/user';
 import { HttpErrorResponse } from '@angular/common/http';
 import { SignUpPage } from './../sign-up/sign-up';
 import { UserProvider } from './../../providers/user/user';
@@ -21,13 +23,20 @@ export class LogInPage {
 
   tabsPage = TabsPage;
   signUpPage = SignUpPage;
-  user = { username: '', password: '' };
+  user: User = { username: '', password: '' };
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private userProvider: UserProvider, private alertCtrl: AlertController) {
   }
 
   ionViewDidLoad() {
-
+    if(localStorage.getItem('token') !== null){
+      this.userProvider.getUserData(localStorage.getItem('token')).subscribe(response =>{
+        this.navCtrl.setRoot(TabsPage);
+        this.userProvider.logged = true;
+      },(err: HttpErrorResponse) =>{
+        console.log(err);
+      });
+    }
   }
 
   createAccount() {
@@ -35,13 +44,11 @@ export class LogInPage {
   }
 
   login() {
-    this.userProvider.login(this.user).subscribe(response => {
-     
+    this.userProvider.login(this.user).subscribe(response => {     
         console.log(response['token']);
-        this.navCtrl.push(this.tabsPage);
         localStorage.setItem('token', response['token']);
-      
-     
+        this.navCtrl.setRoot(TabsPage);
+        this.userProvider.logged = true;     
     }, (error: HttpErrorResponse) => {
       console.log(error.error.message);
       this.showError("Wrong username or password");
@@ -49,7 +56,6 @@ export class LogInPage {
   }
 
   showError(text) {
-
     let alert = this.alertCtrl.create({
       title: 'Fail',
       subTitle: text,
@@ -57,6 +63,4 @@ export class LogInPage {
     });
     alert.present();
   }
-
-
 }

@@ -11,7 +11,8 @@ import { NavController } from 'ionic-angular';
 })
 export class HomePage {
 
-  medias: any[];
+  medias: any = [];
+  arr: any = [];
   numberOfComment: any;
   numberOfLike: any;
 
@@ -19,6 +20,7 @@ export class HomePage {
   constructor(public navCtrl: NavController, private mediaProvider: MediaProvider, private userProvider: UserProvider) {
 
   }
+
   ionViewDidLoad() {
     console.log('ionViewDidLoad FrontPage');
     if (localStorage.getItem('token') !== null) {
@@ -32,6 +34,8 @@ export class HomePage {
     }
     this.getAllMedia();
   }
+
+  
 
   getAllMedia() {
     this.mediaProvider.getAllMedia().subscribe((data: any) => {
@@ -52,9 +56,12 @@ export class HomePage {
   }
 
   getNumberOfComment() {
+    console.log('comment call');
     for (let file of this.medias) {
       this.mediaProvider.getComment(file.file_id).subscribe(res => {
-        this.numberOfComment = file.length;
+        this.arr = res;
+        this.numberOfComment = this.arr.length;
+        console.log(this.numberOfComment);
         file.numberOfComment = this.numberOfComment;
       })
     }
@@ -63,15 +70,28 @@ export class HomePage {
   getNumberOfLike() {
     for (let file of this.medias) {
       this.mediaProvider.getLike(file.file_id).subscribe(res => {
-        this.numberOfLike = file.length;
+        this.arr = res;
+        this.numberOfLike = this.arr.length;
         file.numberOfLike = this.numberOfLike;
       })
     }
   }
 
-  openDetailMedia(id) {
+  openDetailMedia(id, user_id) {
     this.navCtrl.push(DetailMediaPage, {
-      mediaId: id
+      mediaId: id,
+      userId: user_id,
     })
   }
+
+  doRefresh(refresher) {
+    console.log('Begin async operation', refresher);
+
+    setTimeout(() => {
+      console.log('Async operation has ended');
+      refresher.complete();
+    }, 2000);
+  }
+
+
 }

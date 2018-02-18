@@ -10,7 +10,7 @@
       <h1>{{media.title}}</h1>
     </ion-card-title>
     <p>By {{media.username}}</p>
-    <img *ngIf="media.media_type == 'image'" [src]="mediaProvider.mediaUrl + media.filename" [alt]="media.title" (click)="openDetailMedia(media.file_id)">
+    <img *ngIf="media.media_type == 'image'" [src]="mediaProvider.mediaUrl + media.filename" [alt]="media.title" (click)="openDetailMedia(media.file_id,media.user_id)">
     <ion-row>
       <ion-col>
         <ion-icon name="heart"></ion-icon>

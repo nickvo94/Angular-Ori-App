@@ -16,7 +16,28 @@
 <ion-content padding>
 <ion-card>
         <ion-card-title>{{title}}</ion-card-title>
+          <p>{{descrpt}}</p>
+          <p>By {{uName}} </p>
         <img [src]="url" >
-       
+        <ion-row>
+            <ion-col>
+              <ion-icon type="submit" name="heart" (click)="clickLike()"></ion-icon>
+              <p>{{numberOfLike}} Like </p>
+              <p *ngFor="let likeUser of likeUsers">by {{likeUser}}</p>
+            </ion-col>
+            <ion-col>
+              <ion-icon name="text" (click)="onIconCommentClick()"></ion-icon>
+              <p>{{numberOfComment}} Comment</p>
+              <ion-item *ngFor="let commentUser of commentUsers">{{commentUser}}</ion-item>
+            </ion-col>
+          </ion-row>      
     </ion-card>
+    <form *ngIf="iconCommentClicked">
+      <ion-card>
+          <ion-item>
+              <ion-textarea [(ngModel)]="createComment.comment" name="comment"></ion-textarea>
+          </ion-item>
+            <button ion-button type="submit" (click)="callComment()" style="height:30px;width:70px">Post</button>
+      </ion-card>
+    </form>
 </ion-content>

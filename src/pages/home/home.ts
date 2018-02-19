@@ -40,6 +40,7 @@ export class HomePage {
   getAllMedia() {
     this.mediaProvider.getAllMedia().subscribe((data: any) => {
       console.log(data['user_id']);
+      console.log(data);
       this.medias = data;
       this.getNumberOfComment();
       this.getNumberOfLike();
@@ -78,6 +79,7 @@ export class HomePage {
   }
 
   openDetailMedia(id, user_id) {
+    console.log('detail media called');
     this.navCtrl.push(DetailMediaPage, {
       mediaId: id,
       userId: user_id,

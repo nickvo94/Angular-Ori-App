@@ -19,6 +19,10 @@
           <p>{{descrpt}}</p>
           <p>By {{uName}} </p>
         <img [src]="url" >
+        <video width="500" controls>
+            <source  [src]="url" type="video/mp4" alt="media.title">            
+            <source  [src]="url" type="video/ogg" alt="media.title" >           
+        </video>
         <ion-row>
             <ion-col>
               <ion-icon type="submit" name="heart" (click)="clickLike()"></ion-icon>

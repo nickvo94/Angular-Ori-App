@@ -18,21 +18,50 @@
         <ion-card-title>{{title}}</ion-card-title>
           <p>{{descrpt}}</p>
           <p>By {{uName}} </p>
-        <img [src]="url" >
-        <video width="500" controls>
-            <source  [src]="url" type="video/mp4" alt="media.title">            
-            <source  [src]="url" type="video/ogg" alt="media.title" >           
+        <img *ngIf="type == 'image'" [src]="url" >
+        <video *ngIf="type == 'video'" controls>
+            <source  [src]="url" type="video/mp4" alt="title">            
+            <source  [src]="url" type="video/ogg" alt="title" >           
         </video>
         <ion-row>
             <ion-col>
               <ion-icon type="submit" name="heart" (click)="clickLike()"></ion-icon>
-              <p>{{numberOfLike}} Like </p>
-              <p *ngFor="let likeUser of likeUsers">by {{likeUser}}</p>
+              <p>{{numberOfLike}} Like(s) </p>
+              <ion-icon 
+                name="arrow-dropdown" 
+                *ngIf = "likeClicked"
+                (click)="onLikeClick()">
+              </ion-icon>
+              <ion-icon 
+                name="arrow-dropup" 
+                *ngIf = "!likeClicked"
+                (click)="onLikeClick()">
+              </ion-icon>
+
+              <ion-item *ngIf="likeClicked">
+                  <p *ngFor="let likeUser of likeUsers">by {{likeUser}}</p>
+              </ion-item>
+              
             </ion-col>
             <ion-col>
               <ion-icon name="text" (click)="onIconCommentClick()"></ion-icon>
-              <p>{{numberOfComment}} Comment</p>
-              <ion-item *ngFor="let commentUser of commentUsers">{{commentUser}}</ion-item>
+              <p>{{numberOfComment}} Comment(s)</p>
+
+              <ion-icon 
+                name="arrow-dropdown" 
+                *ngIf = "CommentClicked"
+                (click)="onCommentClick()">
+              </ion-icon>
+              <ion-icon 
+                name="arrow-dropup" 
+                *ngIf = "!CommentClicked"
+                (click)="onCommentClick()">
+              </ion-icon>
+
+              <ion-item *ngIf="CommentClicked">
+                  <ion-item *ngFor="let commentUser of commentUsers">{{commentUser}}</ion-item>
+              </ion-item>
+              
             </ion-col>
           </ion-row>      
     </ion-card>

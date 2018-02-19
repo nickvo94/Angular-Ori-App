@@ -11,7 +11,7 @@
     </ion-card-title>
     <p>By {{media.username}}</p>
     <img *ngIf="media.media_type == 'image'" [src]="mediaProvider.mediaUrl + media.filename" [alt]="media.title" (click)="openDetailMedia(media.file_id,media.user_id)">
-    <video *ngIf="media.media_type == 'video'" width="500" (click)="openDetailMedia(media.file_id,media.user_id)" controls>
+    <video *ngIf="media.media_type == 'video'" (click)="openDetailMedia(media.file_id,media.user_id)" controls>
       <source  [src]="mediaProvider.mediaUrl + media.filename" type="video/mp4" alt="media.title" >    
       <source  [src]="mediaProvider.mediaUrl + media.filename" type="video/ogg" alt="media.title" >     
     </video>

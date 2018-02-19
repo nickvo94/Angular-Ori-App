@@ -37,7 +37,8 @@ export class DetailMediaPage {
   descrpt: any;
   uName: any;
   likeUsers: any = [];
-  commentUsers: any = [];    
+  commentUsers: any = [];
+  type:any;    
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private mediaProvider: MediaProvider) {
     this.id = navParams.get('mediaId');
@@ -54,6 +55,8 @@ export class DetailMediaPage {
         this.url = this.mediaProvider.mediaUrl + response['filename'];
         this.title = response['title'];
         this.descrpt = response['description'];
+        this.type = response['media_type'];
+        console.log(this.type);
       }, (error: HttpErrorResponse) => {
         console.log(error);
       });
@@ -121,10 +124,17 @@ export class DetailMediaPage {
   }
   
   public iconCommentClicked: boolean = false; //Whatever you want to initialise it as
+         CommentClicked: boolean = false;
+         likeClicked: boolean = false;
 
   public onIconCommentClick() {    
       this.iconCommentClicked = !this.iconCommentClicked;
   }
-
+  public onCommentClick() {    
+    this.CommentClicked = !this.CommentClicked;    
+  }
+  public onLikeClick() {    
+    this.likeClicked = !this.likeClicked;
+  }
   
 }

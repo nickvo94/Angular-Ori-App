@@ -15,7 +15,10 @@
 
 <ion-content padding>
     <form>
-      <ion-input type="file" placeholder="Upload a file" name="file" (change)="setFile($event)"></ion-input>
+        <ion-item>
+            <ion-input type="file" placeholder="Upload a file" name="file" (change)="setFile($event)"></ion-input>
+        </ion-item>
+      
       <ion-card>
           <ion-item>
               <ion-input [(ngModel)]="media.title" type="text" name="title" placeholder="Title"></ion-input>            

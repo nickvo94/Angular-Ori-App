@@ -1,12 +1,12 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Ori</ion-title>
+    <ion-title id="app-name">Ori</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
   <ion-card *ngFor="let media of medias">
-    <ion-card-title>
+    <ion-card-title class="title">
       <h1>{{media.title}}</h1>
     </ion-card-title>
     <p>By {{media.username}}</p>
@@ -18,11 +18,11 @@
     <ion-row>
       <ion-col>
         <ion-icon name="heart"></ion-icon>
-        <p>{{media.numberOfLike}} Like</p>
+        {{media.numberOfLike}} Like
       </ion-col>
       <ion-col>
         <ion-icon name="text"></ion-icon>
-        <p>{{media.numberOfComment}} Comment</p>
+        {{media.numberOfComment}} Comment
       </ion-col>
     </ion-row>
   </ion-card>

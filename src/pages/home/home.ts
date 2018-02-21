@@ -15,6 +15,7 @@ export class HomePage {
   arr: any = [];
   numberOfComment: any;
   numberOfLike: any;
+  mediaArray: any;
 
 
   constructor(public navCtrl: NavController, private mediaProvider: MediaProvider, private userProvider: UserProvider) {
@@ -46,9 +47,11 @@ export class HomePage {
       this.getNumberOfLike();
       for (let user of this.medias) {
         this.mediaProvider.getUserInfo(user.user_id).subscribe(res => {
+          this.mediaArray = res;
           for (let i in this.medias) {
             if (this.medias[i].user_id == res['user_id']) {
               this.medias[i].username = res['username'];
+
             }
           }
         })
@@ -60,10 +63,15 @@ export class HomePage {
     console.log('comment call');
     for (let file of this.medias) {
       this.mediaProvider.getComment(file.file_id).subscribe(res => {
+<<<<<<< HEAD
         this.arr = res;
         this.numberOfComment = this.arr.length;
         console.log(this.numberOfComment);
         file.numberOfComment = this.numberOfComment;
+=======
+        this.numberOfComment = res;
+        file.numberOfComment = this.numberOfComment.length;
+>>>>>>> dc80b427f284bd6014d642dd93847d90deb4c2c0
       })
     }
   }
@@ -71,9 +79,14 @@ export class HomePage {
   getNumberOfLike() {
     for (let file of this.medias) {
       this.mediaProvider.getLike(file.file_id).subscribe(res => {
+<<<<<<< HEAD
         this.arr = res;
         this.numberOfLike = this.arr.length;
         file.numberOfLike = this.numberOfLike;
+=======
+        this.numberOfLike = res;
+        file.numberOfLike = this.numberOfLike.length;
+>>>>>>> dc80b427f284bd6014d642dd93847d90deb4c2c0
       })
     }
   }

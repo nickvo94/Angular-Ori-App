@@ -2,14 +2,16 @@ import { DetailMediaPage } from './../detail-media/detail-media';
 import { HttpErrorResponse } from '@angular/common/http';
 import { UserProvider } from './../../providers/user/user';
 import { MediaProvider } from './../../providers/media/media';
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { NavController } from 'ionic-angular';
+import { Content } from 'ionic-angular';
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
 })
 export class HomePage {
+   @ViewChild(Content) content: Content;
 
   medias: any = [];
   arr: any = [];
@@ -36,7 +38,9 @@ export class HomePage {
     this.getAllMedia();
   }
 
-  
+  scrollToTop() {
+    this.content.scrollToTop();
+  }
 
   getAllMedia() {
     this.mediaProvider.getAllMedia().subscribe((data: any) => {

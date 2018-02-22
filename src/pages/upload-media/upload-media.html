@@ -16,30 +16,35 @@
 <ion-content padding>
     <ion-grid>
         <form #uploadForm="ngForm">
-            <button ion-button icon-left *ngIf="!mediaData" (click)="takePicture()">
-          <ion-icon name="camera"></ion-icon>Take a Photo</button>
+
+            <button ion-button icon-left class="photo-btn" *ngIf="!mediaData" (click)="takePicture()">
+                    <ion-icon name="camera"></ion-icon>Take a Photo</button>
             <img *ngIf="mediaData" id="img-preview" [src]="mediaData">
             <ion-row>
-                <ion-input *ngIf="!mediaData" type="file" placeholder="Upload a file" name="file" accept="image/*|video/*" (change)="setFile($event)"
-                    ngModel></ion-input>
+                <button ion-button icon-left class="input-file" (click)="file.click()">
+                    <ion-icon name="photos"></ion-icon>Choose File
+                </button>
+                <p class="fileName">{{fileName}}</p>
+                <input #file hidden type="file" placeholder="Upload a file" name="file" accept="image/*|video/*" (change)="setFile($event)"
+                    ngModel>
             </ion-row>
 
             <ion-row>
                 <ion-item>
-                    <ion-input [(ngModel)]="media.title" type="text" name="title" placeholder="Title" required></ion-input>
+                    <ion-input class="input-title" [(ngModel)]="media.title" type="text" name="title" placeholder="Title" required></ion-input>
                 </ion-item>
             </ion-row>
             <ion-row>
                 <ion-item>
-                    <ion-textarea [(ngModel)]="media.description" name="description" placeholder="Description"></ion-textarea>
+                    <ion-textarea class="input-description" [(ngModel)]="media.description" name="description" placeholder="Description (optional)"></ion-textarea>
                 </ion-item>
             </ion-row>
             <ion-row>
                 <ion-col>
-                    <button ion-button type="submit" (click)="startUpload()" [disabled]="!uploadForm.valid">Upload</button>
+                    <button ion-button round full class="submit-btn" type="submit" (click)="startUpload()" [disabled]="!uploadForm.valid">Upload</button>
                 </ion-col>
                 <ion-col>
-                    <button ion-button (click)="cancel()">Cancel</button>
+                    <button ion-button round full class="cancel-btn" (click)="cancel()">Cancel</button>
                 </ion-col>
             </ion-row>
         </form>

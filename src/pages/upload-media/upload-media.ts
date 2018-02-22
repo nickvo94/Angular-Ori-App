@@ -28,6 +28,7 @@ import { HttpErrorResponse } from '@angular/common/http/src/response';
 export class UploadMediaPage {
 
   file: File;
+  fileName: string = 'No File Chosen';
   mediaData;
   media: Media = { file: this.file, title: '', description: '' };
   message: any;
@@ -53,6 +54,7 @@ export class UploadMediaPage {
   setFile(evt) {
     console.log(evt.target.files[0]);
     this.file = evt.target.files[0];
+    this.fileName = this.file.name;
   }
 
   startUpload(form: any) {

@@ -5,7 +5,6 @@ import { NavController, NavParams } from 'ionic-angular';
 import { Like } from '../../app/models/like';
 import { ViewChild } from '@angular/core';
 import { Navbar } from 'ionic-angular';
-import { HomePage } from '../home/home';
 import { Comment } from '../../app/models/comment';
 
 /**
@@ -66,10 +65,7 @@ export class DetailMediaPage {
         console.log(this.uName);
       });
 
-      this.navBar.backButtonClick = (e:UIEvent)=>{
-        // todo something
-        this.navCtrl.push(HomePage);
-       }
+     
   }
 
   callComment(){

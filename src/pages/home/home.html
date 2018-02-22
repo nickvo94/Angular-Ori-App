@@ -12,7 +12,7 @@
     <p id="author">By {{media.username}}</p>
     <img *ngIf="media.media_type == 'image'" [src]="mediaProvider.mediaUrl + media.filename" [alt]="media.title" (click)="openDetailMedia(media.file_id)">
     <div class="video-wrapper">
-      <div id="icon-wrap"><img id="icon-play" *ngIf="media.media_type == 'video'" src="../../assets/icon/play.png"></div>
+      <!-- <div id="icon-wrap"><img id="icon-play" *ngIf="media.media_type == 'video'" src="../../assets/icon/play.png"></div> -->
 
       <video *ngIf="media.media_type == 'video'"  width="100%" height="240px" (click)="openDetailMedia(media.file_id)" controls>
         <source [src]="mediaProvider.mediaUrl + media.filename" type="video/mp4">

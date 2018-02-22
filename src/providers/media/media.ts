@@ -18,8 +18,14 @@ export class MediaProvider {
     console.log('Hello MediaProvider Provider');
   }
 
+  postTag(tag) {
+    const settings = {
+      headers: new HttpHeaders().set('x-access-token', localStorage.getItem('token')),
+    };
+    return this.http.post(this.baseUrl + 'tags', tag, settings);
+  }
 
-  public uploadFile(media){
+  uploadFile(media) {
     const settings = {
       headers: new HttpHeaders().set('x-access-token', localStorage.getItem('token')),
     };
@@ -28,22 +34,22 @@ export class MediaProvider {
     return this.http.post(this.baseUrl + 'media', media, settings);
   }
 
-  postLike(like){
+  postLike(like) {
     console.log(like);
     const settings = {
       headers: new HttpHeaders().set('x-access-token', localStorage.getItem('token')),
     };
     console.log(this.http.post('http://media.mw.metropolia.fi/wbma/favourites', like, settings));
-    return this.http.post( 'http://media.mw.metropolia.fi/wbma/favourites', like, settings);
+    return this.http.post('http://media.mw.metropolia.fi/wbma/favourites', like, settings);
   }
 
-  postComment(comment){
+  postComment(comment) {
     console.log(comment);
     const settings = {
       headers: new HttpHeaders().set('x-access-token', localStorage.getItem('token')),
     };
     console.log(this.http.post('http://media.mw.metropolia.fi/wbma/comments', comment, settings));
-    return this.http.post( 'http://media.mw.metropolia.fi/wbma/comments', comment, settings);
+    return this.http.post('http://media.mw.metropolia.fi/wbma/comments', comment, settings);
   }
 
   getAllMedia() {

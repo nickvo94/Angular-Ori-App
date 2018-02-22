@@ -1,0 +1,41 @@
+<!--
+  Generated template for the ProfilePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{username}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <ion-segment [(ngModel)]="listMedia">
+    <ion-segment-button value="myPost">
+      My Posts
+    </ion-segment-button>
+    <ion-segment-button value="saved">
+      Saved
+    </ion-segment-button>
+  </ion-segment>
+  <div [ngSwitch]="listMedia">
+    <ion-grid *ngSwitchCase="'myPost'">
+      <ion-row>
+        <ion-col col-4 *ngFor="let post of myMediaArray">
+          <img *ngIf="post.media_type == 'image'" [src]="mediaProvider.mediaUrl + post.filename" [alt]="post.title">
+          <video *ngIf="post.media_type == 'video'" height="200px" width="100%">
+            <source [src]="mediaProvider.mediaUrl + post.filename" type="video/mp4">
+          </video>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <ion-list *ngSwitchCase="'saved'">
+      <p>dsfbsdg</p>
+    </ion-list>
+  </div>
+
+</ion-content>

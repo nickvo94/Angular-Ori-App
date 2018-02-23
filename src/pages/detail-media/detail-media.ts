@@ -36,7 +36,8 @@ export class DetailMediaPage {
   descrpt: any;
   uName: any;
   likeUsers: any = [];
-  commentUsers: any = [];
+  commentBody: any = [];
+  commentUsernames: any = [];
   type:any;    
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private mediaProvider: MediaProvider) {
@@ -72,7 +73,7 @@ export class DetailMediaPage {
     this.createComment.file_id = Number(this.id);
     console.log(this.createComment);
     this.mediaProvider.postComment(this.createComment).subscribe(data => {
-      console.log(data)
+      console.log(data);
       this.getNumberOfComment();
     });
   }
@@ -81,13 +82,50 @@ export class DetailMediaPage {
   getNumberOfComment() {    
       this.mediaProvider.getComment(this.id).subscribe(res => {
         console.log(res);
-        this.commentUsers = [];
+        this.commentBody = [];
+        this.commentUsernames = [];
         this.commentArr = res;        
         this.numberOfComment = this.commentArr.length;
+        
+        /*
         for(var i = 0; i< (this.numberOfComment); i++ ){
+          console.log(res[i]['user_id'], i)
           this.commentUsers.push(res[i]['comment']);
+          this.mediaProvider.getUserInfo(res[i]['user_id']).subscribe(data =>{
+            console.log(data['username']);            
+            this.commentUsernames.push(data['username']);
+            console.log(this.commentUsernames);
+          });
         }
-        console.log(this.numberOfComment, res, this.commentUsers);
+        */
+        
+        // Fill Usernames with userID, so the asynchronous callback
+        //  knows which index to replace with the correct user name string
+        for(var i = 0; i< (this.numberOfComment); i++ ) {
+          this.commentUsernames[i] = res[i]['user_id'];
+        }                
+        console.log(this.commentUsernames);
+        for(var i = 0; i< (this.numberOfComment); i++ ){
+          var array_idx = i;
+          var count = 0;
+          console.log(res[i]['user_id'], i)
+          this.commentBody.push(res[i]['comment']);
+          this.mediaProvider.getUserInfo(res[i]['user_id']).subscribe(data => 
+            {
+                for (var i = 0; i< (this.numberOfComment); i++ )
+                {
+                  if (this.commentUsernames[i] === data['user_id']) {
+                    this.commentUsernames[i] = data['username'];
+                  }
+                }
+            });
+        }
+        // for(var i = 0; i< (this.numberOfComment); i++ ){
+        //   //this.commentUsers.push(res[i]['comment']);
+                   
+        // }
+        console.log(this.commentUsernames);
+        console.log(this.numberOfComment, res, this.commentBody);
       });
       
     
@@ -113,10 +151,18 @@ export class DetailMediaPage {
   clickLike(){
     this.like.file_id = Number(this.id);
     console.log(this.like);
-    this.mediaProvider.postLike(this.like).subscribe(data => {
-      console.log(data);
+    this.mediaProvider.postLike(this.like).subscribe(response => {
+      console.log(response);
       this.getNumberOfLike();
-    })
+    },(error: HttpErrorResponse)=>{
+       console.log(error['statusText']);
+       if(error['statusText'] == 'Bad Request'){
+         this.mediaProvider.deleteLike(this.id).subscribe(Response => {
+           console.log(Response);
+           this.getNumberOfLike();
+         })
+       }
+    });
   }
   
   public iconCommentClicked: boolean = false; //Whatever you want to initialise it as
@@ -133,4 +179,11 @@ export class DetailMediaPage {
     this.likeClicked = !this.likeClicked;
   }
   
+  callDeleteComment(comment_id){
+    console.log(comment_id);
+    this.mediaProvider.deleteComment(comment_id).subscribe(data => { 
+      console.log(data);
+      this.getNumberOfComment();    
+    })
+  }
 }

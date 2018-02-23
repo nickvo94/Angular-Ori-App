@@ -28,18 +28,22 @@
               <ion-icon type="submit" name="heart" (click)="clickLike()"></ion-icon>
               <p>{{numberOfLike}} Like(s) </p>
               <ion-icon 
-                name="arrow-dropdown" 
+                name="arrow-dropdown-circle" 
                 *ngIf = "likeClicked"
                 (click)="onLikeClick()">
               </ion-icon>
               <ion-icon 
-                name="arrow-dropup" 
+                name="arrow-dropup-circle" 
                 *ngIf = "!likeClicked"
                 (click)="onLikeClick()">
               </ion-icon>
 
-              <ion-item *ngIf="likeClicked">
-                  <p *ngFor="let likeUser of likeUsers">by {{likeUser}}</p>
+              <ion-item *ngIf="likeClicked">                
+                  <p *ngFor="let likeUser of likeUsers">
+                      <ion-card>
+                          by {{likeUser}}
+                      </ion-card>                    
+                  </p>                                  
               </ion-item>
               
             </ion-col>
@@ -48,20 +52,24 @@
               <p>{{numberOfComment}} Comment(s)</p>
 
               <ion-icon 
-                name="arrow-dropdown" 
+                name="arrow-dropdown-circle" 
                 *ngIf = "CommentClicked"
                 (click)="onCommentClick()">
               </ion-icon>
               <ion-icon 
-                name="arrow-dropup" 
+                name="arrow-dropup-circle" 
                 *ngIf = "!CommentClicked"
                 (click)="onCommentClick()">
               </ion-icon>
 
-              <ion-item *ngIf="CommentClicked">
-                  <ion-item *ngFor="let commentUser of commentUsers">{{commentUser}}</ion-item>
-              </ion-item>
-              
+              <ion-item *ngIf="CommentClicked">                 
+                  <ion-item *ngFor="let comment of commentArr; let i = index ">
+                      <ion-card>
+                          <ion-icon name="close-circle" style="float:right" (click)="callDeleteComment(comment.comment_id)"></ion-icon>
+                          <br>{{comment.comment}}<br>by {{commentUsernames[i]}}<br>                          
+                      </ion-card>                                        
+                  </ion-item>                                
+              </ion-item>              
             </ion-col>
           </ion-row>      
     </ion-card>

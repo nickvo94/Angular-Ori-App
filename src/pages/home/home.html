@@ -14,8 +14,9 @@
     <div class="video-wrapper">
       <!-- <div id="icon-wrap"><img id="icon-play" *ngIf="media.media_type == 'video'" src="../../assets/icon/play.png"></div> -->
 
-      <video *ngIf="media.media_type == 'video'"  width="100%" height="240px"  controls>
-        <source [src]="mediaProvider.mediaUrl + media.filename" type="video/mp4">
+      <video *ngIf="media.media_type == 'video'"  width="100%" height="240px" (click)="openDetailMedia(media.file_id,media.user_id)" controls>
+        <source [src]="mediaProvider.mediaUrl + media.filename" type="video/mp4" alt="media.title" >
+        <source [src]="mediaProvider.mediaUrl + media.filename" type="video/ogg" alt="media.title" >
       </video>
     </div>
     <ion-row>

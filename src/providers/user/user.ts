@@ -28,6 +28,13 @@ export class UserProvider {
     return this.http.get(this.baseUrl + 'users/user', settings);
   }
 
+  getMediaOfCurrentUser() {
+    const settings = {
+      headers: new HttpHeaders().set('x-access-token', localStorage.getItem('token'))
+    };
+     return this.http.get(this.baseUrl + 'media/user', settings); 
+  }
+
   register(user) {  
       return this.http.post(this.baseUrl + 'users', user);
     }

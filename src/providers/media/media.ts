@@ -79,13 +79,6 @@ export class MediaProvider {
     return this.http.delete(this.baseUrl + 'media/' + fileId, settings)
   }
 
-  getUserInfo(userId) {
-    const settings = {
-      headers: new HttpHeaders().set('x-access-token', localStorage.getItem('token'))
-    };
-    return this.http.get(this.baseUrl + 'users/' + userId, settings);
-  }
-
   getComment(fileId) {
     return this.http.get(this.baseUrl + 'comments/file/' + fileId);
   }

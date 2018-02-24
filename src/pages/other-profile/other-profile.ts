@@ -1,3 +1,4 @@
+import { DetailMediaPage } from './../detail-media/detail-media';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MediaProvider } from './../../providers/media/media';
 import { UserProvider } from './../../providers/user/user';
@@ -45,7 +46,14 @@ export class OtherProfilePage {
 
   getMediaOtherUser() {
     this.userProvider.getMediaOfOtherUser(this.user_id).subscribe((res: any) => {
-      this.mediaArray = res;
+      this.mediaArray = res.reverse();
+    })
+  }
+
+  openDetailMedia(file_id, user_id) {
+    this.navCtrl.push(DetailMediaPage, {
+      mediaId: file_id,
+      userId: user_id
     })
   }
 }

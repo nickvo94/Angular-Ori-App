@@ -14,7 +14,7 @@
 <ion-content>
 
   <div class="container">
-    <div class="crop" *ngFor="let post of mediaArray">
+    <div class="crop" *ngFor="let post of mediaArray" (click)= "openDetailMedia(post.file_id, post.user_id)">
       <img *ngIf="post.media_type == 'image'" [src]="mediaProvider.mediaUrl + post.filename" [alt]="post.title">
       <ion-icon *ngIf="post.media_type == 'video'" name="videocam"></ion-icon>
       <video *ngIf="post.media_type == 'video'">

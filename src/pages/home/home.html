@@ -7,14 +7,15 @@
 <ion-content>
   <ion-card *ngFor="let media of medias">
     <ion-card-title>
-      <h1 id="title" (click)="openDetailMedia(media.file_id)">{{media.title}}</h1>
+      <h1 id="title" (click)="openDetailMedia(media.file_id, media.user_id)">{{media.title}}</h1>
     </ion-card-title>
     <p id="author" (click)="openOtherUser(media.user_id)">By {{media.username}}</p>
-    <img *ngIf="media.media_type == 'image'" [src]="mediaProvider.mediaUrl + media.filename" [alt]="media.title" (click)="openDetailMedia(media.file_id)">
+    <img *ngIf="media.media_type == 'image'" [src]="mediaProvider.mediaUrl + media.filename" 
+    [alt]="media.title" (click)="openDetailMedia(media.file_id, media.user_id)">
     <div class="video-wrapper">
       <!-- <div id="icon-wrap"><img id="icon-play" *ngIf="media.media_type == 'video'" src="../../assets/icon/play.png"></div> -->
 
-      <video *ngIf="media.media_type == 'video'"  width="100%" height="240px" (click)="openDetailMedia(media.file_id,media.user_id)" controls>
+      <video *ngIf="media.media_type == 'video'"  width="100%" height="240px" (click)="openDetailMedia(media.file_id, media.user_id)" controls>
         <source [src]="mediaProvider.mediaUrl + media.filename" type="video/mp4" alt="media.title" >
         <source [src]="mediaProvider.mediaUrl + media.filename" type="video/ogg" alt="media.title" >
       </video>
@@ -27,7 +28,7 @@
         </button>
       </ion-col>
       <ion-col>
-        <button id="btn-comment" ion-button clear small icon-start (click)="openDetailMedia(media.file_id)">
+        <button id="btn-comment" ion-button clear small icon-start (click)="openDetailMedia(media.file_id, media.user_id)">
         <ion-icon name="text"></ion-icon>
         {{media.numberOfComment}} Comment
         </button>

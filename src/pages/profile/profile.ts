@@ -1,3 +1,4 @@
+import { DetailMediaPage } from './../detail-media/detail-media';
 import { MediaProvider } from './../../providers/media/media';
 import { HttpErrorResponse } from '@angular/common/http';
 import { UserProvider } from './../../providers/user/user';
@@ -47,8 +48,15 @@ export class ProfilePage {
 
   getMediaCurrentUser() {
     this.userProvider.getMediaOfCurrentUser().subscribe((res: any) => {
-      this.myMediaArray = res;
+      this.myMediaArray = res.reverse();
       console.log(this.myMediaArray);
+    })
+  }
+
+  openDetailMedia(file_id, user_id) {
+    this.navCtrl.push(DetailMediaPage, {
+      mediaId: file_id,
+      userId: user_id
     })
   }
 

@@ -31,7 +31,6 @@ export class LogInPage {
   ionViewDidLoad() {
     if(localStorage.getItem('token') !== null){
       this.userProvider.getUserData(localStorage.getItem('token')).subscribe(response =>{
-        this.navCtrl.setRoot(TabsPage);
         this.userProvider.logged = true;
       },(err: HttpErrorResponse) =>{
         console.log(err);

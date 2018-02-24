@@ -1,9 +1,10 @@
+import { LogInPage } from '../log-in/log-in';
 import { DetailMediaPage } from './../detail-media/detail-media';
 import { MediaProvider } from './../../providers/media/media';
 import { HttpErrorResponse } from '@angular/common/http';
 import { UserProvider } from './../../providers/user/user';
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { App, NavController, NavParams, AlertController } from 'ionic-angular';
 
 /**
  * Generated class for the ProfilePage page.
@@ -28,7 +29,9 @@ export class ProfilePage {
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     private userProvider: UserProvider,
-    private mediaProvider: MediaProvider) { }
+    private mediaProvider: MediaProvider,
+    private app: App,
+    private alertCtrl: AlertController) { }
 
   ionViewDidLoad() {
     this.listMedia = "myPost";
@@ -58,6 +61,26 @@ export class ProfilePage {
       mediaId: file_id,
       userId: user_id
     })
+  }
+
+  showPopup() {
+    let alert = this.alertCtrl.create({
+      subTitle: 'Do you want to Logout?',
+      buttons: [
+        {
+          text: 'Yes',
+          handler: () => {
+            this.userProvider.logout();
+            this.app.getRootNav().setRoot(LogInPage);
+          }
+        },
+        {
+          text: 'Cancel',
+          role: 'cancel',
+        }
+      ]
+    });
+    alert.present();
   }
 
 }

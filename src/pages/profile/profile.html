@@ -6,12 +6,31 @@
 -->
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>{{username}}</ion-title>
-  </ion-navbar>
+  <ion-toolbar>
+    <ion-title id="username">{{username}}</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only menuToggle>
+        <ion-icon name="more"></ion-icon>
+      </button>
+    </ion-buttons>
+    
+  </ion-toolbar>
 
 </ion-header>
 <ion-content>
+  <ion-menu side="right" [content]="mycontent">
+    <ion-list>
+      <button class="menu-btn" ion-item>
+        <ion-icon name="contact" item-start></ion-icon>
+        Edit Profile
+      </button>
+      <button class="menu-btn" ion-item (click)="showPopup()">
+        <ion-icon name="log-out" item-start></ion-icon>
+        Log out
+      </button>
+    </ion-list>
+    </ion-menu>
+  <ion-nav #mycontent></ion-nav>
   <ion-segment [(ngModel)]="listMedia">
     <ion-segment-button value="myPost">
       My Posts
@@ -22,7 +41,7 @@
   </ion-segment>
   <div [ngSwitch]="listMedia">
 
-    <div class="container" *ngSwitchCase="'myPost'"  >
+    <div class="container" *ngSwitchCase="'myPost'">
       <div class="crop" *ngFor="let post of myMediaArray" (click)="openDetailMedia(post.file_id, post.user_id)">
         <img *ngIf="post.media_type == 'image'" [src]="mediaProvider.mediaUrl + post.filename" [alt]="post.title">
         <ion-icon *ngIf="post.media_type == 'video'" name="videocam"></ion-icon>

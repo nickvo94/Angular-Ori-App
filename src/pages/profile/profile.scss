@@ -2,9 +2,21 @@
 
 page-profile {
 
-    ion-title{
+    #username{
         font-family: $text;
+        font-weight: 900;
     }
+   ion-menu {
+        .menu-btn {
+            font-family: $text;
+            color: color($colors, dark);
+            font-weight: 800;
+            font-size: 16px;
+        }
+        ion-icon {
+            color: color($colors, secondary);
+        }
+   }
     .container {
         display: flex;    
         flex-wrap:  wrap;

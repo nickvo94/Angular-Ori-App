@@ -43,8 +43,7 @@ export class UploadMediaPage {
     private camera: Camera,
     private loadingCtrl: LoadingController,
     private toastCtrl: ToastController,
-    public app: App
-  ) {
+    public app: App) {
   }
 
   ionViewDidLoad() {
@@ -103,7 +102,7 @@ export class UploadMediaPage {
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.ALLMEDIA,
       correctOrientation: true,
-      targetHeight: 300
+      targetHeight: 200
     };
     this.camera.getPicture(options).then((imageData) => {
       this.mediaData = 'data:image/jpeg;base64,' + imageData;

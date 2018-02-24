@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs/Rx';
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 /*
@@ -28,26 +28,38 @@ export class UserProvider {
     return this.http.get(this.baseUrl + 'users/user', settings);
   }
 
+  getAllUserInfo(userId) {
+    const settings = {
+      headers: new HttpHeaders().set('x-access-token', localStorage.getItem('token'))
+    };
+    return this.http.get(this.baseUrl + 'users/' + userId, settings);
+  }
+
   getMediaOfCurrentUser() {
     const settings = {
       headers: new HttpHeaders().set('x-access-token', localStorage.getItem('token'))
     };
-     return this.http.get(this.baseUrl + 'media/user', settings); 
+    return this.http.get(this.baseUrl + 'media/user', settings);
   }
 
-  register(user) {  
-      return this.http.post(this.baseUrl + 'users', user);
-    }
-   
+  getMediaOfOtherUser(userId) {
+    const settings = {
+      headers: new HttpHeaders().set('x-access-token', localStorage.getItem('token'))
+    };
+    return this.http.get(this.baseUrl + 'media/user/'+ userId, settings);
+  }
+
+  register(user) {
+    return this.http.post(this.baseUrl + 'users', user);
+  }
 
   login(user) {
     // optional
     const settings = {
       headers: new HttpHeaders().set('Content-Type', 'application/json'),
     };
-   
-      return this.http.post(this.baseUrl + 'login', user, settings);
-    }
+    return this.http.post(this.baseUrl + 'login', user, settings);
+  }
 
   logout() {
     localStorage.removeItem('token');

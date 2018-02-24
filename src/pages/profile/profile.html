@@ -11,14 +11,12 @@
   </ion-navbar>
 
 </ion-header>
-
-
 <ion-content>
   <ion-segment [(ngModel)]="listMedia">
-    <ion-segment-button  value="myPost">
+    <ion-segment-button value="myPost">
       My Posts
     </ion-segment-button>
-    <ion-segment-button  value="saved">
+    <ion-segment-button value="saved">
       Saved
     </ion-segment-button>
   </ion-segment>
@@ -27,16 +25,16 @@
     <div class="container" *ngSwitchCase="'myPost'">
       <div class="crop" *ngFor="let post of myMediaArray">
         <img *ngIf="post.media_type == 'image'" [src]="mediaProvider.mediaUrl + post.filename" [alt]="post.title">
+        <ion-icon *ngIf="post.media_type == 'video'" name="videocam"></ion-icon>
         <video *ngIf="post.media_type == 'video'">
           <source [src]="mediaProvider.mediaUrl + post.filename" type="video/mp4">
         </video>
       </div>
-
     </div>
 
     <ion-list *ngSwitchCase="'saved'">
       <p>dsfbsdg</p>
     </ion-list>
-  </div>
 
+  </div>
 </ion-content>

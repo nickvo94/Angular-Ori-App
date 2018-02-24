@@ -1,3 +1,4 @@
+import { OtherProfilePage } from './../pages/other-profile/other-profile';
 import { ProfilePage } from './../pages/profile/profile';
 import { DetailMediaPage } from './../pages/detail-media/detail-media';
 import { HttpClientModule } from '@angular/common/http';
@@ -28,7 +29,8 @@ import { MediaProvider } from '../providers/media/media';
     LogInPage,
     SignUpPage,
     DetailMediaPage,
-    ProfilePage
+    ProfilePage,
+    OtherProfilePage
   ],
   imports: [
     BrowserModule,
@@ -44,7 +46,8 @@ import { MediaProvider } from '../providers/media/media';
     LogInPage,
     SignUpPage,
     DetailMediaPage,
-    ProfilePage
+    ProfilePage,
+    OtherProfilePage
   ],
   providers: [
     StatusBar,

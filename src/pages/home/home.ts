@@ -1,3 +1,5 @@
+import { OtherProfilePage } from './../other-profile/other-profile';
+import { ProfilePage } from './../profile/profile';
 import { DetailMediaPage } from './../detail-media/detail-media';
 import { HttpErrorResponse } from '@angular/common/http';
 import { UserProvider } from './../../providers/user/user';
@@ -18,9 +20,12 @@ export class HomePage {
   numberOfComment: any;
   numberOfLike: any;
   mediaArray: any;
+  currentUser_id;
 
 
-  constructor(public navCtrl: NavController, private mediaProvider: MediaProvider, private userProvider: UserProvider) {
+  constructor(public navCtrl: NavController, 
+    private mediaProvider: MediaProvider, 
+    private userProvider: UserProvider) {
 
   }
 
@@ -29,6 +34,7 @@ export class HomePage {
     if (localStorage.getItem('token') !== null) {
       this.userProvider.getUserData(localStorage.getItem('token')).
         subscribe(response => {
+          this.currentUser_id = response['user_id'];
           this.userProvider.logged = true;
           localStorage.setItem('user', JSON.stringify(response));
         }, (error: HttpErrorResponse) => {
@@ -83,11 +89,20 @@ export class HomePage {
   }
 
   openDetailMedia(id, user_id) {
-    console.log('detail media called');
     this.navCtrl.push(DetailMediaPage, {
       mediaId: id,
       userId: user_id,
     })
+  }
+
+  openOtherUser(user_id) {
+    if(user_id !== this.currentUser_id) {
+      this.navCtrl.push(OtherProfilePage, {
+        userId: user_id
+      })
+    } else {
+      this.navCtrl.push(ProfilePage);
+    }
   }
 
   doRefresh(refresher) {

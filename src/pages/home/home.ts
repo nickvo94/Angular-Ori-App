@@ -29,8 +29,7 @@ export class HomePage {
 
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad FrontPage');
+  ionViewWillEnter() {
     if (localStorage.getItem('token') !== null) {
       this.userProvider.getUserData(localStorage.getItem('token')).
         subscribe(response => {

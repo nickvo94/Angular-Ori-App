@@ -5,7 +5,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { UserProvider } from './../../providers/user/user';
 import { MediaProvider } from './../../providers/media/media';
 import { Component, ViewChild } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { InfiniteScroll, NavController } from 'ionic-angular';
 import { Content } from 'ionic-angular';
 
 @Component({
@@ -21,6 +21,7 @@ export class HomePage {
   numberOfLike: any;
   mediaArray: any;
   currentUser_id;
+  end: number = 5;
 
 
   constructor(public navCtrl: NavController, 
@@ -48,7 +49,7 @@ export class HomePage {
   }
 
   getAllMedia() {
-    this.mediaProvider.getAllMedia().subscribe((data: any) => {
+    this.mediaProvider.getAllMedia(this.end).subscribe((data: any) => {
       this.medias = data;
       this.getNumberOfComment();
       this.getNumberOfLike();
@@ -100,14 +101,17 @@ export class HomePage {
     }
   }
 
-  doRefresh(refresher) {
-    console.log('Begin async operation', refresher);
-
+  doInfinite(infiniteScroll: InfiniteScroll) {
     setTimeout(() => {
-      console.log('Async operation has ended');
+      this.end += 5;
+      this.getAllMedia(); 
+      infiniteScroll.complete();
+    }, 1000);
+  }
+
+  doRefresh(refresher) {
+    setTimeout(() => {
       refresher.complete();
     }, 2000);
   }
-
-
 }

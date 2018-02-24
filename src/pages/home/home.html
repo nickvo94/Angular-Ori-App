@@ -5,19 +5,27 @@
 </ion-header>
 
 <ion-content>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content
+      pullingIcon="arrow-dropdown"
+      pullingText="Pull to refresh"
+      refreshingSpinner="circles"
+      refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
   <ion-card *ngFor="let media of medias">
     <ion-card-title>
       <h1 id="title" (click)="openDetailMedia(media.file_id, media.user_id)">{{media.title}}</h1>
     </ion-card-title>
     <p id="author" (click)="openOtherUser(media.user_id)">By {{media.username}}</p>
-    <img *ngIf="media.media_type == 'image'" [src]="mediaProvider.mediaUrl + media.filename" 
-    [alt]="media.title" (click)="openDetailMedia(media.file_id, media.user_id)">
+    <img *ngIf="media.media_type == 'image'" [src]="mediaProvider.mediaUrl + media.filename" [alt]="media.title" (click)="openDetailMedia(media.file_id, media.user_id)">
     <div class="video-wrapper">
       <!-- <div id="icon-wrap"><img id="icon-play" *ngIf="media.media_type == 'video'" src="../../assets/icon/play.png"></div> -->
 
-      <video *ngIf="media.media_type == 'video'"  width="100%" height="240px" (click)="openDetailMedia(media.file_id, media.user_id)" controls>
-        <source [src]="mediaProvider.mediaUrl + media.filename" type="video/mp4" alt="media.title" >
-        <source [src]="mediaProvider.mediaUrl + media.filename" type="video/ogg" alt="media.title" >
+      <video *ngIf="media.media_type == 'video'" width="100%" height="240px" (click)="openDetailMedia(media.file_id, media.user_id)"
+        controls>
+        <source [src]="mediaProvider.mediaUrl + media.filename" type="video/mp4" alt="media.title">
+        <source [src]="mediaProvider.mediaUrl + media.filename" type="video/ogg" alt="media.title">
       </video>
     </div>
     <ion-row>
@@ -35,4 +43,8 @@
       </ion-col>
     </ion-row>
   </ion-card>
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event)" threshold="10%">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more post...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>

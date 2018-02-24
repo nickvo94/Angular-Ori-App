@@ -15,7 +15,6 @@ export class MediaProvider {
 
 
   constructor(public http: HttpClient) {
-    console.log('Hello MediaProvider Provider');
   }
 
   postTag(tag) {
@@ -33,7 +32,6 @@ export class MediaProvider {
   }
 
   postLike(like) {
-    console.log(like);
     const settings = {
       headers: new HttpHeaders().set('x-access-token', localStorage.getItem('token')),
     };
@@ -41,7 +39,6 @@ export class MediaProvider {
   }
 
   deleteLike(id) {
-    console.log(id);
     const settings = {
       headers: new HttpHeaders().set('x-access-token', localStorage.getItem('token')),
     };
@@ -49,11 +46,9 @@ export class MediaProvider {
   }
 
   postComment(comment) {
-    console.log(comment);
     const settings = {
       headers: new HttpHeaders().set('x-access-token', localStorage.getItem('token')),
     };
-    console.log(this.http.post('http://media.mw.metropolia.fi/wbma/comments', comment, settings));
     return this.http.post('http://media.mw.metropolia.fi/wbma/comments', comment, settings);
   }
 
@@ -64,8 +59,8 @@ export class MediaProvider {
     return this.http.delete('http://media.mw.metropolia.fi/wbma/comments/' + commentId, settings);
   }
 
-  getAllMedia() {
-    return this.http.get(this.baseUrl + 'media');
+  getAllMedia(end) {
+    return this.http.get(this.baseUrl + 'media?start=0&limit='+ end);
   }
 
   getMediaById(id) {
@@ -85,7 +80,6 @@ export class MediaProvider {
 
   getLike(fileId) {
     return this.http.get(this.baseUrl + 'favourites/file/' + fileId);
-
   }
 
 }

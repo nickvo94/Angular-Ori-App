@@ -83,7 +83,7 @@ export class UploadMediaPage {
           this.loading.dismiss();
           this.app.getRootNav().setRoot(TabsPage);
           this.mediaData = '';
-        }, 2000);
+        }, 3000);
       }, (tabErr: HttpErrorResponse) => {
         console.log(tabErr);
         this.loading.dismiss();
@@ -102,7 +102,9 @@ export class UploadMediaPage {
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.ALLMEDIA,
       correctOrientation: true,
-      targetHeight: 200
+      allowEdit: true,
+      targetHeight: 200,
+      targetWidth: 400
     };
     this.camera.getPicture(options).then((imageData) => {
       this.mediaData = 'data:image/jpeg;base64,' + imageData;
@@ -133,7 +135,7 @@ export class UploadMediaPage {
   }
 
   cancel() {
-    this.app.getRootNav().setRoot(TabsPage);
+    this.navCtrl.setRoot(this.navCtrl.getActive().component);
   }
 
   presentToast(text) {

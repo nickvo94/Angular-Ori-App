@@ -42,7 +42,7 @@
   <div [ngSwitch]="listMedia">
 
     <div class="container" *ngSwitchCase="'myPost'">
-      <div class="crop" *ngFor="let post of myMediaArray" (click)="openDetailMedia(post.file_id, post.user_id)">
+      <div class="crop" *ngFor="let post of myMediaArray" (click)="openDetailMedia(post.file_id, post.user_id)" (press)="deletePost(post.file_id)">
         <img *ngIf="post.media_type == 'image'" [src]="mediaProvider.mediaUrl + post.filename" [alt]="post.title">
         <ion-icon *ngIf="post.media_type == 'video'" name="videocam"></ion-icon>
         <video *ngIf="post.media_type == 'video'">

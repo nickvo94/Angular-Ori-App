@@ -63,9 +63,31 @@ export class ProfilePage {
     })
   }
 
+  deletePost(file_id) {
+    let alert = this.alertCtrl.create({
+      subTitle: 'Delete this post?',
+      buttons: [
+        {
+          text: 'Delete',
+          handler: () => {
+            this.mediaProvider.deleteMedia(file_id).subscribe(res =>{
+              console.log(res['message']);
+              this.getMediaCurrentUser();
+            });
+          }
+        },
+        {
+          text: 'Cancel',
+          role: 'cancel',
+        }
+      ]
+    });
+    alert.present();
+  }
+
   showPopup() {
     let alert = this.alertCtrl.create({
-      subTitle: 'Do you want to Logout?',
+      subTitle: 'Do you want to logout?',
       buttons: [
         {
           text: 'Yes',

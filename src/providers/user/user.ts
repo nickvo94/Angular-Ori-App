@@ -49,6 +49,17 @@ export class UserProvider {
     return this.http.get(this.baseUrl + 'media/user/'+ userId, settings);
   }
 
+  checkUsername(username) {
+    return this.http.get(this.baseUrl + 'users/username/'+ username);
+  }
+
+  editProfile(user) {
+     const settings = {
+      headers: new HttpHeaders().set('x-access-token', localStorage.getItem('token'))
+    };
+    return this.http.put(this.baseUrl + 'users', user, settings);
+  }
+
   register(user) {
     return this.http.post(this.baseUrl + 'users', user);
   }

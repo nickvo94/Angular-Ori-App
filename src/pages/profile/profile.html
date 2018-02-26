@@ -20,11 +20,11 @@
 <ion-content>
   <ion-menu side="right" [content]="mycontent" type="overlay">
     <ion-list>
-      <button class="menu-btn" ion-item>
+      <button class="menu-btn" ion-item (click)="editProfile()">
         <ion-icon name="contact" item-start></ion-icon>
         Edit Profile
       </button>
-      <button class="menu-btn" ion-item (click)="showPopup()">
+      <button class="menu-btn" ion-item (click)="logout()">
         <ion-icon name="log-out" item-start></ion-icon>
         Log out
       </button>

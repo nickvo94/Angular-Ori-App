@@ -1,3 +1,4 @@
+import { User } from '../../app/models/user';
 import { LogInPage } from '../log-in/log-in';
 import { DetailMediaPage } from './../detail-media/detail-media';
 import { MediaProvider } from './../../providers/media/media';
@@ -22,7 +23,7 @@ export class ProfilePage {
   userId;
   username;
   email;
-  fullname;
+  user: User = { username: '', password: '', email: '' };
   listMedia: string;
   myMediaArray: any = [];
 
@@ -41,7 +42,6 @@ export class ProfilePage {
         console.log(this.userId);
         this.username = res['username'];
         this.email = res['email'];
-        this.fullname = res['full_name'];
       }, (err: HttpErrorResponse) => {
         console.log(err);
       });
@@ -63,6 +63,77 @@ export class ProfilePage {
     })
   }
 
+  editProfile() {
+    let alert = this.alertCtrl.create({
+      title: 'Edit Profile',
+      inputs: [
+        {
+          name: 'username',
+          value: this.username,
+        },
+        {
+          name: 'password',
+          placeholder: 'New password',
+          type: 'password'
+        },
+        {
+          name: 'email',
+          value: this.email,
+          type: 'email'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+        },
+        {
+          text: 'Update',
+          handler: data => {
+            console.log(data)
+            this.checkUsername(data.username);
+            if (data.username != '' && data.password != '' && data.email != '') {
+              this.userProvider.editProfile(data).subscribe(res => {
+                this.username = data.username;
+                this.showPopup("", "User data updated" )
+              });
+            } else {
+              return false;
+            }
+          }
+        }
+      ]
+    });
+    alert.present();
+  }
+
+  checkUsername(username) {
+    if (username !== this.username) {
+      this.userProvider.checkUsername(username).subscribe(res => {
+        switch (res['available']) {
+          case true:
+            break;
+          case false:
+            this.showPopup("Fail","username already exists");
+            break
+        }
+      });
+    }
+  }
+  showPopup(title, text) {
+    let alert = this.alertCtrl.create({
+      title: title,
+      subTitle: text,
+      buttons: [
+        {
+          text: 'OK',
+          role: 'cancel'
+        }
+      ]
+    });
+    alert.present();
+  }
+
   deletePost(file_id) {
     let alert = this.alertCtrl.create({
       subTitle: 'Delete this post?',
@@ -70,7 +141,7 @@ export class ProfilePage {
         {
           text: 'Delete',
           handler: () => {
-            this.mediaProvider.deleteMedia(file_id).subscribe(res =>{
+            this.mediaProvider.deleteMedia(file_id).subscribe(res => {
               console.log(res['message']);
               this.navCtrl.setRoot(this.navCtrl.getActive().component);
               this.mediaProvider.reload = true;
@@ -86,7 +157,7 @@ export class ProfilePage {
     alert.present();
   }
 
-  showPopup() {
+  logout() {
     let alert = this.alertCtrl.create({
       subTitle: 'Do you want to logout?',
       buttons: [
@@ -105,5 +176,6 @@ export class ProfilePage {
     });
     alert.present();
   }
+
 
 }

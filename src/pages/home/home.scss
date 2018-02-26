@@ -13,39 +13,24 @@ page-home {
 }
 #title {
         margin-left: 5px;
-        margin-bottom: -5px;
+        margin-bottom: -10px;
+        margin-top: -7px;
         font-family: $text;
         color: color($colors, dark);
-        font-size: 22px;
+        font-size: 20px;
         font-weight: 900;
     }
 #author {
-        font-size: 16px;
+        font-size: 15px;
         color: color($colors, grey1);
         font-weight: 600;
         margin-bottom: 5px;
         margin-left: 5px;
         font-family: $text;
     }
-.video-wrapper {
-    position: relative;
-}
-#icon-wrap {
-    position: absolute;
-    left:50%;
-    top: 50%;
-    margin: -30px 0 0 -30px;
-
-}
-#icon-play{
-    
-    width: 60px;
-    height: 60px;
-    opacity: 0.9;
-}
 
 ion-row {
-    margin: 5px 0;
+    margin: -3px 0;
     ion-icon{
         font-size: 23px;
         color: color($colors, secondary);
@@ -55,7 +40,7 @@ ion-row {
 
 #btn-like, #btn-comment {
     font-family: $text;
-    font-size: 16px;
+    font-size: 15px;
     color: color($colors, dark);
     font-weight: 600;
     text-transform: lowercase;

@@ -19,15 +19,12 @@
     </ion-card-title>
     <p id="author" (click)="openOtherUser(media.user_id)">By {{media.username}}</p>
     <img *ngIf="media.media_type == 'image'" [src]="mediaProvider.mediaUrl + media.filename" [alt]="media.title" (click)="openDetailMedia(media.file_id, media.user_id)">
-    <div class="video-wrapper">
-      <!-- <div id="icon-wrap"><img id="icon-play" *ngIf="media.media_type == 'video'" src="../../assets/icon/play.png"></div> -->
 
       <video *ngIf="media.media_type == 'video'" width="100%" height="240px"
         controls>
         <source [src]="mediaProvider.mediaUrl + media.filename" type="video/mp4" alt="media.title">
         <source [src]="mediaProvider.mediaUrl + media.filename" type="video/ogg" alt="media.title">
       </video>
-    </div>
     <ion-row>
       <ion-col>
         <button id="btn-like" ion-button clear small icon-start>

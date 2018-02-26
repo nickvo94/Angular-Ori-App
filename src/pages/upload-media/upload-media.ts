@@ -64,6 +64,8 @@ export class UploadMediaPage {
     const formData: FormData = new FormData();
     if (this.mediaData) {
       formData.append('file', this.dataURItoBlob(this.mediaData));
+      this.fileName = 'No File Chosen';
+      this.file = null;
     } else {
       formData.append('file', this.file);
     }
@@ -97,14 +99,14 @@ export class UploadMediaPage {
  
   takePicture() {
     const options: CameraOptions = {
-      quality: 50,
+      quality: 100,
       destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.ALLMEDIA,
       correctOrientation: true,
       allowEdit: true,
-      targetHeight: 200,
-      targetWidth: 400
+      targetHeight: 1000,
+      targetWidth: 1000
     };
     this.camera.getPicture(options).then((imageData) => {
       this.mediaData = 'data:image/jpeg;base64,' + imageData;

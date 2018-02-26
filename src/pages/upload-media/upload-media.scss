@@ -12,6 +12,9 @@ page-upload-media {
         font-family: $text;
         color: color($colors, dark);
     }
+    #img-preview {
+        margin: -10px 0 4px 0;
+    }
     .photo-btn {
         font-weight: 700;
         width: 150px;

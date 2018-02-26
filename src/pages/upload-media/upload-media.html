@@ -19,8 +19,8 @@
 
             <button ion-button icon-left class="photo-btn" *ngIf="!mediaData" (click)="takePicture()">
                     <ion-icon name="camera"></ion-icon>Take a Photo</button>
-            <img *ngIf="mediaData" id="img-preview" [src]="mediaData">
-            <ion-row>
+            <img *ngIf="mediaData" id="img-preview" [src]="mediaData" (click)="takePicture()">
+            <ion-row *ngIf="!mediaData">
                 <button ion-button icon-left class="input-file" (click)="file.click()">
                     <ion-icon name="photos"></ion-icon>Choose File
                 </button>

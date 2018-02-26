@@ -120,6 +120,9 @@ export class HomePage {
 
   doRefresh(refresher) {
     setTimeout(() => {
+      this.medias = [];
+      this.end = 5;
+      this.getAllMedia();
       refresher.complete();
     }, 2000);
   }

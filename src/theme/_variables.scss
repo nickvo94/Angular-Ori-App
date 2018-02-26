@@ -47,8 +47,7 @@ $colors: (
 // --------------------------------------------------
 // iOS only Sass variables can go here
 
-
-
+$toolbar-ios-title-text-color: color($colors, primary);
 
 // App Material Design Variables
 // --------------------------------------------------
@@ -57,7 +56,9 @@ $colors: (
 $toolbar-md-background:  color($colors, primary);
 $tabs-md-background:  color($colors, primary);
 $tabs-md-tab-color-active: white;
-$menu-width: 200px;
+$menu-width: calc(100% - 120px);
+$toolbar-md-height: 12px;
+;
 
 
 // App Windows Variables

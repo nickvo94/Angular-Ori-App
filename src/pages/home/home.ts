@@ -13,7 +13,7 @@ import { Content } from 'ionic-angular';
   templateUrl: 'home.html'
 })
 export class HomePage {
-   @ViewChild(Content) content: Content;
+  @ViewChild(Content) content: Content;
 
   medias: any = [];
   arr: any = [];
@@ -24,13 +24,13 @@ export class HomePage {
   end: number = 5;
 
 
-  constructor(public navCtrl: NavController, 
-    private mediaProvider: MediaProvider, 
+  constructor(public navCtrl: NavController,
+    private mediaProvider: MediaProvider,
     private userProvider: UserProvider) {
 
   }
 
-  ionViewWillEnter() {
+  ionViewDidLoad() {
     if (localStorage.getItem('token') !== null) {
       this.userProvider.getUserData(localStorage.getItem('token')).
         subscribe(response => {
@@ -42,6 +42,15 @@ export class HomePage {
         });
     }
     this.getAllMedia();
+  }
+
+  ionViewWillEnter() {
+    if(this.mediaProvider.reload){
+      this.medias = [];
+      this.end = 5;
+      this.getAllMedia();
+      this.mediaProvider.reload = false;
+    }
   }
 
   scrollToTop() {
@@ -92,7 +101,7 @@ export class HomePage {
   }
 
   openOtherUser(user_id) {
-    if(user_id !== this.currentUser_id) {
+    if (user_id !== this.currentUser_id) {
       this.navCtrl.push(OtherProfilePage, {
         userId: user_id
       })
@@ -104,9 +113,9 @@ export class HomePage {
   doInfinite(infiniteScroll: InfiniteScroll) {
     setTimeout(() => {
       this.end += 5;
-      this.getAllMedia(); 
+      this.getAllMedia();
       infiniteScroll.complete();
-    }, 1000);
+    }, 3000);
   }
 
   doRefresh(refresher) {

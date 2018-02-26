@@ -73,6 +73,7 @@ export class ProfilePage {
             this.mediaProvider.deleteMedia(file_id).subscribe(res =>{
               console.log(res['message']);
               this.getMediaCurrentUser();
+              this.mediaProvider.reload = true;
             });
           }
         },

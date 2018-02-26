@@ -22,7 +22,7 @@
     <div class="video-wrapper">
       <!-- <div id="icon-wrap"><img id="icon-play" *ngIf="media.media_type == 'video'" src="../../assets/icon/play.png"></div> -->
 
-      <video *ngIf="media.media_type == 'video'" width="100%" height="240px" (click)="openDetailMedia(media.file_id, media.user_id)"
+      <video *ngIf="media.media_type == 'video'" width="100%" height="240px"
         controls>
         <source [src]="mediaProvider.mediaUrl + media.filename" type="video/mp4" alt="media.title">
         <source [src]="mediaProvider.mediaUrl + media.filename" type="video/ogg" alt="media.title">
@@ -43,7 +43,7 @@
       </ion-col>
     </ion-row>
   </ion-card>
-  <ion-infinite-scroll (ionInfinite)="doInfinite($event)" threshold="10%">
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event)" threshold="200px">
     <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more post...">
     </ion-infinite-scroll-content>
   </ion-infinite-scroll>

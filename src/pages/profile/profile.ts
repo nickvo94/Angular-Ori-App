@@ -70,6 +70,7 @@ export class ProfilePage {
         {
           name: 'username',
           value: this.username,
+          placeholder: 'New username',
         },
         {
           name: 'password',
@@ -79,7 +80,8 @@ export class ProfilePage {
         {
           name: 'email',
           value: this.email,
-          type: 'email'
+          type: 'email',
+          placeholder: 'New email'
         }
       ],
       buttons: [
@@ -134,7 +136,7 @@ export class ProfilePage {
     alert.present();
   }
 
-  deletePost(file_id) {
+  deletePost(file_id, post) {
     let alert = this.alertCtrl.create({
       subTitle: 'Delete this post?',
       buttons: [
@@ -143,7 +145,8 @@ export class ProfilePage {
           handler: () => {
             this.mediaProvider.deleteMedia(file_id).subscribe(res => {
               console.log(res['message']);
-              this.navCtrl.setRoot(this.navCtrl.getActive().component);
+              this.myMediaArray.splice(this.myMediaArray.indexOf(post),1);
+              console.log(this.myMediaArray);
               this.mediaProvider.reload = true;
             });
           }

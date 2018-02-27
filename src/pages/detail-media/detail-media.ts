@@ -40,6 +40,7 @@ export class DetailMediaPage {
   commentBody: any = [];
   commentUsernames: any = [];
   type: any;
+  likePost: string = "heart-outline";
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
@@ -151,16 +152,14 @@ export class DetailMediaPage {
 
   clickLike() {
     this.like.file_id = Number(this.id);
-    console.log(this.like);
     this.mediaProvider.postLike(this.like).subscribe(response => {
-      console.log(response);
       this.getNumberOfLike();
+      this.likePost = "heart";
     }, (error: HttpErrorResponse) => {
-      console.log(error['statusText']);
       if (error['statusText'] == 'Bad Request') {
         this.mediaProvider.deleteLike(this.id).subscribe(Response => {
-          console.log(Response);
           this.getNumberOfLike();
+          this.likePost = "heart-outline";
         })
       }
     });

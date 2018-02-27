@@ -1,4 +1,19 @@
+@import "../../theme/variables";
+
 page-detail-media {
+    font-family: $text;
+
+    #title {
+        margin-top: 2px;
+        margin-bottom: 5px;
+    }
+    #author {
+        color: color($colors, dark);
+    }
+   .desciption {
+        font-size: 13px;
+        color: color($colors, dark);
+   }
 
 }
 

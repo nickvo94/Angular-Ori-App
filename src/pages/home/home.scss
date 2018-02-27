@@ -27,6 +27,16 @@ page-home {
         margin-left: 5px;
         font-family: $text;
     }
+ion-card {
+    position: relative;
+    #btn-save {
+        position: absolute;
+        top: 5px;
+        right: 10px;
+        font-size: 28px;
+        color: color($colors, secondary);
+    }
+}
 
 ion-row {
     margin: -3px 0;
@@ -35,6 +45,13 @@ ion-row {
         color: color($colors, secondary);
         padding-right: 4px;
     }
+}
+#time {
+    font-family: $text;
+    font-size: 15px;
+    color: color($colors, grey1);
+    padding-top: 10px;
+    font-weight: 600;
 }
 
 #btn-like, #btn-comment {

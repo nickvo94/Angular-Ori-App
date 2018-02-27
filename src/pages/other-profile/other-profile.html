@@ -7,8 +7,16 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>{{username}}</ion-title>
   </ion-navbar>
+  <ion-toolbar>
+    <ion-item id="user-info" margin-left no-lines>
+      <ion-thumbnail item-left>
+        <img width="100px" src="../../assets/imgs/logo.png">
+      </ion-thumbnail>
+      <h4 margin-horizontal >{{username}}</h4>
+      <p margin-horizontal>{{mediaArray.length}} posts</p>
+    </ion-item>
+  </ion-toolbar>
 
 </ion-header>
 <ion-content>

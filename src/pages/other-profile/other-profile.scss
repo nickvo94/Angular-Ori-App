@@ -3,9 +3,27 @@
 
 page-other-profile {
 
-    ion-title{
-        font-family: $text;
+    ion-toolbar{
+        background: linear-gradient(to left,  color($colors, secondary) ,  color($colors, primary) 65%);
+        #user-info {
+                background-color:  transparent;
+                padding-bottom: 30px;
+                h4 {
+                    font-family: $text;
+                    font-weight: 550;
+                    font-size: 20px;
+                    color: white;
+                }
+                p {
+                    font-family: $text;
+                    font-weight: 550;
+                    font-size: 15px;
+                    color: white;
+                    opacity: 0.9;
+                }
+            }
     }
+    
     .container {
         display: flex;    
         flex-wrap:  wrap;

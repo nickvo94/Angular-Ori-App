@@ -1,42 +1,54 @@
 <ion-header>
-  <ion-navbar>
+  <ion-toolbar>
     <ion-title id="app-name" (click)="scrollToTop()">Ori</ion-title>
-  </ion-navbar>
+    <ion-buttons end>
+      <button ion-button icon-only>
+        <ion-icon name="search"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-buttons start>
+      <button ion-button icon-only>
+        <ion-icon ios="ios-funnel-outline" md="md-funnel" ></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-refresher (ionRefresh)="doRefresh($event)">
-    <ion-refresher-content
-      pullingIcon="arrow-dropdown"
-      pullingText="Pull to refresh"
-      refreshingSpinner="circles"
-      refreshingText="Refreshing...">
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles" refreshingText="Refreshing...">
     </ion-refresher-content>
   </ion-refresher>
   <ion-card *ngFor="let media of medias">
     <ion-card-title>
       <h1 id="title" (click)="openDetailMedia(media.file_id, media.user_id)">{{media.title}}</h1>
     </ion-card-title>
+    <ion-icon id="btn-save" ios="ios-bookmark-outline" md="md-bookmark"></ion-icon>
+
     <p id="author" (click)="openOtherUser(media.user_id)">By {{media.username}}</p>
     <img *ngIf="media.media_type == 'image'" [src]="mediaProvider.mediaUrl + media.filename" [alt]="media.title" (click)="openDetailMedia(media.file_id, media.user_id)">
 
-      <video *ngIf="media.media_type == 'video'" width="100%" height="240px"
-        controls>
-        <source [src]="mediaProvider.mediaUrl + media.filename" type="video/mp4" alt="media.title">
-        <source [src]="mediaProvider.mediaUrl + media.filename" type="video/ogg" alt="media.title">
-      </video>
-    <ion-row>
-      <ion-col>
+    <video *ngIf="media.media_type == 'video'" width="100%" height="240px" controls>
+      <source [src]="mediaProvider.mediaUrl + media.filename" type="video/mp4" alt="media.title">
+      <source [src]="mediaProvider.mediaUrl + media.filename" type="video/ogg" alt="media.title">
+    </video>
+    <ion-row (click)="openDetailMedia(media.file_id, media.user_id)">
+      <ion-col col-5>
         <button id="btn-like" ion-button clear small icon-start>
-        <ion-icon name="heart-outline"></ion-icon>
+        <ion-icon name="heart"></ion-icon>
         {{media.numberOfLike}} Like
         </button>
       </ion-col>
-      <ion-col>
-        <button id="btn-comment" ion-button clear small icon-start (click)="openDetailMedia(media.file_id, media.user_id)">
+      <ion-col col-5>
+        <button id="btn-comment" ion-button clear small icon-start >
         <ion-icon name="text"></ion-icon>
         {{media.numberOfComment}} Comment
         </button>
+      </ion-col>
+      <ion-col col-2 center text-center>
+        <p id="time">
+          11h ago
+        </p>
       </ion-col>
     </ion-row>
   </ion-card>

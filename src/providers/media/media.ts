@@ -37,28 +37,28 @@ export class MediaProvider {
     const settings = {
       headers: new HttpHeaders().set('x-access-token', localStorage.getItem('token')),
     };
-    return this.http.post('http://media.mw.metropolia.fi/wbma/favourites', like, settings);
+    return this.http.post(this.baseUrl + 'favourites', like, settings);
   }
 
   deleteLike(id) {
     const settings = {
       headers: new HttpHeaders().set('x-access-token', localStorage.getItem('token')),
     };
-    return this.http.delete('http://media.mw.metropolia.fi/wbma/favourites/file/' + id, settings);
+    return this.http.delete(this.baseUrl + 'favourites/file/' + id, settings);
   }
 
   postComment(comment) {
     const settings = {
       headers: new HttpHeaders().set('x-access-token', localStorage.getItem('token')),
     };
-    return this.http.post('http://media.mw.metropolia.fi/wbma/comments', comment, settings);
+    return this.http.post(this.baseUrl + 'comments', comment, settings);
   }
 
-  deleteComment(commentId){
+  deleteComment(id){
     const settings = {
       headers: new HttpHeaders().set('x-access-token', localStorage.getItem('token')),
     };
-    return this.http.delete('http://media.mw.metropolia.fi/wbma/comments/' + commentId, settings);
+    return this.http.delete(this.baseUrl + 'comments/' + id, settings);
   }
 
   getAllMedia(end) {

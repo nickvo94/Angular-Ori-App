@@ -35,7 +35,9 @@ import { MediaProvider } from '../providers/media/media';
   imports: [
     BrowserModule,
     HttpClientModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp, {
+      backButtonText:''
+    })
   ],
   bootstrap: [IonicApp],
   entryComponents: [

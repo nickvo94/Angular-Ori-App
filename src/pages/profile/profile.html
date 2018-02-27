@@ -7,38 +7,52 @@
 <ion-header>
 
   <ion-toolbar>
-    <ion-title id="username">{{username}}</ion-title>
+    <ion-title id="username">Ori</ion-title>
     <ion-buttons end>
       <button ion-button icon-only menuToggle>
         <ion-icon name="more"></ion-icon>
       </button>
     </ion-buttons>
-    
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-item id="user-info" margin-left no-lines>
+      <ion-thumbnail item-left>
+        <img width="100px" src="../../assets/imgs/logo.png">
+      </ion-thumbnail>
+      <h4 margin-horizontal >{{username}}</h4>
+      <p margin-horizontal>{{myMediaArray.length}} posts</p>
+    </ion-item>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-nav #mycontent></ion-nav>
+    <ion-segment [(ngModel)]="listMedia">
+      <ion-segment-button value="myPost">
+        My Posts
+      </ion-segment-button>
+      <ion-segment-button value="saved">
+        Saved
+      </ion-segment-button>
+    </ion-segment>
   </ion-toolbar>
 
 </ion-header>
-<ion-content>
-  <ion-menu side="right" [content]="mycontent" type="overlay">
-    <ion-list>
-      <button class="menu-btn" ion-item (click)="editProfile()">
+
+
+<ion-menu side="right" [content]="mycontent" type="overlay">
+  <ion-list>
+    <button class="menu-btn" ion-item detail-none (click)="editProfile()">
         <ion-icon name="contact" item-start></ion-icon>
         Edit Profile
       </button>
-      <button class="menu-btn" ion-item (click)="logout()">
+    <button class="menu-btn" ion-item detail-none (click)="logout()">
         <ion-icon name="log-out" item-start></ion-icon>
         Log out
       </button>
-    </ion-list>
-    </ion-menu>
-  <ion-nav #mycontent></ion-nav>
-  <ion-segment [(ngModel)]="listMedia">
-    <ion-segment-button value="myPost">
-      My Posts
-    </ion-segment-button>
-    <ion-segment-button value="saved">
-      Saved
-    </ion-segment-button>
-  </ion-segment>
+  </ion-list>
+</ion-menu>
+
+<ion-content>
+
   <div [ngSwitch]="listMedia">
 
     <div class="container" *ngSwitchCase="'myPost'">

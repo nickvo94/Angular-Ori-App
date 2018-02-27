@@ -2,9 +2,29 @@
 
 page-profile {
 
+    ion-toolbar{
+        background: linear-gradient(to left,  color($colors, secondary) ,  color($colors, primary) 65%);
+        #user-info {
+                background-color:  transparent;
+                h4 {
+                    font-family: $text;
+                    font-weight: 550;
+                    font-size: 20px;
+                    color: white;
+                }
+                p {
+                    font-family: $text;
+                    font-weight: 550;
+                    font-size: 15px;
+                    color: color($colors, light);
+                    opacity: 0.9;
+                }
+            }
+    }
+           
+
     #username{
-        font-family: $text;
-        font-weight: 900;
+        font-family: $title;
     }
    ion-menu {
         .menu-btn {

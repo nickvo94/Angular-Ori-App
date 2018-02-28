@@ -84,4 +84,12 @@ export class MediaProvider {
     return this.http.get(this.baseUrl + 'favourites/file/' + fileId);
   }
 
+  postSearch(search){
+    const settings = {
+      headers: new HttpHeaders().set('x-access-token', localStorage.getItem('token')),
+    };
+    return this.http.post(this.baseUrl + 'media/search/', search, settings);
+
+  }
+
 }

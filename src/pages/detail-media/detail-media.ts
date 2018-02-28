@@ -22,7 +22,7 @@ import { Comment } from '../../app/models/comment';
 export class DetailMediaPage {
   @ViewChild(Navbar) navBar: Navbar;
 
-  public id;
+  id;
   userId;
 
   like: Like = { file_id: 0 };
@@ -34,8 +34,9 @@ export class DetailMediaPage {
   numberOfLike: any;
   url: string;
   title: string;
-  descrpt: any;
-  uName: any;
+  description: any;
+  username: any;
+  time;
   likeUsers: any = [];
   commentBody: any = [];
   commentUsernames: any = [];
@@ -49,7 +50,6 @@ export class DetailMediaPage {
 
     this.id = navParams.get('mediaId');
     this.userId = navParams.get('userId');
-    console.log(this.id, this.userId);
     this.getNumberOfComment();
     this.getNumberOfLike();
   }
@@ -59,15 +59,15 @@ export class DetailMediaPage {
       subscribe(response => {
         this.url = this.mediaProvider.mediaUrl + response['filename'];
         this.title = response['title'];
-        this.descrpt = response['description'];
+        this.description = response['description'];
         this.type = response['media_type'];
+        this.time = response['time_added'];
       }, (error: HttpErrorResponse) => {
         console.log(error);
       });
 
     this.userProvider.getAllUserInfo(this.userId).subscribe(res => {
-      this.uName = res['username'];
-      console.log(this.uName);
+      this.username = res['username'];
     });
 
 
@@ -135,7 +135,6 @@ export class DetailMediaPage {
 
   getNumberOfLike() {
     this.mediaProvider.getLike(this.id).subscribe(data => {
-      console.log(data);
       this.likeArr = data;
       this.likeUsers = [];
       this.numberOfLike = this.likeArr.length;
@@ -143,10 +142,8 @@ export class DetailMediaPage {
       for (var i = 0; i < (this.numberOfLike); i++) {
         this.userProvider.getAllUserInfo(data[i]['user_id']).subscribe(data => {
           this.likeUsers.push(data['username']);
-          console.log(this.likeUsers);
         });
       }
-      console.log(this.numberOfLike, data, this.likeUsers);
     });
   }
 
@@ -180,7 +177,6 @@ export class DetailMediaPage {
   }
 
   callDeleteComment(comment_id) {
-    console.log(comment_id);
     this.mediaProvider.deleteComment(comment_id).subscribe(data => {
       console.log(data);
       this.getNumberOfComment();

@@ -33,22 +33,17 @@
       <source [src]="mediaProvider.mediaUrl + media.filename" type="video/ogg" alt="media.title">
     </video>
     <ion-row (click)="openDetailMedia(media.file_id, media.user_id)">
-      <ion-col col-5>
+      <ion-col>
         <button id="btn-like" ion-button clear small icon-start>
         <ion-icon name="heart"></ion-icon>
         {{media.numberOfLike}} Like
         </button>
       </ion-col>
-      <ion-col col-5>
+      <ion-col>
         <button id="btn-comment" ion-button clear small icon-start >
         <ion-icon name="text"></ion-icon>
         {{media.numberOfComment}} Comment
         </button>
-      </ion-col>
-      <ion-col col-2 center text-center>
-        <p id="time">
-          11h ago
-        </p>
       </ion-col>
     </ion-row>
   </ion-card>

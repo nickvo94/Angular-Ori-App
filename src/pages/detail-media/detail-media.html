@@ -23,12 +23,14 @@
   </video>
   <ion-row>
     <ion-col>
-      <button id="btn-like" (click)="clickLike()" ion-button clear small icon-start>
-        <ion-icon [name]="likePost"></ion-icon>
-        {{numberOfLike}} Likes
+      <div class="wrap-like">
+        <button id="btn-like" (click)="clickLike()" ion-button clear small icon-start>
+        <ion-icon  [name]="likePost"></ion-icon>
         </button>
-
-      <!-- <ion-icon name="arrow-dropdown-circle" *ngIf="likeClicked" (click)="onLikeClick()">
+        <p id="txt-like">{{numberOfLike}} likes </p>
+      </div>
+    </ion-col>
+    <!-- <ion-icon name="arrow-dropdown-circle" *ngIf="likeClicked" (click)="onLikeClick()">
         </ion-icon>
         <ion-icon name="arrow-dropup-circle" *ngIf="!likeClicked" (click)="onLikeClick()">
         </ion-icon>
@@ -41,11 +43,10 @@
           </p>
         </ion-item> -->
 
-    </ion-col>
-    <ion-col>
+    <ion-col >
       <button id="btn-comment" (click)="onIconCommentClick()" ion-button clear small icon-start>
         <ion-icon name="text"></ion-icon>
-        {{numberOfComment}} Comment
+        {{numberOfComment}} comments
         </button>
 
       <!-- <ion-icon name="arrow-dropdown-circle" *ngIf="CommentClicked" (click)="onCommentClick()">
@@ -62,12 +63,17 @@
           </ion-item>
         </ion-item> -->
     </ion-col>
-  </ion-row>
-      <p >
-        <span id="author">{{uName}}</span>
-        <span class="description">{{descrpt}}</span>
+    <ion-col center text-center>
+      <p id="time">
+        {{time| date: 'mediumDate'}}
       </p>
- 
+    </ion-col>
+  </ion-row>
+  <p class="wrap-des">
+    <span id="author">{{username}}</span>
+    <span class="description">{{description}}</span>
+  </p>
+
   <form *ngIf="iconCommentClicked">
     <ion-card>
       <ion-item>

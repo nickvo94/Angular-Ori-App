@@ -43,25 +43,11 @@
           </p>
         </ion-item> -->
 
-    <ion-col >
+    <ion-col>
       <button id="btn-comment" (click)="onIconCommentClick()" ion-button clear small icon-start>
         <ion-icon name="text"></ion-icon>
         {{numberOfComment}} comments
         </button>
-
-      <!-- <ion-icon name="arrow-dropdown-circle" *ngIf="CommentClicked" (click)="onCommentClick()">
-        </ion-icon>
-        <ion-icon name="arrow-dropup-circle" *ngIf="!CommentClicked" (click)="onCommentClick()">
-        </ion-icon>
-
-        <ion-item *ngIf="CommentClicked">
-          <ion-item *ngFor="let comment of commentArr; let i = index ">
-            <ion-card>
-              <ion-icon name="close-circle" style="float:right" (click)="callDeleteComment(comment.comment_id)"></ion-icon>
-              <br>{{comment.comment}}<br>by {{commentUsernames[i]}}<br>
-            </ion-card>
-          </ion-item>
-        </ion-item> -->
     </ion-col>
     <ion-col center text-center>
       <p id="time">
@@ -73,13 +59,4 @@
     <span id="author">{{username}}</span>
     <span class="description">{{description}}</span>
   </p>
-
-  <form *ngIf="iconCommentClicked">
-    <ion-card>
-      <ion-item>
-        <ion-textarea [(ngModel)]="createComment.comment" name="comment"></ion-textarea>
-      </ion-item>
-      <button ion-button type="submit" (click)="callComment()" style="height:30px;width:70px">Post</button>
-    </ion-card>
-  </form>
 </ion-content>

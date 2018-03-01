@@ -4,10 +4,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { MediaProvider } from './../../providers/media/media';
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { Like } from '../../app/models/like';
 import { ViewChild } from '@angular/core';
 import { Navbar } from 'ionic-angular';
-import { Comment } from '../../app/models/comment';
 
 /**
  * Generated class for the DetailMediaPage page.
@@ -25,10 +23,6 @@ export class DetailMediaPage {
 
   id;
   userId;
-
-  like: Like = { file_id: 0 };
-  createComment: Comment = { file_id: 0, comment: '' };
-
   commentArr: any = [];
   likeArr: any = [];
   numberOfComment: any;
@@ -51,8 +45,6 @@ export class DetailMediaPage {
 
     this.id = navParams.get('mediaId');
     this.userId = navParams.get('userId');
-    this.getNumberOfComment();
-    this.getNumberOfLike();
   }
 
   ionViewDidLoad() {
@@ -70,67 +62,18 @@ export class DetailMediaPage {
     this.userProvider.getAllUserInfo(this.userId).subscribe(res => {
       this.username = res['username'];
     });
-
-
+    this.getNumberOfLike();
   }
 
-  callComment() {
-    this.createComment.file_id = Number(this.id);
-    console.log(this.createComment);
-    this.mediaProvider.postComment(this.createComment).subscribe(data => {
-      console.log(data);
-      this.getNumberOfComment();
-    });
+  ionViewWillEnter() {
+    this.getNumberOfComment();
   }
-
 
   getNumberOfComment() {
     this.mediaProvider.getComment(this.id).subscribe(res => {
-      this.commentBody = [];
-      this.commentUsernames = [];
       this.commentArr = res;
       this.numberOfComment = this.commentArr.length;
-
-      /*
-      for(var i = 0; i< (this.numberOfComment); i++ ){
-        console.log(res[i]['user_id'], i)
-        this.commentUsers.push(res[i]['comment']);
-        this.mediaProvider.getUserInfo(res[i]['user_id']).subscribe(data =>{
-          console.log(data['username']);            
-          this.commentUsernames.push(data['username']);
-          console.log(this.commentUsernames);
-        });
-      }
-      */
-
-      // Fill Usernames with userID, so the asynchronous callback
-      //  knows which index to replace with the correct user name string
-      for (var i = 0; i < (this.numberOfComment); i++) {
-        this.commentUsernames[i] = res[i]['user_id'];
-      }
-      console.log(this.commentUsernames);
-      for (var i = 0; i < (this.numberOfComment); i++) {
-        var array_idx = i;
-        var count = 0;
-        console.log(res[i]['user_id'], i)
-        this.commentBody.push(res[i]['comment']);
-        this.userProvider.getAllUserInfo(res[i]['user_id']).subscribe(data => {
-          for (var i = 0; i < (this.numberOfComment); i++) {
-            if (this.commentUsernames[i] === data['user_id']) {
-              this.commentUsernames[i] = data['username'];
-            }
-          }
-        });
-      }
-      // for(var i = 0; i< (this.numberOfComment); i++ ){
-      //   //this.commentUsers.push(res[i]['comment']);
-
-      // }
-      console.log(this.commentUsernames);
-      console.log(this.numberOfComment, res, this.commentBody);
     });
-
-
   }
 
   getNumberOfLike() {
@@ -148,8 +91,10 @@ export class DetailMediaPage {
   }
 
   clickLike() {
-    this.like.file_id = Number(this.id);
-    this.mediaProvider.postLike(this.like).subscribe(response => {
+     const like = {
+      file_id: this.id
+    };
+    this.mediaProvider.postLike(like).subscribe(response => {
       this.getNumberOfLike();
       this.likePost = "heart";
     }, (error: HttpErrorResponse) => {
@@ -162,8 +107,6 @@ export class DetailMediaPage {
     });
   }
 
-  public iconCommentClicked: boolean = false; //Whatever you want to initialise it as
-  CommentClicked: boolean = false;
   likeClicked: boolean = false;
 
   public onIconCommentClick() {
@@ -172,21 +115,11 @@ export class DetailMediaPage {
       username: this.username,
       title: this.title,
       des: this.description
-    })
-    this.iconCommentClicked = !this.iconCommentClicked;
+    });
+  }
 
-  }
-  public onCommentClick() {
-    this.CommentClicked = !this.CommentClicked;
-  }
   public onLikeClick() {
     this.likeClicked = !this.likeClicked;
   }
 
-  callDeleteComment(comment_id) {
-    this.mediaProvider.deleteComment(comment_id).subscribe(data => {
-      console.log(data);
-      this.getNumberOfComment();
-    })
-  }
 }

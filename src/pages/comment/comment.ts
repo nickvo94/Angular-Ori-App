@@ -1,3 +1,4 @@
+import { DetailMediaPage } from '../detail-media/detail-media';
 import { UserProvider } from './../../providers/user/user';
 import { MediaProvider } from './../../providers/media/media';
 import { Component } from '@angular/core';
@@ -22,6 +23,9 @@ export class CommentPage {
   description;
   comments: any = [];
   commentArr: any;
+  newComment;
+  myComment: boolean;
+  numberOfCommnent;
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
@@ -36,9 +40,26 @@ export class CommentPage {
   }
 
   ionViewDidLoad() {
-    this.mediaProvider.getComment(this.id).subscribe((res: any) =>{
-        this.comments = res;
-        for (let cmt of this.comments) {
+    this.getAllComment();
+  }
+
+  postComment() {
+    const comment = {
+      file_id: this.id,
+      comment: this.newComment
+    };
+    this.mediaProvider.postComment(comment).subscribe(res => {
+      this.getAllComment();
+      this.newComment = '';
+    })
+  }
+
+  getAllComment() {
+    this.mediaProvider.getComment(this.id).subscribe((res: any) => {
+      this.comments = res;
+      this.numberOfCommnent = this.comments.length;
+      console.log(this.numberOfCommnent);
+      for (let cmt of this.comments) {
         this.userProvider.getAllUserInfo(cmt.user_id).subscribe(res => {
           this.commentArr = res;
           for (let i in this.comments) {
@@ -51,6 +72,8 @@ export class CommentPage {
     })
   }
 
-
+  backButtonClick() {
+    
+  }
 
 }

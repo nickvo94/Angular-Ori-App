@@ -23,9 +23,9 @@
     </ion-list-header>
     <ion-item no-lines text-wrap *ngFor="let comment of comments">
       <p class="wrap-cmt">
-        <span id="author-cmt">{{comment.username}}</span> {{comment.comment}}
+        <span id="author-cmt" (click)="openOtherUser(comment.user_id)">{{comment.username}}</span> {{comment.comment}}
       </p>
-      <ion-icon id="delete" name="close-circle" item-end></ion-icon>
+      <ion-icon *ngIf="comment.user_id == my_id" (click)="deleteComment(comment.comment_id, comment)" id="delete" name="close-circle" item-end></ion-icon>
     </ion-item>
   </ion-list>
   <form #commentForm="ngForm">

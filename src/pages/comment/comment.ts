@@ -1,8 +1,9 @@
-import { DetailMediaPage } from '../detail-media/detail-media';
+import { ProfilePage } from './../profile/profile';
+import { OtherProfilePage } from './../other-profile/other-profile';
 import { UserProvider } from './../../providers/user/user';
 import { MediaProvider } from './../../providers/media/media';
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, AlertController } from 'ionic-angular';
 
 /**
  * Generated class for the CommentPage page.
@@ -18,6 +19,7 @@ import { NavController, NavParams } from 'ionic-angular';
 export class CommentPage {
 
   id;
+  my_id;
   username;
   title;
   description;
@@ -25,18 +27,18 @@ export class CommentPage {
   commentArr: any;
   newComment;
   myComment: boolean;
-  numberOfCommnent;
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     private mediaProvider: MediaProvider,
-    private userProvider: UserProvider) {
+    private userProvider: UserProvider,
+    private alertCtrl: AlertController) {
 
     this.id = navParams.get('mediaId');
     this.username = navParams.get('username');
     this.title = navParams.get('title');
     this.description = navParams.get('des');
-
+    this.my_id = this.userProvider.my_id;
   }
 
   ionViewDidLoad() {
@@ -54,11 +56,31 @@ export class CommentPage {
     })
   }
 
+  deleteComment(cmt_id, cmt) {
+    let alert = this.alertCtrl.create({
+      subTitle: 'Delete this comment?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+        },
+        {
+          text: 'Delete',
+          handler: () => {
+            this.mediaProvider.deleteComment(cmt_id).subscribe(res => {
+              console.log(res['message']);
+              this.comments.splice(this.comments.indexOf(cmt), 1);
+            });
+          }
+        }
+      ]
+    });
+    alert.present();
+  }
+
   getAllComment() {
     this.mediaProvider.getComment(this.id).subscribe((res: any) => {
       this.comments = res;
-      this.numberOfCommnent = this.comments.length;
-      console.log(this.numberOfCommnent);
       for (let cmt of this.comments) {
         this.userProvider.getAllUserInfo(cmt.user_id).subscribe(res => {
           this.commentArr = res;
@@ -72,8 +94,14 @@ export class CommentPage {
     })
   }
 
-  backButtonClick() {
-    
+  openOtherUser(user_id) {
+    if (user_id !== this.my_id) {
+      this.navCtrl.push(OtherProfilePage, {
+        userId: user_id
+      })
+    } else {
+      this.navCtrl.push(ProfilePage);
+    }
   }
 
 }

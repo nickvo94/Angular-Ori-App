@@ -52,7 +52,6 @@ export class ProfilePage {
   getMediaCurrentUser() {
     this.userProvider.getMediaOfCurrentUser().subscribe((res: any) => {
       this.myMediaArray = res.reverse();
-      console.log(this.myMediaArray);
     })
   }
 

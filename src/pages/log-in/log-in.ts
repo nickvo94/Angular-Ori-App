@@ -1,4 +1,3 @@
-import { HomePage } from './../home/home';
 import { User } from './../../app/models/user';
 import { HttpErrorResponse } from '@angular/common/http';
 import { SignUpPage } from './../sign-up/sign-up';
@@ -21,8 +20,6 @@ import { AlertController, IonicPage, NavController, NavParams } from 'ionic-angu
 })
 export class LogInPage {
 
-  tabsPage = TabsPage;
-  signUpPage = SignUpPage;
   user: User = { username: '', password: '' };
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private userProvider: UserProvider, private alertCtrl: AlertController) {
@@ -39,7 +36,7 @@ export class LogInPage {
   }
 
   createAccount() {
-    this.navCtrl.push(this.signUpPage);
+    this.navCtrl.push(SignUpPage);
   }
 
   login() {

@@ -1,3 +1,4 @@
+import { CommentPage } from './../comment/comment';
 import { UserProvider } from './../../providers/user/user';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MediaProvider } from './../../providers/media/media';
@@ -85,7 +86,6 @@ export class DetailMediaPage {
 
   getNumberOfComment() {
     this.mediaProvider.getComment(this.id).subscribe(res => {
-      console.log(res);
       this.commentBody = [];
       this.commentUsernames = [];
       this.commentArr = res;
@@ -167,7 +167,14 @@ export class DetailMediaPage {
   likeClicked: boolean = false;
 
   public onIconCommentClick() {
+    this.navCtrl.push(CommentPage, {
+      mediaId: this.id,
+      username: this.username,
+      title: this.title,
+      des: this.description
+    })
     this.iconCommentClicked = !this.iconCommentClicked;
+
   }
   public onCommentClick() {
     this.CommentClicked = !this.CommentClicked;

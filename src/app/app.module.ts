@@ -1,3 +1,4 @@
+import { CommentPage } from './../pages/comment/comment';
 import { OtherProfilePage } from './../pages/other-profile/other-profile';
 import { ProfilePage } from './../pages/profile/profile';
 import { DetailMediaPage } from './../pages/detail-media/detail-media';
@@ -30,7 +31,8 @@ import { MediaProvider } from '../providers/media/media';
     SignUpPage,
     DetailMediaPage,
     ProfilePage,
-    OtherProfilePage
+    OtherProfilePage,
+    CommentPage
   ],
   imports: [
     BrowserModule,
@@ -49,7 +51,8 @@ import { MediaProvider } from '../providers/media/media';
     SignUpPage,
     DetailMediaPage,
     ProfilePage,
-    OtherProfilePage
+    OtherProfilePage,
+    CommentPage
   ],
   providers: [
     StatusBar,

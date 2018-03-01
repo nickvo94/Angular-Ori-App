@@ -26,6 +26,7 @@ export class ProfilePage {
   user: User = { username: '', password: '', email: '' };
   listMedia: string;
   myMediaArray: any = [];
+  mySavedArray: any = [];
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
@@ -47,6 +48,8 @@ export class ProfilePage {
       });
     }
     this.getMediaCurrentUser();
+    this.mySavedArray = this.mediaProvider.saved;
+    console.log(this.mySavedArray)
   }
 
   getMediaCurrentUser() {

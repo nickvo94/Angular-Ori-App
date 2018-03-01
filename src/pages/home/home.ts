@@ -25,7 +25,7 @@ export class HomePage {
   numberOfLike: any;
   mediaArray: any;
   currentUser_id;
-  end: number = 5;
+  end: number = 10;
   toggled: boolean = false;
   search: Search = { title: '' };
 
@@ -100,6 +100,26 @@ export class HomePage {
         file.numberOfLike = this.numberOfLike.length;
       })
     }
+  }
+
+  clickLike(id) {
+     const like = {
+      file_id: id
+    };
+    this.mediaProvider.postLike(like).subscribe(response => {
+      this.getNumberOfLike();
+    }, (error: HttpErrorResponse) => {
+      if (error['statusText'] == 'Bad Request') {
+        this.mediaProvider.deleteLike(id).subscribe(Response => {
+          this.getNumberOfLike();
+        })
+      }
+    });
+  }
+
+  savePost(media) {
+    this.mediaProvider.saved.push(media);
+    console.log(this.mediaProvider.saved);
   }
 
   openDetailMedia(id, user_id) {

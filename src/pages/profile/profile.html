@@ -65,9 +65,15 @@
       </div>
     </div>
 
-    <ion-list *ngSwitchCase="'saved'">
-      <p>dsfbsdg</p>
-    </ion-list>
+    <div class="container" *ngSwitchCase="'saved'">
+      <div class="crop" *ngFor="let post of mySavedArray" (click)="openDetailMedia(post.file_id, post.user_id)">
+        <img *ngIf="post.media_type == 'image'" [src]="mediaProvider.mediaUrl + post.filename" [alt]="post.title">
+        <ion-icon *ngIf="post.media_type == 'video'" name="videocam"></ion-icon>
+        <video *ngIf="post.media_type == 'video'">
+          <source [src]="mediaProvider.mediaUrl + post.filename" type="video/mp4">
+        </video>
+      </div>
+    </div>
 
   </div>
 </ion-content>

@@ -9,6 +9,7 @@ import { InfiniteScroll, NavController } from 'ionic-angular';
 import { Content } from 'ionic-angular';
 import { Search } from '../../app/models/search';
 import { SearchPage } from '../search/search';
+import { Refresher } from 'ionic-angular/components/refresher/refresher';
 
 @Component({
   selector: 'page-home',
@@ -21,12 +22,13 @@ export class HomePage {
   arr: any = [];
   searchArray: any = []; 
   numberOfComment: any;
-  numberOfLike: any;
+  numberOfLike: any;  
   mediaArray: any;
   currentUser_id;
   end: number = 5;
   toggled: boolean = false;
   search: Search = {title: ''};
+  showPopular = false;
 
 
   constructor(public navCtrl: NavController,
@@ -46,14 +48,14 @@ export class HomePage {
           console.log(error);
         });
     }
-    this.getAllMedia();
+    this.getAllMedia(null);
   }
 
   ionViewWillEnter() {
     if(this.mediaProvider.reload){
       this.medias = [];
       this.end = 5;
-      this.getAllMedia();
+      this.getAllMedia(null);
       this.mediaProvider.reload = false;
     }
   }
@@ -61,22 +63,39 @@ export class HomePage {
   scrollToTop() {
     this.content.scrollToTop();
   }
-
-  getAllMedia() {
+  getAllMedia(callbacks: any) {
     this.mediaProvider.getAllMedia(this.end).subscribe((data: any) => {
+      console.log("getAllMedia data received.");
+      let likesCallback = null;
+      let commentCallback = null;
+      let mediaCallback = null;      
       this.medias = data;
-      this.getNumberOfComment();
-      this.getNumberOfLike();
+
+      console.log(this.medias);
+      // Check callback to see if the call function is done or not
+      if (callbacks != null) {
+        if (typeof callbacks == 'object') {          
+          if (callbacks.likes) {likesCallback = callbacks.likes;}
+          if (callbacks.media) {mediaCallback = callbacks.media;}
+          this.showPopular = true;
+        }
+      }            
+
+      this.getNumberOfComment();      
+      this.getNumberOfLike(likesCallback, this.medias);
+      
+      if (mediaCallback != null) {mediaCallback(this.medias);}
+
       for (let user of this.medias) {
         this.userProvider.getAllUserInfo(user.user_id).subscribe(res => {
           this.mediaArray = res;
           for (let i in this.medias) {
             if (this.medias[i].user_id == res['user_id']) {
               this.medias[i].username = res['username'];
-            }
-          }
+            }           
+          }         
         })
-      }
+      }      
     });
   }
 
@@ -89,11 +108,20 @@ export class HomePage {
     }
   }
 
-  getNumberOfLike() {
+  getNumberOfLike(callback: any, param: any) {
+    let count = 0;
     for (let file of this.medias) {
       this.mediaProvider.getLike(file.file_id).subscribe(res => {
         this.numberOfLike = res;
-        file.numberOfLike = this.numberOfLike.length;
+        file.numberOfLike = this.numberOfLike.length;                
+          count += 1;
+          if (count == this.medias.length)
+          {
+            if (callback != null) {
+              console.log("getNumberOfLike callback");  
+              callback(param);
+            }
+          }        
       })
     }
   }
@@ -116,18 +144,20 @@ export class HomePage {
   }
 
   doInfinite(infiniteScroll: InfiniteScroll) {
+    this.showPopular = false;
     setTimeout(() => {
       this.end += 5;
-      this.getAllMedia();
+      this.getAllMedia(null);
       infiniteScroll.complete();
     }, 3000);
   }
 
   doRefresh(refresher) {
+    this.showPopular = false;
     setTimeout(() => {
       this.medias = [];
       this.end = 5;
-      this.getAllMedia();
+      this.getAllMedia(null);
       refresher.complete();
     }, 2000);
   }
@@ -158,8 +188,28 @@ export class HomePage {
   })
 }
 
- onCancle(){
-   console.log('Cancle');
+ onFilter(){
+   console.log('Filter');
+   let likeValue: any;
+   let lastLikeVal = 0;
+   let bool = false;
+   let sortCallbacks = {
+      likes : function (arrayToSort) {
+        console.log("onFilter likes callback.");        
+        arrayToSort = arrayToSort.sort(function(a,b) 
+          {
+            return b.numberOfLike - a.numberOfLike
+          });
+        arrayToSort = arrayToSort.splice(20,80);
+        
+      }
+   }
+
+   this.end = 100;   
+   
+   this.getAllMedia(sortCallbacks);
+   
+    this.end = 5;
  }
 
 }

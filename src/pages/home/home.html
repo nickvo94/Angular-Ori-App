@@ -1,6 +1,8 @@
 <ion-header>
   <ion-toolbar>
     <ion-title id="app-name" (click)="scrollToTop()">Ori</ion-title>
+    <ion-title *ngIf="showPopular == false"> Recent Post </ion-title>
+    <ion-title *ngIf="showPopular == true"> 20 Popular Posts </ion-title>
     <ion-buttons end>
       <button ion-button icon-only (click)="toggle()">
         <ion-icon  name="search"></ion-icon>
@@ -8,8 +10,8 @@
     </ion-buttons>
  
     <ion-buttons start>
-      <button ion-button icon-only>
-        <ion-icon ios="ios-funnel-outline" md="md-funnel" ></ion-icon>
+      <button ion-button icon-only  (click)="onFilter()">
+        <ion-icon ios="ios-funnel-outline" md="md-funnel"></ion-icon>
       </button>
     </ion-buttons>
   </ion-toolbar>
@@ -23,14 +25,13 @@
     [showCancelButton]="shouldShowCancel"
     (ionInput)="onInputSearch(myInput)"
     (ionCancel)="onCancel()">
-  </ion-searchbar>
+  </ion-searchbar> 
 
   <ion-list *ngIf="toggled == true">
       <ion-item *ngFor="let item of searchArray" (click)="openDetailMedia(item.file_id, item.user_id)">
           {{item.title}}
       </ion-item>
-  </ion-list>
-  
+  </ion-list>  
 
   <ion-refresher (ionRefresh)="doRefresh($event)">
     <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles" refreshingText="Refreshing...">

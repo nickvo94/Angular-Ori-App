@@ -26,6 +26,7 @@ export class ProfilePage {
   user: User = { username: '', password: '', email: '' };
   listMedia: string;
   myMediaArray: any = [];
+  mySavedArray: any = [];
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
@@ -47,12 +48,20 @@ export class ProfilePage {
       });
     }
     this.getMediaCurrentUser();
+    this.mySavedArray = this.mediaProvider.saved;
+    console.log(this.mySavedArray)
+  }
+
+ ionViewWillEnter() {
+    if (this.mediaProvider.reloadProfile) {
+    this.getMediaCurrentUser();
+    this.mediaProvider.reloadProfile = false
+    }
   }
 
   getMediaCurrentUser() {
     this.userProvider.getMediaOfCurrentUser().subscribe((res: any) => {
       this.myMediaArray = res.reverse();
-      console.log(this.myMediaArray);
     })
   }
 

@@ -11,7 +11,8 @@ import { Injectable } from '@angular/core';
 export class MediaProvider {
 
   reload: boolean = false;
-
+  reloadProfile: boolean = false;
+  saved: any = [];
   baseUrl = 'http://media.mw.metropolia.fi/wbma/';
   mediaUrl = 'http://media.mw.metropolia.fi/wbma/uploads/';
 

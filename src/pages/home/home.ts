@@ -1,3 +1,4 @@
+import { CommentPage } from './../comment/comment';
 import { OtherProfilePage } from './../other-profile/other-profile';
 import { ProfilePage } from './../profile/profile';
 import { DetailMediaPage } from './../detail-media/detail-media';
@@ -20,15 +21,16 @@ export class HomePage {
 
   medias: any = [];
   arr: any = [];
-  searchArray: any = []; 
+  searchArray: any = [];
   numberOfComment: any;
   numberOfLike: any;  
   mediaArray: any;
   currentUser_id;
-  end: number = 5;
+  end: number = 10;
   toggled: boolean = false;
   search: Search = {title: ''};
   showPopular = false;
+
 
 
   constructor(public navCtrl: NavController,
@@ -42,6 +44,7 @@ export class HomePage {
       this.userProvider.getUserData(localStorage.getItem('token')).
         subscribe(response => {
           this.currentUser_id = response['user_id'];
+          this.userProvider.my_id = response['user_id'];
           this.userProvider.logged = true;
           localStorage.setItem('user', JSON.stringify(response));
         }, (error: HttpErrorResponse) => {
@@ -52,10 +55,13 @@ export class HomePage {
   }
 
   ionViewWillEnter() {
-    if(this.mediaProvider.reload){
+    this.getNumberOfComment();
+    this.getNumberOfLike(null, null);
+    if (this.mediaProvider.reload) {
       this.medias = [];
-      this.end = 5;
+      this.end = 10;
       this.getAllMedia(null);
+
       this.mediaProvider.reload = false;
     }
   }
@@ -126,6 +132,26 @@ export class HomePage {
     }
   }
 
+  clickLike(id) {
+     const like = {
+      file_id: id
+    };
+    this.mediaProvider.postLike(like).subscribe(response => {
+      this.getNumberOfLike(null, null);
+    }, (error: HttpErrorResponse) => {
+      if (error['statusText'] == 'Bad Request') {
+        this.mediaProvider.deleteLike(id).subscribe(Response => {
+          this.getNumberOfLike(null, null);
+        })
+      }
+    });
+  }
+
+  savePost(media) {
+    this.mediaProvider.saved.push(media);
+    console.log(this.mediaProvider.saved);
+  }
+
   openDetailMedia(id, user_id) {
     this.navCtrl.push(DetailMediaPage, {
       mediaId: id,
@@ -143,6 +169,15 @@ export class HomePage {
     }
   }
 
+  openComment(id, username, title, description) {
+     this.navCtrl.push(CommentPage, {
+      mediaId: id,
+      username: username,
+      title: title,
+      des: description
+    });
+  }
+
   doInfinite(infiniteScroll: InfiniteScroll) {
     this.showPopular = false;
     setTimeout(() => {
@@ -156,8 +191,9 @@ export class HomePage {
     this.showPopular = false;
     setTimeout(() => {
       this.medias = [];
-      this.end = 5;
+      this.end = 10;
       this.getAllMedia(null);
+
       refresher.complete();
     }, 2000);
   }
@@ -165,28 +201,8 @@ export class HomePage {
   public toggle() {
     console.log('search call', this.toggled)
     this.toggled = this.toggled ? false : true;
- }
+  }
 
- onInputSearch(myInput){
-   this.searchArray = [];
-   console.log(myInput);
-   this.search.title = String(myInput);
-   console.log(this.search.title);
-   if(myInput !== ''){
-    this.mediaProvider.postSearch(this.search).subscribe(data => {
-      this.searchArray = data;
-      console.log(this.searchArray);
-    });     
-   }
-   
- }
-
- onSearchEnter(){
-  console.log('Enter');
-  this.navCtrl.push(SearchPage, {
-    searchArray: this.searchArray
-  })
-}
 
  onFilter(){
    console.log('Filter');
@@ -211,5 +227,30 @@ export class HomePage {
    
     this.end = 5;
  }
+
+  onInputSearch(myInput) {
+    this.searchArray = [];
+    console.log(myInput);
+    this.search.title = String(myInput);
+    console.log(this.search.title);
+    if (myInput !== '') {
+      this.mediaProvider.postSearch(this.search).subscribe(data => {
+        this.searchArray = data;
+        console.log(this.searchArray);
+      });
+    }
+
+  }
+
+  onSearchEnter() {
+    console.log('Enter');
+    this.navCtrl.push(SearchPage, {
+      searchArray: this.searchArray
+    })
+  }
+
+  onCancle() {
+    console.log('Cancle');
+  }
 
 }

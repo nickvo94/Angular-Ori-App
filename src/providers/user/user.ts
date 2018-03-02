@@ -15,11 +15,10 @@ export class UserProvider {
 
   logged = false;
   baseUrl = 'http://media.mw.metropolia.fi/wbma/';
+  my_id;
 
   constructor(public http: HttpClient) {
-    console.log('Hello UserProvider Provider');
   }
-
 
   getUserData(token) {
     const settings = {

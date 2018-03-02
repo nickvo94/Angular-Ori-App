@@ -1,3 +1,4 @@
+import { CommentPage } from './../pages/comment/comment';
 import { OtherProfilePage } from './../pages/other-profile/other-profile';
 import { ProfilePage } from './../pages/profile/profile';
 import { DetailMediaPage } from './../pages/detail-media/detail-media';
@@ -32,6 +33,7 @@ import { SearchPage } from '../pages/search/search';
     DetailMediaPage,
     ProfilePage,
     OtherProfilePage,
+    CommentPage,
     SearchPage
   ],
   imports: [
@@ -52,6 +54,7 @@ import { SearchPage } from '../pages/search/search';
     DetailMediaPage,
     ProfilePage,
     OtherProfilePage,
+    CommentPage,
     SearchPage,
   ],
   providers: [

@@ -52,6 +52,13 @@ export class ProfilePage {
     console.log(this.mySavedArray)
   }
 
+ ionViewWillEnter() {
+    if (this.mediaProvider.reloadProfile) {
+    this.getMediaCurrentUser();
+    this.mediaProvider.reloadProfile = false
+    }
+  }
+
   getMediaCurrentUser() {
     this.userProvider.getMediaOfCurrentUser().subscribe((res: any) => {
       this.myMediaArray = res.reverse();

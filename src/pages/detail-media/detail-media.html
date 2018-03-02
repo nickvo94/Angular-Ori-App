@@ -9,6 +9,11 @@
   <ion-navbar>
     <ion-title *ngIf="type == 'image'">photo</ion-title>
     <ion-title *ngIf="type == 'video'">video</ion-title>
+    <ion-buttons end *ngIf="userId == myId">
+      <button ion-button icon-only (click)="deletePost()">
+        <ion-icon  name="trash"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 
 </ion-header>

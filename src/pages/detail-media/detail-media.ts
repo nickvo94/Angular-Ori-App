@@ -3,7 +3,7 @@ import { UserProvider } from './../../providers/user/user';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MediaProvider } from './../../providers/media/media';
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, AlertController } from 'ionic-angular';
 import { ViewChild } from '@angular/core';
 import { Navbar } from 'ionic-angular';
 
@@ -23,6 +23,7 @@ export class DetailMediaPage {
 
   id;
   userId;
+  myId;
   commentArr: any = [];
   likeArr: any = [];
   numberOfComment: any;
@@ -33,15 +34,14 @@ export class DetailMediaPage {
   username: any;
   time;
   likeUsers: any = [];
-  commentBody: any = [];
-  commentUsernames: any = [];
   type: any;
   likePost: string = "heart-outline";
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     private mediaProvider: MediaProvider,
-    private userProvider: UserProvider) {
+    private userProvider: UserProvider,
+    private alertCtrl: AlertController) {
 
     this.id = navParams.get('mediaId');
     this.userId = navParams.get('userId');
@@ -58,11 +58,11 @@ export class DetailMediaPage {
       }, (error: HttpErrorResponse) => {
         console.log(error);
       });
-
     this.userProvider.getAllUserInfo(this.userId).subscribe(res => {
       this.username = res['username'];
     });
     this.getNumberOfLike();
+    this.myId = this.userProvider.my_id;
   }
 
   ionViewWillEnter() {
@@ -120,6 +120,29 @@ export class DetailMediaPage {
 
   public onLikeClick() {
     this.likeClicked = !this.likeClicked;
+  }
+
+  deletePost() {
+    let alert = this.alertCtrl.create({
+      subTitle: 'Delete this post?',
+      buttons: [
+        {
+          text: 'Delete',
+          handler: () => {
+            this.mediaProvider.deleteMedia(this.id).subscribe(res => {
+              console.log(res['message']);
+              this.mediaProvider.reloadProfile = true;
+              this.navCtrl.pop();
+            });
+          }
+        },
+        {
+          text: 'Cancel',
+          role: 'cancel',
+        }
+      ]
+    });
+    alert.present();
   }
 
 }

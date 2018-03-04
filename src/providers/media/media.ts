@@ -55,7 +55,7 @@ export class MediaProvider {
     return this.http.post(this.baseUrl + 'comments', comment, settings);
   }
 
-  deleteComment(id){
+  deleteComment(id) {
     const settings = {
       headers: new HttpHeaders().set('x-access-token', localStorage.getItem('token')),
     };
@@ -63,7 +63,7 @@ export class MediaProvider {
   }
 
   getAllMedia(end) {
-    return this.http.get(this.baseUrl + 'media?start=0&limit='+ end);
+    return this.http.get(this.baseUrl + 'media?start=0&limit=' + end);
   }
 
   getMediaById(id) {
@@ -85,7 +85,14 @@ export class MediaProvider {
     return this.http.get(this.baseUrl + 'favourites/file/' + fileId);
   }
 
-  postSearch(search){
+  getLikeOfCurrentUser() {
+    const settings = {
+      headers: new HttpHeaders().set('x-access-token', localStorage.getItem('token')),
+    };
+    return this.http.get(this.baseUrl + 'favourites', settings);
+  }
+
+  postSearch(search) {
     const settings = {
       headers: new HttpHeaders().set('x-access-token', localStorage.getItem('token')),
     };

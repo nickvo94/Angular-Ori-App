@@ -23,12 +23,11 @@ export class HomePage {
   searchArray: any = [];
   numberOfComment: any;
   numberOfLike: any;
-  mediaArray: any;
   currentUser_id;
   end: number = 10;
   toggled: boolean = false;
   search: Search = { title: '' };
-
+  likeArr: any;
 
   constructor(public navCtrl: NavController,
     private mediaProvider: MediaProvider,
@@ -73,7 +72,6 @@ export class HomePage {
       this.getNumberOfLike();
       for (let user of this.medias) {
         this.userProvider.getAllUserInfo(user.user_id).subscribe(res => {
-          this.mediaArray = res;
           for (let i in this.medias) {
             if (this.medias[i].user_id == res['user_id']) {
               this.medias[i].username = res['username'];
@@ -96,25 +94,37 @@ export class HomePage {
   getNumberOfLike() {
     for (let file of this.medias) {
       this.mediaProvider.getLike(file.file_id).subscribe(res => {
+        this.likeArr = res;
         this.numberOfLike = res;
         file.numberOfLike = this.numberOfLike.length;
+        file.like = false;
+        file.likePost = "heart-outline";
+        for (let i in this.likeArr) {
+          if (this.likeArr[i].user_id == this.currentUser_id) {
+            file.like = true;
+            file.likePost = "heart";
+          } else {
+            file.like = false;
+            file.likePost = "heart-outline";
+          }
+        }
       })
     }
   }
 
-  clickLike(id) {
-     const like = {
+  clickLike(id, isLiked) {
+    const like = {
       file_id: id
     };
-    this.mediaProvider.postLike(like).subscribe(response => {
-      this.getNumberOfLike();
-    }, (error: HttpErrorResponse) => {
-      if (error['statusText'] == 'Bad Request') {
-        this.mediaProvider.deleteLike(id).subscribe(Response => {
-          this.getNumberOfLike();
-        })
-      }
-    });
+    if (isLiked == false) {
+      this.mediaProvider.postLike(like).subscribe(response => {
+        this.getNumberOfLike();
+      })
+    } else {
+      this.mediaProvider.deleteLike(id).subscribe(Response => {
+        this.getNumberOfLike();
+      })
+    }
   }
 
   savePost(media) {
@@ -140,7 +150,7 @@ export class HomePage {
   }
 
   openComment(id, username, title, description) {
-     this.navCtrl.push(CommentPage, {
+    this.navCtrl.push(CommentPage, {
       mediaId: id,
       username: username,
       title: title,

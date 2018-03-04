@@ -36,6 +36,8 @@ export class DetailMediaPage {
   likeUsers: any = [];
   type: any;
   likePost: string = "heart-outline";
+  likeClicked: boolean = false;
+
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
@@ -79,6 +81,7 @@ export class DetailMediaPage {
   getNumberOfLike() {
     this.mediaProvider.getLike(this.id).subscribe(data => {
       this.likeArr = data;
+      this.checkIsLiked();
       this.likeUsers = [];
       this.numberOfLike = this.likeArr.length;
 
@@ -91,35 +94,41 @@ export class DetailMediaPage {
   }
 
   clickLike() {
-     const like = {
+    const like = {
       file_id: this.id
     };
-    this.mediaProvider.postLike(like).subscribe(response => {
-      this.getNumberOfLike();
-      this.likePost = "heart";
-    }, (error: HttpErrorResponse) => {
-      if (error['statusText'] == 'Bad Request') {
-        this.mediaProvider.deleteLike(this.id).subscribe(Response => {
-          this.getNumberOfLike();
-          this.likePost = "heart-outline";
-        })
-      }
-    });
+    if (!this.likeClicked) {
+      this.mediaProvider.postLike(like).subscribe(response => {
+        this.getNumberOfLike();
+        this.likePost = "heart";
+      })
+    } else {
+      this.mediaProvider.deleteLike(this.id).subscribe(Response => {
+        this.getNumberOfLike();
+        this.likePost = "heart-outline";
+      })
+    }
   }
 
-  likeClicked: boolean = false;
+  checkIsLiked() {
+    for (let i in this.likeArr) {
+      if (this.likeArr[i].user_id == this.myId) {
+        this.likeClicked = true;
+        this.likePost = "heart";
+      } else {
+        this.likeClicked = false;
+        this.likePost = "heart-outline";
+      }
+    }
+  }
 
-  public onIconCommentClick() {
+  onIconCommentClick() {
     this.navCtrl.push(CommentPage, {
       mediaId: this.id,
       username: this.username,
       title: this.title,
       des: this.description
     });
-  }
-
-  public onLikeClick() {
-    this.likeClicked = !this.likeClicked;
   }
 
   deletePost() {

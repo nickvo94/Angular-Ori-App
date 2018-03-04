@@ -190,6 +190,7 @@ export class DetailMediaPage {
           this.checkIsSaved();
         })
       }
+      this.mediaProvider.reloadProfile = true;
   }
   
   checkIsSaved() {

@@ -14,10 +14,10 @@
       </button>
     </ion-buttons>
     <ion-buttons end *ngIf="userId !== myId" (click)="savePost()">
-      <button text-lowercase ion-button *ngIf="saveClicked == false">
+      <button text-uppercase ion-button strong *ngIf="saveClicked == false">
         save
       </button>
-      <button text-lowercase ion-button *ngIf="saveClicked == true">
+      <button text-uppercase ion-button strong color="dark" *ngIf="saveClicked == true">
         unsave
       </button>
     </ion-buttons>

@@ -60,6 +60,7 @@ export class ProfilePage {
   ionViewWillEnter() {
     if (this.mediaProvider.reloadProfile) {
       this.getMediaCurrentUser();
+      this.getSavedPost();
       this.mediaProvider.reloadProfile = false
     }
   }
@@ -72,9 +73,9 @@ export class ProfilePage {
 
   getSavedPost() {
     const tag = encodeURIComponent(this.tag_content);
-    this.mediaProvider.getPostByTag(tag).subscribe(res => {
+    this.mediaProvider.getPostByTag(tag).subscribe((res:any) => {
       console.log(res)
-      this.mySavedArray = res;
+      this.mySavedArray = res.reverse();
     })
   }
 

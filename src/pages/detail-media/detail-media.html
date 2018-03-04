@@ -13,11 +13,19 @@
         <ion-icon  name="trash"></ion-icon>
       </button>
     </ion-buttons>
+    <ion-buttons end *ngIf="userId !== myId" (click)="savePost()">
+      <button text-lowercase ion-button *ngIf="saveClicked == false">
+        save
+      </button>
+      <button text-lowercase ion-button *ngIf="saveClicked == true">
+        unsave
+      </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
-  <h1 id="title">{{title}}</h1>
+  <h1 (click)="savePost()" id="title">{{title}}</h1>
   <img *ngIf="type == 'image'" [src]="url" width="100%" height="auto">
   <video *ngIf="type == 'video'" width="100%" height="250px" autoplay controls>
     <source [src]="url" type="video/mp4" alt="title">

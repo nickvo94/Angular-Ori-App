@@ -26,8 +26,12 @@ export class DetailMediaPage {
   id;
   userId;
   myId;
+  tagId;
   commentArr: any = [];
   likeArr: any = [];
+  tagArr: any = [];
+  tag_content;
+  saveClicked: boolean = false;
   numberOfComment: any;
   numberOfLike: any;
   url: string;
@@ -69,6 +73,8 @@ export class DetailMediaPage {
     });
     this.getNumberOfLike();
     this.myId = this.userProvider.my_id;
+    this.tag_content = "#myori" + this.myId;
+    this.checkIsSaved();
   }
 
   ionViewWillEnter() {
@@ -166,6 +172,38 @@ export class DetailMediaPage {
     } else {
       this.navCtrl.push(ProfilePage);
     }
+  }
+
+  savePost() {
+    const tag = {
+        file_id: this.id,
+        tag: this.tag_content
+      };
+      if (this.saveClicked == false) {
+      this.mediaProvider.postTag(tag).subscribe(res =>{
+        console.log(res)
+        this.checkIsSaved();
+      })
+      } else {
+        this.mediaProvider.deleteTag(this.tagId).subscribe(res =>{
+          console.log(res)
+          this.checkIsSaved();
+        })
+      }
+  }
+  
+  checkIsSaved() {
+    this.mediaProvider.getTagbyFileId(this.id).subscribe(res =>{
+      this.tagArr = res;
+      for(let i in this.tagArr) {
+        if (this.tagArr[i].tag == this.tag_content) {
+          this.saveClicked = true;
+          this.tagId = this.tagArr[i].tag_id;
+        } else {
+          this.saveClicked = false;
+        }
+      }
+    })
   }
 
 }

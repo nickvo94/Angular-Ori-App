@@ -27,6 +27,7 @@ export class ProfilePage {
   listMedia: string;
   myMediaArray: any = [];
   mySavedArray: any = [];
+  tag_content: string;
   avatar_url = "https://api.adorable.io/avatars/100/";
 
 
@@ -42,9 +43,13 @@ export class ProfilePage {
     if (localStorage.getItem('token') !== null) {
       this.userProvider.getUserData(localStorage.getItem('token')).subscribe(res => {
         this.userId = res['user_id'];
+        this.tag_content = "#myori" + this.userId;
         console.log(this.userId);
+        console.log(this.tag_content)
+        this.getSavedPost();
         this.username = res['username'];
         this.email = res['email'];
+
       }, (err: HttpErrorResponse) => {
         console.log(err);
       });
@@ -52,16 +57,24 @@ export class ProfilePage {
     this.getMediaCurrentUser();
   }
 
- ionViewWillEnter() {
+  ionViewWillEnter() {
     if (this.mediaProvider.reloadProfile) {
-    this.getMediaCurrentUser();
-    this.mediaProvider.reloadProfile = false
+      this.getMediaCurrentUser();
+      this.mediaProvider.reloadProfile = false
     }
   }
 
   getMediaCurrentUser() {
     this.userProvider.getMediaOfCurrentUser().subscribe((res: any) => {
       this.myMediaArray = res.reverse();
+    })
+  }
+
+  getSavedPost() {
+    const tag = encodeURIComponent(this.tag_content);
+    this.mediaProvider.getPostByTag(tag).subscribe(res => {
+      console.log(res)
+      this.mySavedArray = res;
     })
   }
 
@@ -106,7 +119,7 @@ export class ProfilePage {
             if (data.username != '' && data.password != '' && data.email != '') {
               this.userProvider.editProfile(data).subscribe(res => {
                 this.username = data.username;
-                this.showPopup("", "User data updated" )
+                this.showPopup("", "User data updated")
               });
             } else {
               return false;
@@ -125,7 +138,7 @@ export class ProfilePage {
           case true:
             break;
           case false:
-            this.showPopup("Fail","username already exists");
+            this.showPopup("Fail", "username already exists");
             break
         }
       });
@@ -154,7 +167,7 @@ export class ProfilePage {
           handler: () => {
             this.mediaProvider.deleteMedia(file_id).subscribe(res => {
               console.log(res['message']);
-              this.myMediaArray.splice(this.myMediaArray.indexOf(post),1);
+              this.myMediaArray.splice(this.myMediaArray.indexOf(post), 1);
               console.log(this.myMediaArray);
               this.mediaProvider.reload = true;
             });

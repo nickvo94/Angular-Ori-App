@@ -27,6 +27,21 @@ export class MediaProvider {
     return this.http.post(this.baseUrl + 'tags', tag, settings);
   }
 
+  deleteTag(id) {
+     const settings = {
+      headers: new HttpHeaders().set('x-access-token', localStorage.getItem('token')),
+    };
+    return this.http.delete(this.baseUrl + 'tags/'+ id, settings);
+  }
+
+  getPostByTag(tag: any) {
+    return this.http.get(this.baseUrl + 'tags/' + tag);
+  }
+
+  getTagbyFileId(id) {
+    return this.http.get(this.baseUrl + 'tags/file/' + id);
+  }
+
   uploadFile(media) {
     const settings = {
       headers: new HttpHeaders().set('x-access-token', localStorage.getItem('token')),

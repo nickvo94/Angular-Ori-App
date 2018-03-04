@@ -31,11 +31,13 @@
   </ion-refresher>
   <div *ngIf="toggled == false">
     <ion-card *ngFor="let media of medias">
-      <ion-card-title>
-        <h1 id="title" (click)="openDetailMedia(media.file_id, media.user_id)">{{media.title}}</h1>
-      </ion-card-title>
-      <ion-icon id="btn-save" (click)="savePost(media)" ios="ios-bookmark-outline" md="md-bookmark"></ion-icon>
-      <p id="author" (click)="openOtherUser(media.user_id)">By {{media.username}}</p>
+      <ion-item>
+        <ion-avatar item-start (click)="openDetailMedia(media.file_id, media.user_id)">
+          <img [src]="avatar_url + media.username + '.png'">
+        </ion-avatar>
+        <h2 id="title" (click)="openDetailMedia(media.file_id, media.user_id)">{{media.title}}</h2>
+        <p id="author" (click)="openOtherUser(media.user_id)">By {{media.username}}</p>
+      </ion-item>
       <img *ngIf="media.media_type == 'image'" [src]="mediaProvider.mediaUrl + media.filename" [alt]="media.title" (click)="openDetailMedia(media.file_id, media.user_id)">
       <video *ngIf="media.media_type == 'video'" width="100%" height="240px" controls>
         <source [src]="mediaProvider.mediaUrl + media.filename" type="video/mp4" alt="media.title">

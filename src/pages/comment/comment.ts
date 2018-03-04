@@ -27,6 +27,8 @@ export class CommentPage {
   commentArr: any;
   newComment;
   myComment: boolean;
+  avatar_url = "https://api.adorable.io/avatars/40/";
+
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,

@@ -50,8 +50,6 @@ export class ProfilePage {
       });
     }
     this.getMediaCurrentUser();
-    this.mySavedArray = this.mediaProvider.saved;
-    console.log(this.mySavedArray)
   }
 
  ionViewWillEnter() {

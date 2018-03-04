@@ -18,7 +18,6 @@ export class HomePage {
   @ViewChild(Content) content: Content;
 
   medias: any = [];
-  arr: any = [];
   searchArray: any = [];
   numberOfComment: any;
   numberOfLike: any;
@@ -27,6 +26,8 @@ export class HomePage {
   toggled: boolean = false;
   search: Search = { title: '' };
   likeArr: any;
+  avatar_url = "https://api.adorable.io/avatars/40/";
+
 
   constructor(public navCtrl: NavController,
     private mediaProvider: MediaProvider,
@@ -124,11 +125,6 @@ export class HomePage {
         this.getNumberOfLike();
       })
     }
-  }
-
-  savePost(media) {
-    this.mediaProvider.saved.push(media);
-    console.log(this.mediaProvider.saved);
   }
 
   openDetailMedia(id, user_id) {

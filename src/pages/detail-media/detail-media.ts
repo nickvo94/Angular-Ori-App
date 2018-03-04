@@ -1,3 +1,5 @@
+import { ProfilePage } from './../profile/profile';
+import { OtherProfilePage } from './../other-profile/other-profile';
 import { CommentPage } from './../comment/comment';
 import { UserProvider } from './../../providers/user/user';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -37,6 +39,8 @@ export class DetailMediaPage {
   type: any;
   likePost: string = "heart-outline";
   likeClicked: boolean = false;
+  avatar_url = "https://api.adorable.io/avatars/40/";
+
 
 
   constructor(public navCtrl: NavController,
@@ -152,6 +156,16 @@ export class DetailMediaPage {
       ]
     });
     alert.present();
+  }
+
+  openOtherUser() {
+    if (this.userId !== this.myId) {
+      this.navCtrl.push(OtherProfilePage, {
+        userId: this.userId
+      })
+    } else {
+      this.navCtrl.push(ProfilePage);
+    }
   }
 
 }

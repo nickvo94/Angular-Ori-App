@@ -27,7 +27,7 @@
     <ion-col>
       <div class="wrap-like">
         <button id="btn-like" (click)="clickLike()" ion-button clear small icon-start>
-        <ion-icon  [name]="likePost"></ion-icon>
+        <ion-icon [name]="likePost"></ion-icon>
         </button>
         <p id="txt-like">{{numberOfLike}} likes </p>
       </div>
@@ -45,7 +45,8 @@
     </ion-col>
   </ion-row>
   <p class="wrap-des">
-    <span id="author">{{username}}</span>
+    <img width="23px" (click)="openOtherUser()" [src]="avatar_url + username + '.png'">
+    <span (click)="openOtherUser()" id="author">{{username}}</span>
     <span class="description">{{description}}</span>
   </p>
 </ion-content>

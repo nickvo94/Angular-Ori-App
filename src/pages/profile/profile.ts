@@ -27,6 +27,8 @@ export class ProfilePage {
   listMedia: string;
   myMediaArray: any = [];
   mySavedArray: any = [];
+  avatar_url = "https://api.adorable.io/avatars/100/";
+
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,

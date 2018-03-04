@@ -9,7 +9,6 @@ import { Component, ViewChild } from '@angular/core';
 import { InfiniteScroll, NavController } from 'ionic-angular';
 import { Content } from 'ionic-angular';
 import { Search } from '../../app/models/search';
-import { SearchPage } from '../search/search';
 
 @Component({
   selector: 'page-home',
@@ -182,23 +181,12 @@ export class HomePage {
 
   onInputSearch(myInput) {
     this.searchArray = [];
-    console.log(myInput);
     this.search.title = String(myInput);
-    console.log(this.search.title);
     if (myInput !== '') {
       this.mediaProvider.postSearch(this.search).subscribe(data => {
         this.searchArray = data;
-        console.log(this.searchArray);
       });
     }
-
-  }
-
-  onSearchEnter() {
-    console.log('Enter');
-    this.navCtrl.push(SearchPage, {
-      searchArray: this.searchArray
-    })
   }
 
   onCancle() {

@@ -22,10 +22,10 @@ page-comment {
     }
     .wrap-cmt {
         font-size: 1.4rem;
+        color: color($colors, dark);
        // margin-top: -2px;
         #author-cmt {
             font-size: 15px;
-            color: color($colors, dark);
             font-weight: 600; 
         }
         img {
@@ -33,6 +33,10 @@ page-comment {
             margin-bottom: -3px;
             margin-right: 2px;
         }
+    }
+
+    .wrap-des {
+        color: color($colors, dark);
     }
   
     .submit-btn {

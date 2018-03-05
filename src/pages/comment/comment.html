@@ -15,9 +15,9 @@
 
 <ion-content>
   <ion-list>
-    <ion-list-header text-wrap>
-      <h2 id="title">{{title}}</h2>
-      <p class="wrap-des">
+    <ion-list-header  text-wrap>
+      <h2 text-capitalize id="title">{{title}}</h2>
+      <p  text-lowercase class="wrap-des">
         <img width="23px" [src]="avatar_url + username + '.png'">
         <span id="author">{{username}}</span> {{description}}
       </p>

@@ -12,12 +12,13 @@ page-profile {
                     font-size: 20px;
                     color: white;
                 }
-                p {
+                pre {
                     font-family: $text;
                     font-weight: 550;
                     font-size: 15px;
                     color: white;
                     opacity: 0.9;
+                    margin-top: -2px;
                 }
                 img {
                     border-radius: 50%; 

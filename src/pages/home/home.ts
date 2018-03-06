@@ -18,15 +18,18 @@ export class HomePage {
   @ViewChild(Content) content: Content;
 
   medias: any = [];
+  mediaArr: any = [];
   searchArray: any = [];
   numberOfComment: any;
   numberOfLike: any;
   currentUser_id;
   start: number = 0;
-  end: number = 10;
+  end: number = 100;
+  doLoadMore: boolean = true;
   toggled: boolean = false;
   search: Search = { title: '' };
   likeArr: any;
+  tagArr: any;
   avatar_url = "https://api.adorable.io/avatars/40/";
 
 
@@ -68,12 +71,29 @@ export class HomePage {
   }
 
   getAllMedia() {
-    this.mediaProvider.getAllMedia(this.start, this.end).subscribe((data: any) => {
+    this.mediaProvider.getAllMedia(this.start, 10).subscribe((data: any) => {
       this.medias = data;
       this.getNumberOfComment();
       this.getNumberOfLike();
       this.getUsername();
+      this.getOnlyOriMedia(data);
     });
+  }
+
+  getOnlyOriMedia(data) {
+    for (let file of data) {
+      this.mediaProvider.getTagbyFileId(file.file_id).subscribe(res =>{
+        this.tagArr = res;
+        for (let i in this.tagArr) {
+          if(this.tagArr[i].tag == "#ori") {
+            console.log(file)
+            this.mediaArr.push(file);
+            console.log(this.mediaArr)
+            //this.medias.splice(file, 1);
+          } 
+        }
+      })
+    }
   }
 
   getUsername() {
@@ -162,16 +182,22 @@ export class HomePage {
   doInfinite(infiniteScroll: InfiniteScroll) {
     setTimeout(() => {
       this.start = this.medias.length;
-      console.log( this.start, this.end)
-      this.mediaProvider.getAllMedia(this.start, this.end).subscribe((data: any) => {
-        console.log(data)
-        this.medias = this.medias.concat(data);
-        this.getNumberOfComment();
-        this.getNumberOfLike();
-        this.getUsername();
-      });
-      infiniteScroll.complete();
+      console.log(this.start, this.end)
+      if (this.doLoadMore) {
+        this.mediaProvider.getAllMedia(this.start, 10).subscribe((data: any) => {
+          console.log(data)
+          this.medias = this.medias.concat(data);
+          this.getNumberOfComment();
+          this.getNumberOfLike();
+          this.getUsername();
+          this.getOnlyOriMedia(data);
+        });
+        infiniteScroll.complete();
+      }
     }, 2500);
+    if (this.medias.length > 30) {
+      this.doLoadMore = false;
+    }
   }
 
   doRefresh(refresher) {
@@ -180,6 +206,7 @@ export class HomePage {
       this.start = 0;
       this.end = 10;
       this.getAllMedia();
+      this.doLoadMore = true;
       refresher.complete();
     }, 2000);
   }

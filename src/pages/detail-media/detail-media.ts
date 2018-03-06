@@ -31,7 +31,7 @@ export class DetailMediaPage {
   likeArr: any = [];
   tagArr: any = [];
   tag_content;
-  saveClicked: boolean = false;
+  saveClicked: boolean;
   numberOfComment: any;
   numberOfLike: any;
   url: string;
@@ -42,7 +42,7 @@ export class DetailMediaPage {
   likeUsers: any = [];
   type: any;
   likePost: string = "heart-outline";
-  likeClicked: boolean = false;
+  likeClicked: boolean;
   avatar_url = "https://api.adorable.io/avatars/40/";
 
 
@@ -71,8 +71,8 @@ export class DetailMediaPage {
     this.userProvider.getAllUserInfo(this.userId).subscribe(res => {
       this.username = res['username'];
     });
-    this.getNumberOfLike();
     this.myId = this.userProvider.my_id;
+    this.getNumberOfLike();
     this.tag_content = "#myori" + this.myId;
     this.checkIsSaved();
   }
@@ -91,6 +91,7 @@ export class DetailMediaPage {
   getNumberOfLike() {
     this.mediaProvider.getLike(this.id).subscribe(data => {
       this.likeArr = data;
+      console.log(data)
       this.checkIsLiked();
       this.likeUsers = [];
       this.numberOfLike = this.likeArr.length;
@@ -111,11 +112,13 @@ export class DetailMediaPage {
       this.mediaProvider.postLike(like).subscribe(response => {
         this.getNumberOfLike();
         this.likePost = "heart";
+        this.likeClicked = true;
       })
     } else {
       this.mediaProvider.deleteLike(this.id).subscribe(Response => {
         this.getNumberOfLike();
         this.likePost = "heart-outline";
+        this.likeClicked = false;
       })
     }
   }
@@ -130,6 +133,7 @@ export class DetailMediaPage {
         this.likePost = "heart-outline";
       }
     }
+    console.log(this.likeClicked)
   }
 
   onIconCommentClick() {
@@ -176,27 +180,27 @@ export class DetailMediaPage {
 
   savePost() {
     const tag = {
-        file_id: this.id,
-        tag: this.tag_content
-      };
-      if (this.saveClicked == false) {
-      this.mediaProvider.postTag(tag).subscribe(res =>{
+      file_id: this.id,
+      tag: this.tag_content
+    };
+    if (this.saveClicked == false) {
+      this.mediaProvider.postTag(tag).subscribe(res => {
         console.log(res)
         this.checkIsSaved();
       })
-      } else {
-        this.mediaProvider.deleteTag(this.tagId).subscribe(res =>{
-          console.log(res)
-          this.checkIsSaved();
-        })
-      }
-      this.mediaProvider.reloadProfile = true;
+    } else {
+      this.mediaProvider.deleteTag(this.tagId).subscribe(res => {
+        console.log(res)
+        this.checkIsSaved();
+      })
+    }
+    this.mediaProvider.reloadProfile = true;
   }
-  
+
   checkIsSaved() {
-    this.mediaProvider.getTagbyFileId(this.id).subscribe(res =>{
+    this.mediaProvider.getTagbyFileId(this.id).subscribe(res => {
       this.tagArr = res;
-      for(let i in this.tagArr) {
+      for (let i in this.tagArr) {
         if (this.tagArr[i].tag == this.tag_content) {
           this.saveClicked = true;
           this.tagId = this.tagArr[i].tag_id;

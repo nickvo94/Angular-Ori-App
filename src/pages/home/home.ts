@@ -22,6 +22,7 @@ export class HomePage {
   numberOfComment: any;
   numberOfLike: any;
   currentUser_id;
+  start: number = 0;
   end: number = 10;
   toggled: boolean = false;
   search: Search = { title: '' };
@@ -55,6 +56,7 @@ export class HomePage {
     this.getNumberOfLike();
     if (this.mediaProvider.reload) {
       this.medias = [];
+      this.start = 0;
       this.end = 10;
       this.getAllMedia();
       this.mediaProvider.reload = false;
@@ -66,20 +68,24 @@ export class HomePage {
   }
 
   getAllMedia() {
-    this.mediaProvider.getAllMedia(this.end).subscribe((data: any) => {
+    this.mediaProvider.getAllMedia(this.start, this.end).subscribe((data: any) => {
       this.medias = data;
       this.getNumberOfComment();
       this.getNumberOfLike();
-      for (let user of this.medias) {
-        this.userProvider.getAllUserInfo(user.user_id).subscribe(res => {
-          for (let i in this.medias) {
-            if (this.medias[i].user_id == res['user_id']) {
-              this.medias[i].username = res['username'];
-            }
-          }
-        })
-      }
+      this.getUsername();
     });
+  }
+
+  getUsername() {
+    for (let user of this.medias) {
+      this.userProvider.getAllUserInfo(user.user_id).subscribe(res => {
+        for (let i in this.medias) {
+          if (this.medias[i].user_id == res['user_id']) {
+            this.medias[i].username = res['username'];
+          }
+        }
+      })
+    }
   }
 
   getNumberOfComment() {
@@ -155,15 +161,23 @@ export class HomePage {
 
   doInfinite(infiniteScroll: InfiniteScroll) {
     setTimeout(() => {
-      this.end += 5;
-      this.getAllMedia();
+      this.start = this.medias.length;
+      console.log( this.start, this.end)
+      this.mediaProvider.getAllMedia(this.start, this.end).subscribe((data: any) => {
+        console.log(data)
+        this.medias = this.medias.concat(data);
+        this.getNumberOfComment();
+        this.getNumberOfLike();
+        this.getUsername();
+      });
       infiniteScroll.complete();
-    }, 3000);
+    }, 2500);
   }
 
   doRefresh(refresher) {
     setTimeout(() => {
       this.medias = [];
+      this.start = 0;
       this.end = 10;
       this.getAllMedia();
       refresher.complete();

@@ -9,8 +9,6 @@ import { Component, ViewChild } from '@angular/core';
 import { InfiniteScroll, NavController } from 'ionic-angular';
 import { Content } from 'ionic-angular';
 import { Search } from '../../app/models/search';
-import { SearchPage } from '../search/search';
-import { Refresher } from 'ionic-angular/components/refresher/refresher';
 
 @Component({
   selector: 'page-home',
@@ -20,17 +18,19 @@ export class HomePage {
   @ViewChild(Content) content: Content;
 
   medias: any = [];
-  arr: any = [];
+  mediaArr: any = [];
   searchArray: any = [];
   numberOfComment: any;
-  numberOfLike: any;  
-  mediaArray: any;
+  numberOfLike: any;
   currentUser_id;
-  end: number = 10;
+  start: number = 0;
+  end: number = 100;
+  doLoadMore: boolean = true;
   toggled: boolean = false;
-  search: Search = {title: ''};
-  showPopular = false;
-
+  search: Search = { title: '' };
+  likeArr: any;
+  tagArr: any;
+  avatar_url = "https://api.adorable.io/avatars/40/";
 
 
   constructor(public navCtrl: NavController,
@@ -51,17 +51,17 @@ export class HomePage {
           console.log(error);
         });
     }
-    this.getAllMedia(null);
+    this.getAllMedia();
   }
 
   ionViewWillEnter() {
     this.getNumberOfComment();
-    this.getNumberOfLike(null, null);
+    this.getNumberOfLike();
     if (this.mediaProvider.reload) {
       this.medias = [];
+      this.start = 0;
       this.end = 10;
-      this.getAllMedia(null);
-
+      this.getAllMedia();
       this.mediaProvider.reload = false;
     }
   }
@@ -69,40 +69,43 @@ export class HomePage {
   scrollToTop() {
     this.content.scrollToTop();
   }
-  getAllMedia(callbacks: any) {
-    this.mediaProvider.getAllMedia(this.end).subscribe((data: any) => {
-      console.log("getAllMedia data received.");
-      let likesCallback = null;
-      let commentCallback = null;
-      let mediaCallback = null;      
+
+  getAllMedia() {
+    this.mediaProvider.getAllMedia(this.start, 10).subscribe((data: any) => {
       this.medias = data;
-
-      console.log(this.medias);
-      // Check callback to see if the call function is done or not
-      if (callbacks != null) {
-        if (typeof callbacks == 'object') {          
-          if (callbacks.likes) {likesCallback = callbacks.likes;}
-          if (callbacks.media) {mediaCallback = callbacks.media;}
-          this.showPopular = true;
-        }
-      }            
-
-      this.getNumberOfComment();      
-      this.getNumberOfLike(likesCallback, this.medias);
-      
-      if (mediaCallback != null) {mediaCallback(this.medias);}
-
-      for (let user of this.medias) {
-        this.userProvider.getAllUserInfo(user.user_id).subscribe(res => {
-          this.mediaArray = res;
-          for (let i in this.medias) {
-            if (this.medias[i].user_id == res['user_id']) {
-              this.medias[i].username = res['username'];
-            }           
-          }         
-        })
-      }      
+      this.getNumberOfComment();
+      this.getNumberOfLike();
+      this.getUsername();
+      this.getOnlyOriMedia(data);
     });
+  }
+
+  getOnlyOriMedia(data) {
+    for (let file of data) {
+      this.mediaProvider.getTagbyFileId(file.file_id).subscribe(res =>{
+        this.tagArr = res;
+        for (let i in this.tagArr) {
+          if(this.tagArr[i].tag == "#ori") {
+            console.log(file)
+            this.mediaArr.push(file);
+            console.log(this.mediaArr)
+            //this.medias.splice(file, 1);
+          } 
+        }
+      })
+    }
+  }
+
+  getUsername() {
+    for (let user of this.medias) {
+      this.userProvider.getAllUserInfo(user.user_id).subscribe(res => {
+        for (let i in this.medias) {
+          if (this.medias[i].user_id == res['user_id']) {
+            this.medias[i].username = res['username'];
+          }
+        }
+      })
+    }
   }
 
   getNumberOfComment() {
@@ -114,42 +117,40 @@ export class HomePage {
     }
   }
 
-  getNumberOfLike(callback: any, param: any) {
-    let count = 0;
+  getNumberOfLike() {
     for (let file of this.medias) {
       this.mediaProvider.getLike(file.file_id).subscribe(res => {
+        this.likeArr = res;
         this.numberOfLike = res;
-        file.numberOfLike = this.numberOfLike.length;                
-          count += 1;
-          if (count == this.medias.length)
-          {
-            if (callback != null) {
-              console.log("getNumberOfLike callback");  
-              callback(param);
-            }
-          }        
+        file.numberOfLike = this.numberOfLike.length;
+        file.like = false;
+        file.likePost = "heart-outline";
+        for (let i in this.likeArr) {
+          if (this.likeArr[i].user_id == this.currentUser_id) {
+            file.like = true;
+            file.likePost = "heart";
+          } else {
+            file.like = false;
+            file.likePost = "heart-outline";
+          }
+        }
       })
     }
   }
 
-  clickLike(id) {
-     const like = {
+  clickLike(id, isLiked) {
+    const like = {
       file_id: id
     };
-    this.mediaProvider.postLike(like).subscribe(response => {
-      this.getNumberOfLike(null, null);
-    }, (error: HttpErrorResponse) => {
-      if (error['statusText'] == 'Bad Request') {
-        this.mediaProvider.deleteLike(id).subscribe(Response => {
-          this.getNumberOfLike(null, null);
-        })
-      }
-    });
-  }
-
-  savePost(media) {
-    this.mediaProvider.saved.push(media);
-    console.log(this.mediaProvider.saved);
+    if (isLiked == false) {
+      this.mediaProvider.postLike(like).subscribe(response => {
+        this.getNumberOfLike();
+      })
+    } else {
+      this.mediaProvider.deleteLike(id).subscribe(Response => {
+        this.getNumberOfLike();
+      })
+    }
   }
 
   openDetailMedia(id, user_id) {
@@ -170,7 +171,7 @@ export class HomePage {
   }
 
   openComment(id, username, title, description) {
-     this.navCtrl.push(CommentPage, {
+    this.navCtrl.push(CommentPage, {
       mediaId: id,
       username: username,
       title: title,
@@ -179,21 +180,33 @@ export class HomePage {
   }
 
   doInfinite(infiniteScroll: InfiniteScroll) {
-    this.showPopular = false;
     setTimeout(() => {
-      this.end += 5;
-      this.getAllMedia(null);
-      infiniteScroll.complete();
-    }, 3000);
+      this.start = this.medias.length;
+      console.log(this.start, this.end)
+      if (this.doLoadMore) {
+        this.mediaProvider.getAllMedia(this.start, 10).subscribe((data: any) => {
+          console.log(data)
+          this.medias = this.medias.concat(data);
+          this.getNumberOfComment();
+          this.getNumberOfLike();
+          this.getUsername();
+          this.getOnlyOriMedia(data);
+        });
+        infiniteScroll.complete();
+      }
+    }, 2500);
+    if (this.medias.length > 30) {
+      this.doLoadMore = false;
+    }
   }
 
   doRefresh(refresher) {
-    this.showPopular = false;
     setTimeout(() => {
       this.medias = [];
+      this.start = 0;
       this.end = 10;
-      this.getAllMedia(null);
-
+      this.getAllMedia();
+      this.doLoadMore = true;
       refresher.complete();
     }, 2000);
   }
@@ -203,50 +216,14 @@ export class HomePage {
     this.toggled = this.toggled ? false : true;
   }
 
-
- onFilter(){
-   console.log('Filter');
-   let likeValue: any;
-   let lastLikeVal = 0;
-   let bool = false;
-   let sortCallbacks = {
-      likes : function (arrayToSort) {
-        console.log("onFilter likes callback.");        
-        arrayToSort = arrayToSort.sort(function(a,b) 
-          {
-            return b.numberOfLike - a.numberOfLike
-          });
-        arrayToSort = arrayToSort.splice(20,80);
-        
-      }
-   }
-
-   this.end = 100;   
-   
-   this.getAllMedia(sortCallbacks);
-   
-    this.end = 5;
- }
-
   onInputSearch(myInput) {
     this.searchArray = [];
-    console.log(myInput);
     this.search.title = String(myInput);
-    console.log(this.search.title);
     if (myInput !== '') {
       this.mediaProvider.postSearch(this.search).subscribe(data => {
         this.searchArray = data;
-        console.log(this.searchArray);
       });
     }
-
-  }
-
-  onSearchEnter() {
-    console.log('Enter');
-    this.navCtrl.push(SearchPage, {
-      searchArray: this.searchArray
-    })
   }
 
   onCancle() {

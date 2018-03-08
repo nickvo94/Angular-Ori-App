@@ -1,3 +1,5 @@
+import { ProfilePage } from './../profile/profile';
+import { OtherProfilePage } from './../other-profile/other-profile';
 import { CommentPage } from './../comment/comment';
 import { UserProvider } from './../../providers/user/user';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -24,8 +26,12 @@ export class DetailMediaPage {
   id;
   userId;
   myId;
+  tagId;
   commentArr: any = [];
   likeArr: any = [];
+  tagArr: any = [];
+  tag_content;
+  saveClicked: boolean;
   numberOfComment: any;
   numberOfLike: any;
   url: string;
@@ -36,6 +42,10 @@ export class DetailMediaPage {
   likeUsers: any = [];
   type: any;
   likePost: string = "heart-outline";
+  likeClicked: boolean;
+  avatar_url = "https://api.adorable.io/avatars/40/";
+
+
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
@@ -61,8 +71,10 @@ export class DetailMediaPage {
     this.userProvider.getAllUserInfo(this.userId).subscribe(res => {
       this.username = res['username'];
     });
-    this.getNumberOfLike();
     this.myId = this.userProvider.my_id;
+    this.getNumberOfLike();
+    this.tag_content = "#myori" + this.myId;
+    this.checkIsSaved();
   }
 
   ionViewWillEnter() {
@@ -79,6 +91,8 @@ export class DetailMediaPage {
   getNumberOfLike() {
     this.mediaProvider.getLike(this.id).subscribe(data => {
       this.likeArr = data;
+      console.log(data)
+      this.checkIsLiked();
       this.likeUsers = [];
       this.numberOfLike = this.likeArr.length;
 
@@ -91,35 +105,44 @@ export class DetailMediaPage {
   }
 
   clickLike() {
-     const like = {
+    const like = {
       file_id: this.id
     };
-    this.mediaProvider.postLike(like).subscribe(response => {
-      this.getNumberOfLike();
-      this.likePost = "heart";
-    }, (error: HttpErrorResponse) => {
-      if (error['statusText'] == 'Bad Request') {
-        this.mediaProvider.deleteLike(this.id).subscribe(Response => {
-          this.getNumberOfLike();
-          this.likePost = "heart-outline";
-        })
-      }
-    });
+    if (!this.likeClicked) {
+      this.mediaProvider.postLike(like).subscribe(response => {
+        this.getNumberOfLike();
+        this.likePost = "heart";
+        this.likeClicked = true;
+      })
+    } else {
+      this.mediaProvider.deleteLike(this.id).subscribe(Response => {
+        this.getNumberOfLike();
+        this.likePost = "heart-outline";
+        this.likeClicked = false;
+      })
+    }
   }
 
-  likeClicked: boolean = false;
+  checkIsLiked() {
+    for (let i in this.likeArr) {
+      if (this.likeArr[i].user_id == this.myId) {
+        this.likeClicked = true;
+        this.likePost = "heart";
+      } else {
+        this.likeClicked = false;
+        this.likePost = "heart-outline";
+      }
+    }
+    console.log(this.likeClicked)
+  }
 
-  public onIconCommentClick() {
+  onIconCommentClick() {
     this.navCtrl.push(CommentPage, {
       mediaId: this.id,
       username: this.username,
       title: this.title,
       des: this.description
     });
-  }
-
-  public onLikeClick() {
-    this.likeClicked = !this.likeClicked;
   }
 
   deletePost() {
@@ -143,6 +166,49 @@ export class DetailMediaPage {
       ]
     });
     alert.present();
+  }
+
+  openOtherUser() {
+    if (this.userId !== this.myId) {
+      this.navCtrl.push(OtherProfilePage, {
+        userId: this.userId
+      })
+    } else {
+      this.navCtrl.push(ProfilePage);
+    }
+  }
+
+  savePost() {
+    const tag = {
+      file_id: this.id,
+      tag: this.tag_content
+    };
+    if (this.saveClicked == false) {
+      this.mediaProvider.postTag(tag).subscribe(res => {
+        console.log(res)
+        this.checkIsSaved();
+      })
+    } else {
+      this.mediaProvider.deleteTag(this.tagId).subscribe(res => {
+        console.log(res)
+        this.checkIsSaved();
+      })
+    }
+    this.mediaProvider.reloadProfile = true;
+  }
+
+  checkIsSaved() {
+    this.mediaProvider.getTagbyFileId(this.id).subscribe(res => {
+      this.tagArr = res;
+      for (let i in this.tagArr) {
+        if (this.tagArr[i].tag == this.tag_content) {
+          this.saveClicked = true;
+          this.tagId = this.tagArr[i].tag_id;
+        } else {
+          this.saveClicked = false;
+        }
+      }
+    })
   }
 
 }

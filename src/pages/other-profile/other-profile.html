@@ -11,7 +11,7 @@
   <ion-toolbar>
     <ion-item id="user-info" margin-left no-lines>
       <ion-thumbnail item-left>
-        <img width="100px" src="../../assets/imgs/logo.png">
+        <img [src]="avatar_url + username + '.png'">
       </ion-thumbnail>
       <h4 margin-horizontal >{{username}}</h4>
       <p margin-horizontal>{{mediaArray.length}} posts</p>

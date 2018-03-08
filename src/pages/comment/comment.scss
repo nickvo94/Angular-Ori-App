@@ -11,6 +11,10 @@ page-comment {
        #author {
         color: color($colors, dark);
         }
+        img {
+            border-radius: 50%;
+            margin-bottom: -3px;
+        }
    }
     #delete {
         font-size: 20px;
@@ -18,12 +22,21 @@ page-comment {
     }
     .wrap-cmt {
         font-size: 1.4rem;
-        margin-top: -2px;
+        color: color($colors, dark);
+       // margin-top: -2px;
         #author-cmt {
             font-size: 15px;
-            color: color($colors, dark);
             font-weight: 600; 
         }
+        img {
+            border-radius: 50%;
+            margin-bottom: -3px;
+            margin-right: 2px;
+        }
+    }
+
+    .wrap-des {
+        color: color($colors, dark);
     }
   
     .submit-btn {

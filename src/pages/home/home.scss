@@ -20,9 +20,6 @@ page-home {
     
 }
 #title {
-        margin-left: 5px;
-        margin-bottom: -10px;
-        margin-top: -7px;
         font-family: $text;
         color: color($colors, dark);
         font-size: 20px;
@@ -32,20 +29,8 @@ page-home {
         font-size: 15px;
         color: color($colors, grey1);
         font-weight: 600;
-        margin-bottom: 5px;
-        margin-left: 5px;
         font-family: $text;
     }
-ion-card {
-    position: relative;
-    #btn-save {
-        position: absolute;
-        top: 5px;
-        right: 10px;
-        font-size: 28px;
-        color: color($colors, secondary);
-    }
-}
 
 ion-row {
     margin: -3px 0;
@@ -55,7 +40,6 @@ ion-row {
         padding-right: 4px;
     }
 }
-
 
 #btn-like, #btn-comment {
     font-family: $text;

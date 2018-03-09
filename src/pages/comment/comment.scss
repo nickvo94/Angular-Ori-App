@@ -2,24 +2,28 @@
 
 page-comment {
     font-family: $text;
+
     #title {
         margin-top: 2px;
         margin-bottom: 5px;
     }
-   ion-list-header {
-       border-bottom: solid lightgray 1px;
-       #author {
+
+    ion-list-header {
+        border-bottom: solid lightgray 1px;
+        #author {
         color: color($colors, dark);
         }
         img {
             border-radius: 50%;
             margin-bottom: -3px;
         }
-   }
+    }
+
     #delete {
         font-size: 20px;
         color: grey;
     }
+
     .wrap-cmt {
         font-size: 1.4rem;
         color: color($colors, dark);
@@ -44,6 +48,7 @@ page-comment {
         height: 23px;
         margin-top: 15px;
     }
+    
     .new-cmt {
         width: 80%;
     }

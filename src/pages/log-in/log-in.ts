@@ -6,12 +6,6 @@ import { TabsPage } from './../tabs/tabs';
 import { Component } from '@angular/core';
 import { AlertController, IonicPage, NavController, NavParams } from 'ionic-angular';
 
-/**
- * Generated class for the LogInPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({
@@ -26,10 +20,10 @@ export class LogInPage {
   }
 
   ionViewDidLoad() {
-    if(localStorage.getItem('token') !== null){
-      this.userProvider.getUserData(localStorage.getItem('token')).subscribe(response =>{
+    if (localStorage.getItem('token') !== null) {
+      this.userProvider.getUserData(localStorage.getItem('token')).subscribe(response => {
         this.userProvider.logged = true;
-      },(err: HttpErrorResponse) =>{
+      }, (err: HttpErrorResponse) => {
         console.log(err);
       });
     }
@@ -40,11 +34,11 @@ export class LogInPage {
   }
 
   login() {
-    this.userProvider.login(this.user).subscribe(response => {     
-        console.log(response['token']);
-        localStorage.setItem('token', response['token']);
-        this.navCtrl.setRoot(TabsPage);
-        this.userProvider.logged = true;     
+    this.userProvider.login(this.user).subscribe(response => {
+      console.log(response['token']);
+      localStorage.setItem('token', response['token']);
+      this.navCtrl.setRoot(TabsPage);
+      this.userProvider.logged = true;
     }, (error: HttpErrorResponse) => {
       console.log(error.error.message);
       this.showError("Wrong username or password");

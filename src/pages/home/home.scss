@@ -1,40 +1,39 @@
 @import "../../theme/variables";
 
-page-home {
-    
+page-home {    
 }
 
- ion-content{
-    margin:0;
- }
+ion-content {
+    margin: 0;
+}
 
- ion-searchbar {
+ion-searchbar {
 	color: rgb(175, 169, 169);
 	margin: 0 !important;
 	padding: 0;
 }
 
-
-#app-name{
-    font-family: $title;
-    
+#app-name {
+    font-family: $title;    
 }
+
 #title {
         font-family: $text;
         color: color($colors, dark);
         font-size: 20px;
         font-weight: 900;
-    }
+}
+
 #author {
         font-size: 15px;
         color: color($colors, grey1);
         font-weight: 600;
         font-family: $text;
-    }
+}
 
 ion-row {
     margin: -3px 0;
-    ion-icon{
+    ion-icon {
         font-size: 23px;
         color: color($colors, secondary);
         padding-right: 4px;

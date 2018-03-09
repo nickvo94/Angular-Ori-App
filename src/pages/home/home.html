@@ -6,17 +6,17 @@
         <ion-icon  name="search"></ion-icon>
       </button>
     </ion-buttons>
-
-    <ion-buttons start>
+    <!-- <ion-buttons start>
       <button ion-button icon-only>
         <ion-icon ios="ios-funnel-outline" md="md-funnel" ></ion-icon>
       </button>
-    </ion-buttons>
+    </ion-buttons> -->
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-searchbar (search)="onSearchEnter()" *ngIf="toggled == true" [(ngModel)]="myInput" [showCancelButton]="shouldShowCancel"
+  <!-- -------------------- SEARCH -------------------- -->
+  <ion-searchbar (search)="onSearchEnter(myInput)" *ngIf="toggled == true" [(ngModel)]="myInput" [showCancelButton]="shouldShowCancel"
     (ionInput)="onInputSearch(myInput)" (ionCancel)="onCancel()">
   </ion-searchbar>
   <ion-list *ngIf="toggled == true">
@@ -24,12 +24,12 @@
       {{item.title}}
     </ion-item>
   </ion-list>
-
+  <!-- -------------------- REFRESH -------------------- -->
   <ion-refresher (ionRefresh)="doRefresh($event)">
     <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles" refreshingText="Refreshing...">
     </ion-refresher-content>
   </ion-refresher>
-
+  <!-- -------------------- LIST OF MEDIA -------------------- -->
   <div *ngIf="toggled == false">
     <ion-card *ngFor="let media of medias">
       <ion-item>
@@ -59,7 +59,7 @@
         </ion-col>
       </ion-row>
     </ion-card>
-
+    <!---------------------- LOAD MORE MEDIA ---------------------->
     <ion-infinite-scroll *ngIf="doLoadMore == true" (ionInfinite)="doInfinite($event)">
       <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more post...">
       </ion-infinite-scroll-content>

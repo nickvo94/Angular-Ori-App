@@ -19,12 +19,13 @@ export class HomePage {
 
   medias: any = [];
   mediaArr: any = [];
+  myOriArray: any = [];
   searchArray: any = [];
   numberOfComment: any;
   numberOfLike: any;
   currentUser_id;
   start: number = 0;
-  end: number = 100;
+  end: number = 10;
   doLoadMore: boolean = true;
   toggled: boolean = false;
   search: Search = { title: '' };
@@ -52,6 +53,7 @@ export class HomePage {
         });
     }
     this.getAllMedia();
+    this.getOriPost();
   }
 
   ionViewWillEnter() {
@@ -80,17 +82,24 @@ export class HomePage {
     });
   }
 
+  getOriPost() {
+    const tag = encodeURIComponent("#ori");
+    this.mediaProvider.getPostByTag(tag).subscribe((res: any) => {
+      console.log(res)
+      this.myOriArray = res.reverse();
+    })
+  }
+
   getOnlyOriMedia(data) {
     for (let file of data) {
-      this.mediaProvider.getTagbyFileId(file.file_id).subscribe(res =>{
+      this.mediaProvider.getTagbyFileId(file.file_id).subscribe(res => {
         this.tagArr = res;
         for (let i in this.tagArr) {
-          if(this.tagArr[i].tag == "#ori") {
+          if (this.tagArr[i].tag == "#ori") {
             console.log(file)
             this.mediaArr.push(file);
             console.log(this.mediaArr)
-            //this.medias.splice(file, 1);
-          } 
+          }
         }
       })
     }
@@ -153,6 +162,7 @@ export class HomePage {
     }
   }
 
+
   openDetailMedia(id, user_id) {
     this.navCtrl.push(DetailMediaPage, {
       mediaId: id,
@@ -182,10 +192,8 @@ export class HomePage {
   doInfinite(infiniteScroll: InfiniteScroll) {
     setTimeout(() => {
       this.start = this.medias.length;
-      console.log(this.start, this.end)
       if (this.doLoadMore) {
         this.mediaProvider.getAllMedia(this.start, 10).subscribe((data: any) => {
-          console.log(data)
           this.medias = this.medias.concat(data);
           this.getNumberOfComment();
           this.getNumberOfLike();
@@ -223,6 +231,14 @@ export class HomePage {
       this.mediaProvider.postSearch(this.search).subscribe(data => {
         this.searchArray = data;
       });
+    }
+  }
+
+  onSearchEnter(myInput) {
+    if (myInput !== '') {
+      this.openDetailMedia(this.searchArray[0].file_id, this.searchArray[0].user_id);
+    } else {
+      this.onCancle();
     }
   }
 

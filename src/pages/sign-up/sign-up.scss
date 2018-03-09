@@ -1,12 +1,11 @@
 @import "../../theme/variables";
 
-
 page-sign-up {
-.login-content {
+  .login-content {
     background: linear-gradient(to left,  color($colors, secondary) ,  color($colors, primary));
  
     .logo-row {
-      padding-bottom: 10px;
+        padding-bottom: 10px;
     }
     
     h2 {
@@ -16,8 +15,8 @@ page-sign-up {
     }
  
     .login-box {
-      background: transparent;
-      padding: 0px 20px;
+        background: transparent;
+        padding: 0px 20px;
     }
  
     ion-row {
@@ -26,15 +25,15 @@ page-sign-up {
     }
  
     ion-item {
-         border-radius: 30px !important;
-         padding-left: 30px !important;
-         font-size: 16px;
-         font-family: $text;
-         color: color($colors, dark);
-         margin-bottom: 10px;
-         border: 1px solid #ffffff;
-         border-bottom: 0px !important;
-         box-shadow: none !important;
+        border-radius: 30px !important;
+        padding-left: 30px !important;
+        font-size: 16px;
+        font-family: $text;
+        color: color($colors, dark);
+        margin-bottom: 10px;
+        border: 1px solid #ffffff;
+        border-bottom: 0px !important;
+        box-shadow: none !important;
     }
  
     .signup-col {
@@ -55,12 +54,10 @@ page-sign-up {
     }
  
     .register-btn {
-       color: #ffffff;
-       font-size: 14px;
+        color: #ffffff;
+        font-size: 14px;
         font-family: $text;
         padding-bottom: 20px;
-
-
     }
   }
 }
@@ -69,7 +66,6 @@ page-sign-up {
   from {
     transform-origin: center;
   }
-
   to {
     transform-origin: center;
     transform: rotate3d(0, 0, 1, 360deg);

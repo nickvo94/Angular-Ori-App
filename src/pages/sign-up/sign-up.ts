@@ -4,12 +4,6 @@ import { UserProvider } from './../../providers/user/user';
 import { Component } from '@angular/core';
 import { AlertController, IonicPage, NavController, NavParams } from 'ionic-angular';
 
-/**
- * Generated class for the SignUpPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({
@@ -22,9 +16,9 @@ export class SignUpPage {
   user: User = { username: '', email: '', password: '' };
   createSuccess = false;
 
-  constructor(public navCtrl: NavController, 
-    public navParams: NavParams, 
-    private userProvider: UserProvider, 
+  constructor(public navCtrl: NavController,
+    public navParams: NavParams,
+    private userProvider: UserProvider,
     private alertCtrl: AlertController) {
   }
 
@@ -36,11 +30,10 @@ export class SignUpPage {
     this.userProvider.register(this.user).subscribe(response => {
       this.createSuccess = true;
       this.showPopup("Success", "Account created.");
-      
-      },
+    },
       error => {
         this.showPopup("Error", "username already exists");
-    });
+      });
   }
 
   showPopup(title, text) {
@@ -64,5 +57,4 @@ export class SignUpPage {
   backLogin() {
     this.navCtrl.push(this.logInPage);
   }
-
 }

@@ -1,13 +1,12 @@
 @import "../../theme/variables";
 
-
 page-log-in {
 .login-content {
     background: linear-gradient(to left,  color($colors, secondary) ,  color($colors, primary));
  
     .logo-row {
-      padding-top: 5px;
-      padding-bottom: 20px;
+        padding-top: 5px;
+        padding-bottom: 20px;
     }
     
     h2 {
@@ -17,52 +16,50 @@ page-log-in {
     }
  
     .login-box {
-      background: transparent;
-      padding: 0px 20px;
-      margin-top: 10px;
+        background: transparent;
+        padding: 0px 20px;
+        margin-top: 10px;
     }
  
     ion-row {
-       align-items: center;
-       text-align: center;
+        align-items: center;
+        text-align: center;
     }
  
     ion-item {
-         border-radius: 30px !important;
-         padding-left: 30px !important;
-         font-size: 16px;
-         font-family: $text;
-         color: color($colors, dark);
-         margin-bottom: 10px;
-         border: 1px solid #ffffff;
-         border-bottom: 0px !important;
-         box-shadow: none !important;
+        border-radius: 30px !important;
+        padding-left: 30px !important;
+        font-size: 16px;
+        font-family: $text;
+        color: color($colors, dark);
+        margin-bottom: 10px;
+        border: 1px solid #ffffff;
+        border-bottom: 0px !important;
+        box-shadow: none !important;
     }
  
     .signup-col {
-       margin: 0px 16px 0px 16px;
+        margin: 0px 16px 0px 16px;
     }
  
     .item-inner {
-       border-bottom-color: white !important;
-       box-shadow: none !important;
+        border-bottom-color: white !important;
+        box-shadow: none !important;
     }
  
     .submit-btn {
-       background: transparent;
-       border: 2px solid #ffffff;
-       font-size: 20px;
-       height: 45px;
-       font-family: $text;
+        background: transparent;
+        border: 2px solid #ffffff;
+        font-size: 20px;
+        height: 45px;
+        font-family: $text;
     }
  
     .register-btn {
-       color: #ffffff;
-       font-size: 14px;
+        color: #ffffff;
+        font-size: 14px;
         font-family: $text;
         padding-bottom: 20px;
-
-
     }
   }
 }
@@ -71,7 +68,6 @@ page-log-in {
   from {
     transform-origin: center;
   }
-
   to {
     transform-origin: center;
     transform: rotate3d(0, 0, 1, 360deg);

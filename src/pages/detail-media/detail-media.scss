@@ -8,24 +8,28 @@ page-detail-media {
         margin-bottom: 5px;
         margin-left: 5px;
     }
+
     #author {
         color: color($colors, dark);
     }
+
    .desciption {
         font-size: 13px;
         color: color($colors, dark);
-   }
+    }
+
     ion-item {
         padding-bottom: -5px;
     }
    
     .wrap-like {
         position: relative;
-         #btn-like {
-             position: absolute;
-             left: 1px;
+        #btn-like {
+            position: absolute;
+            left: 1px;
         }
     }
+
     #txt-like {
         font-size: 15px;
         color: color($colors, dark);
@@ -34,11 +38,13 @@ page-detail-media {
         top: -4px;
         left: 41px;
     }
+
     #time {
         font-size: 13px;
         font-weight: 500;
         color: color($colors, grey1);
     }
+
     .wrap-des {
         margin-top: -5px;
         margin-left: 5px;

@@ -1,8 +1,6 @@
 <ion-content class="login-content" padding>
-  <!-- <button ion-button (click)="goToHomePage()">Log In</button> -->
   <ion-row class="logo-row">
     <ion-col>
-
       <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="150"
         height="150" viewBox="0 0 1045 1046">
         <g id="Group_" data-name="&lt;Group&gt;">
@@ -21,7 +19,6 @@
         />
       </svg>
       <h2> Welcome to Ori </h2>
-
     </ion-col>
   </ion-row>
   <div class="login-box">
@@ -29,15 +26,12 @@
       <ion-row>
         <ion-col>
           <ion-list inset>
-
             <ion-item>
               <ion-input type="text" placeholder="Username" name="username" [(ngModel)]="user.username" required></ion-input>
             </ion-item>
-
             <ion-item>
               <ion-input type="password" placeholder="Password" name="password" [(ngModel)]="user.password" required></ion-input>
             </ion-item>
-
           </ion-list>
         </ion-col>
       </ion-row>
@@ -48,6 +42,5 @@
       </ion-row>
     </form>
     <button ion-button class="register-btn" block clear (click)="createAccount()">Create New Account</button>
-
   </div>
 </ion-content>

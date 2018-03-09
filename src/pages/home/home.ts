@@ -9,6 +9,7 @@ import { Component, ViewChild } from '@angular/core';
 import { InfiniteScroll, NavController } from 'ionic-angular';
 import { Content } from 'ionic-angular';
 import { Search } from '../../app/models/search';
+import { SearchPage } from '../search/search';
 
 @Component({
   selector: 'page-home',
@@ -224,6 +225,13 @@ export class HomePage {
         this.searchArray = data;
       });
     }
+  }
+
+  onSearchEnter() {
+    console.log('Enter');
+    this.navCtrl.push(SearchPage, {
+      searchArray: this.searchArray
+    })
   }
 
   onCancle() {

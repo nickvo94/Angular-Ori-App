@@ -20,6 +20,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { UserProvider } from '../providers/user/user';
 import { MediaProvider } from '../providers/media/media';
+import { SearchPage } from '../pages/search/search';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { MediaProvider } from '../providers/media/media';
     ProfilePage,
     OtherProfilePage,
     CommentPage,
+    SearchPage
   ],
   imports: [
     BrowserModule,
@@ -53,6 +55,7 @@ import { MediaProvider } from '../providers/media/media';
     ProfilePage,
     OtherProfilePage,
     CommentPage,
+    SearchPage
   ],
   providers: [
     StatusBar,

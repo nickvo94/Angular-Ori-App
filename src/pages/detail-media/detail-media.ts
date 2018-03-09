@@ -52,6 +52,7 @@ export class DetailMediaPage {
   }
 
   ionViewDidLoad() {
+    //Get chosen file
     this.mediaProvider.getMediaById(this.navParams.get('mediaId')).
       subscribe(response => {
         this.url = this.mediaProvider.mediaUrl + response['filename'];
@@ -62,6 +63,7 @@ export class DetailMediaPage {
       }, (error: HttpErrorResponse) => {
         console.log(error);
       });
+    //get username of chosen file
     this.userProvider.getAllUserInfo(this.userId).subscribe(res => {
       this.username = res['username'];
     });
@@ -75,6 +77,7 @@ export class DetailMediaPage {
     this.getNumberOfComment();
   }
 
+  //count number of comments
   getNumberOfComment() {
     this.mediaProvider.getComment(this.id).subscribe(res => {
       this.commentArr = res;
@@ -82,14 +85,13 @@ export class DetailMediaPage {
     });
   }
 
+  //count number of likes
   getNumberOfLike() {
     this.mediaProvider.getLike(this.id).subscribe(data => {
       this.likeArr = data;
-      console.log(data)
       this.checkIsLiked();
       this.likeUsers = [];
       this.numberOfLike = this.likeArr.length;
-
       for (var i = 0; i < (this.numberOfLike); i++) {
         this.userProvider.getAllUserInfo(data[i]['user_id']).subscribe(data => {
           this.likeUsers.push(data['username']);
@@ -117,6 +119,7 @@ export class DetailMediaPage {
     }
   }
 
+  //Display whether current user has liked or not
   checkIsLiked() {
     for (let i in this.likeArr) {
       if (this.likeArr[i].user_id == this.myId) {
@@ -127,9 +130,9 @@ export class DetailMediaPage {
         this.likePost = "heart-outline";
       }
     }
-    console.log(this.likeClicked)
   }
 
+  //open the comment page
   onIconCommentClick() {
     this.navCtrl.push(CommentPage, {
       mediaId: this.id,
@@ -139,6 +142,7 @@ export class DetailMediaPage {
     });
   }
 
+  //show popup to confirm deleting post only when current user is the author
   deletePost() {
     let alert = this.alertCtrl.create({
       subTitle: 'Delete this post?',
@@ -162,11 +166,12 @@ export class DetailMediaPage {
     alert.present();
   }
 
+  //open user profile page
   openOtherUser() {
     if (this.userId !== this.myId) {
       this.navCtrl.push(OtherProfilePage, {
         userId: this.userId
-      })
+      });
     } else {
       this.navCtrl.push(ProfilePage);
     }
@@ -177,20 +182,22 @@ export class DetailMediaPage {
       file_id: this.id,
       tag: this.tag_content
     };
+    //create specific tag to save post
     if (this.saveClicked == false) {
       this.mediaProvider.postTag(tag).subscribe(res => {
         console.log(res)
         this.checkIsSaved();
-      })
+      });
     } else {
       this.mediaProvider.deleteTag(this.tagId).subscribe(res => {
         console.log(res)
         this.checkIsSaved();
-      })
+      });
     }
     this.mediaProvider.reloadProfile = true;
   }
 
+  //Display whether current user has saved or not
   checkIsSaved() {
     this.mediaProvider.getTagbyFileId(this.id).subscribe(res => {
       this.tagArr = res;
@@ -202,7 +209,7 @@ export class DetailMediaPage {
           this.saveClicked = false;
         }
       }
-    })
+    });
   }
 
 }

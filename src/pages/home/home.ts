@@ -18,8 +18,7 @@ export class HomePage {
   @ViewChild(Content) content: Content;
 
   medias: any = [];
-  mediaArr: any = [];
-  myOriArray: any = [];
+  OriArray: any = [];
   searchArray: any = [];
   numberOfComment: any;
   numberOfLike: any;
@@ -56,9 +55,11 @@ export class HomePage {
     this.getOriPost();
   }
 
+  //auto update number of commnent/like
   ionViewWillEnter() {
     this.getNumberOfComment();
     this.getNumberOfLike();
+    //reload homepage
     if (this.mediaProvider.reload) {
       this.medias = [];
       this.start = 0;
@@ -68,43 +69,31 @@ export class HomePage {
     }
   }
 
+  //back to top
   scrollToTop() {
     this.content.scrollToTop();
   }
 
+  //get number of media files providing a starting and limit number
   getAllMedia() {
     this.mediaProvider.getAllMedia(this.start, 10).subscribe((data: any) => {
       this.medias = data;
       this.getNumberOfComment();
       this.getNumberOfLike();
       this.getUsername();
-      this.getOnlyOriMedia(data);
     });
   }
 
+  //get only Ori media files by tag
   getOriPost() {
     const tag = encodeURIComponent("#ori");
     this.mediaProvider.getPostByTag(tag).subscribe((res: any) => {
       console.log(res)
-      this.myOriArray = res.reverse();
-    })
+      this.OriArray = res.reverse();
+    });
   }
 
-  getOnlyOriMedia(data) {
-    for (let file of data) {
-      this.mediaProvider.getTagbyFileId(file.file_id).subscribe(res => {
-        this.tagArr = res;
-        for (let i in this.tagArr) {
-          if (this.tagArr[i].tag == "#ori") {
-            console.log(file)
-            this.mediaArr.push(file);
-            console.log(this.mediaArr)
-          }
-        }
-      })
-    }
-  }
-
+  //get username each files
   getUsername() {
     for (let user of this.medias) {
       this.userProvider.getAllUserInfo(user.user_id).subscribe(res => {
@@ -113,10 +102,11 @@ export class HomePage {
             this.medias[i].username = res['username'];
           }
         }
-      })
+      });
     }
   }
 
+  //count number of commnents by file_id
   getNumberOfComment() {
     for (let file of this.medias) {
       this.mediaProvider.getComment(file.file_id).subscribe(res => {
@@ -126,6 +116,7 @@ export class HomePage {
     }
   }
 
+  //count number of likes by file_id
   getNumberOfLike() {
     for (let file of this.medias) {
       this.mediaProvider.getLike(file.file_id).subscribe(res => {
@@ -134,6 +125,7 @@ export class HomePage {
         file.numberOfLike = this.numberOfLike.length;
         file.like = false;
         file.likePost = "heart-outline";
+        //Display whether current user has liked or not
         for (let i in this.likeArr) {
           if (this.likeArr[i].user_id == this.currentUser_id) {
             file.like = true;
@@ -143,7 +135,7 @@ export class HomePage {
             file.likePost = "heart-outline";
           }
         }
-      })
+      });
     }
   }
 
@@ -162,7 +154,7 @@ export class HomePage {
     }
   }
 
-
+  //open detail page by file_id
   openDetailMedia(id, user_id) {
     this.navCtrl.push(DetailMediaPage, {
       mediaId: id,
@@ -170,6 +162,7 @@ export class HomePage {
     })
   }
 
+  //open user profile page by user_id
   openOtherUser(user_id) {
     if (user_id !== this.currentUser_id) {
       this.navCtrl.push(OtherProfilePage, {
@@ -180,6 +173,7 @@ export class HomePage {
     }
   }
 
+  //open comment page by file_id
   openComment(id, username, title, description) {
     this.navCtrl.push(CommentPage, {
       mediaId: id,
@@ -189,6 +183,7 @@ export class HomePage {
     });
   }
 
+  //load more media files providing a starting and limit number
   doInfinite(infiniteScroll: InfiniteScroll) {
     setTimeout(() => {
       this.start = this.medias.length;
@@ -198,16 +193,17 @@ export class HomePage {
           this.getNumberOfComment();
           this.getNumberOfLike();
           this.getUsername();
-          this.getOnlyOriMedia(data);
         });
         infiniteScroll.complete();
       }
     }, 2500);
+    //limit number of media files (changeable)
     if (this.medias.length > 30) {
       this.doLoadMore = false;
     }
   }
 
+  //pull to refresh page
   doRefresh(refresher) {
     setTimeout(() => {
       this.medias = [];
@@ -224,6 +220,7 @@ export class HomePage {
     this.toggled = this.toggled ? false : true;
   }
 
+  //check search input, then get list of result files by title
   onInputSearch(myInput) {
     this.searchArray = [];
     this.search.title = String(myInput);
@@ -234,6 +231,7 @@ export class HomePage {
     }
   }
 
+  //open detail page of 1st search result 
   onSearchEnter(myInput) {
     if (myInput !== '') {
       this.openDetailMedia(this.searchArray[0].file_id, this.searchArray[0].user_id);
@@ -242,6 +240,7 @@ export class HomePage {
     }
   }
 
+  //cancle search
   onCancle() {
     console.log('Cancle');
   }

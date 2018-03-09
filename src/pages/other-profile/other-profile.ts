@@ -5,12 +5,6 @@ import { UserProvider } from './../../providers/user/user';
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
-/**
- * Generated class for the OtherProfilePage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @Component({
   selector: 'page-other-profile',
@@ -20,7 +14,6 @@ export class OtherProfilePage {
 
   username;
   email;
-  fullname;
   user_id;
   mediaArray: any = [];
   avatar_url = "https://api.adorable.io/avatars/100/";
@@ -35,26 +28,28 @@ export class OtherProfilePage {
   }
 
   ionViewDidLoad() {
+    //get user information
     this.userProvider.getAllUserInfo(this.user_id).subscribe(res => {
-        this.username = res['username'];
-        this.email = res['email'];
-        this.fullname = res['full_name'];
-      }, (err: HttpErrorResponse) => {
-        console.log(err);
-      });
-      this.getMediaOtherUser();
+      this.username = res['username'];
+      this.email = res['email'];
+    }, (err: HttpErrorResponse) => {
+      console.log(err);
+    });
+    this.getMediaOtherUser();
   }
 
+  //get list of files by user_id
   getMediaOtherUser() {
     this.userProvider.getMediaOfOtherUser(this.user_id).subscribe((res: any) => {
       this.mediaArray = res.reverse();
-    })
+    });
   }
 
+  //open detail page by file_id
   openDetailMedia(file_id, user_id) {
     this.navCtrl.push(DetailMediaPage, {
       mediaId: file_id,
       userId: user_id
-    })
+    });
   }
 }

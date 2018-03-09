@@ -13,12 +13,6 @@ import {
 import { MediaProvider } from '../../providers/media/media';
 import { HttpErrorResponse } from '@angular/common/http/src/response';
 
-/**
- * Generated class for the UploadMediaPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({
@@ -36,7 +30,6 @@ export class UploadMediaPage {
     content: 'Uploading, please wait...',
   });
 
-
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     private mediaProvider: MediaProvider,
@@ -47,20 +40,17 @@ export class UploadMediaPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad UploadPage');
   }
 
   setFile(evt) {
-    console.log(evt.target.files[0]);
     this.file = evt.target.files[0];
     this.fileName = this.file.name;
   }
 
   startUpload(form: any) {
     //Create FormData object
-    //add title & discription, add file,send FormData obj
+    //add title & discription, add file
     this.loading.present();
-
     const formData: FormData = new FormData();
     if (this.mediaData) {
       formData.append('file', this.dataURItoBlob(this.mediaData));
@@ -71,10 +61,10 @@ export class UploadMediaPage {
     }
     formData.append('title', this.media.title);
     formData.append('description', this.media.description);
-
+    //upload new file
     this.mediaProvider.uploadFile(formData).subscribe(data => {
-      console.log(data);
       this.message = data['message'];
+      //create tag of the file for sorting later
       const tag = {
         file_id: data['file_id'],
         tag: "#ori"
@@ -83,6 +73,7 @@ export class UploadMediaPage {
         setTimeout(() => {
           this.presentToast(this.message);
           this.loading.dismiss();
+          //back to homepage
           this.app.getRootNav().setRoot(TabsPage);
           this.mediaData = '';
         }, 3000);
@@ -96,7 +87,8 @@ export class UploadMediaPage {
       this.presentToast("Error while uploading");
     });
   }
- 
+
+  //access to mobile camera for taking new photo
   takePicture() {
     const options: CameraOptions = {
       quality: 100,
@@ -120,22 +112,20 @@ export class UploadMediaPage {
   dataURItoBlob(dataURI) {
     // convert base64 to raw binary data held in a string
     var byteString = atob(dataURI.split(',')[1]);
-
     // separate out the mime component
     var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
-
     // write the bytes of the string to an ArrayBuffer
     var arrayBuffer = new ArrayBuffer(byteString.length);
     var _ia = new Uint8Array(arrayBuffer);
     for (var i = 0; i < byteString.length; i++) {
       _ia[i] = byteString.charCodeAt(i);
     }
-
     var dataView = new DataView(arrayBuffer);
     var blob = new Blob([dataView.buffer], { type: mimeString });
     return blob;
   }
 
+  //reset page when click cancel
   cancel() {
     this.navCtrl.setRoot(this.navCtrl.getActive().component);
   }

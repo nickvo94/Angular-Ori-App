@@ -7,12 +7,6 @@ import { UserProvider } from './../../providers/user/user';
 import { Component } from '@angular/core';
 import { App, NavController, NavParams, AlertController } from 'ionic-angular';
 
-/**
- * Generated class for the ProfilePage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @Component({
   selector: 'page-profile',
@@ -40,16 +34,14 @@ export class ProfilePage {
 
   ionViewDidLoad() {
     this.listMedia = "myPost";
+    //get current user information
     if (localStorage.getItem('token') !== null) {
       this.userProvider.getUserData(localStorage.getItem('token')).subscribe(res => {
         this.userId = res['user_id'];
         this.tag_content = "#myori" + this.userId;
-        console.log(this.userId);
-        console.log(this.tag_content)
         this.getSavedPost();
         this.username = res['username'];
         this.email = res['email'];
-
       }, (err: HttpErrorResponse) => {
         console.log(err);
       });
@@ -57,6 +49,7 @@ export class ProfilePage {
     this.getMediaCurrentUser();
   }
 
+  //auto update when add/delete or save/unsave files
   ionViewWillEnter() {
     if (this.mediaProvider.reloadProfile) {
       this.getMediaCurrentUser();
@@ -65,27 +58,31 @@ export class ProfilePage {
     }
   }
 
+  //get list of files of current user
   getMediaCurrentUser() {
     this.userProvider.getMediaOfCurrentUser().subscribe((res: any) => {
       this.myMediaArray = res.reverse();
-    })
+    });
   }
 
+  //get list of saved files of current user
   getSavedPost() {
     const tag = encodeURIComponent(this.tag_content);
-    this.mediaProvider.getPostByTag(tag).subscribe((res:any) => {
+    this.mediaProvider.getPostByTag(tag).subscribe((res: any) => {
       console.log(res)
       this.mySavedArray = res.reverse();
-    })
+    });
   }
 
+  //open detail page by file_id
   openDetailMedia(file_id, user_id) {
     this.navCtrl.push(DetailMediaPage, {
       mediaId: file_id,
       userId: user_id
-    })
+    });
   }
 
+  //show popup with inputs to edit current user info
   editProfile() {
     let alert = this.alertCtrl.create({
       title: 'Edit Profile',
@@ -132,6 +129,7 @@ export class ProfilePage {
     alert.present();
   }
 
+  //Check if new username already exists
   checkUsername(username) {
     if (username !== this.username) {
       this.userProvider.checkUsername(username).subscribe(res => {
@@ -145,6 +143,7 @@ export class ProfilePage {
       });
     }
   }
+
   showPopup(title, text) {
     let alert = this.alertCtrl.create({
       title: title,
@@ -159,6 +158,7 @@ export class ProfilePage {
     alert.present();
   }
 
+  //show popup to confirm delete post
   deletePost(file_id, post) {
     let alert = this.alertCtrl.create({
       subTitle: 'Delete this post?',
@@ -169,7 +169,6 @@ export class ProfilePage {
             this.mediaProvider.deleteMedia(file_id).subscribe(res => {
               console.log(res['message']);
               this.myMediaArray.splice(this.myMediaArray.indexOf(post), 1);
-              console.log(this.myMediaArray);
               this.mediaProvider.reload = true;
             });
           }
@@ -183,6 +182,7 @@ export class ProfilePage {
     alert.present();
   }
 
+  //show popup to confirm logout
   logout() {
     let alert = this.alertCtrl.create({
       subTitle: 'Do you want to logout?',
@@ -202,6 +202,4 @@ export class ProfilePage {
     });
     alert.present();
   }
-
-
 }

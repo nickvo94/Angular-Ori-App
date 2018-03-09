@@ -5,12 +5,6 @@ import { MediaProvider } from './../../providers/media/media';
 import { Component } from '@angular/core';
 import { NavController, NavParams, AlertController } from 'ionic-angular';
 
-/**
- * Generated class for the CommentPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @Component({
   selector: 'page-comment',
@@ -24,7 +18,6 @@ export class CommentPage {
   title;
   description;
   comments: any = [];
-  commentArr: any;
   newComment;
   myComment: boolean;
   avatar_url = "https://api.adorable.io/avatars/40/";
@@ -47,6 +40,7 @@ export class CommentPage {
     this.getAllComment();
   }
 
+  //add a new comment
   postComment() {
     const comment = {
       file_id: this.id,
@@ -55,9 +49,10 @@ export class CommentPage {
     this.mediaProvider.postComment(comment).subscribe(res => {
       this.getAllComment();
       this.newComment = '';
-    })
+    });
   }
 
+  //show popup to confirm detele comment
   deleteComment(cmt_id, cmt) {
     let alert = this.alertCtrl.create({
       subTitle: 'Delete this comment?',
@@ -80,27 +75,29 @@ export class CommentPage {
     alert.present();
   }
 
+  //get list of comments by file_id
   getAllComment() {
     this.mediaProvider.getComment(this.id).subscribe((res: any) => {
       this.comments = res;
+      //get username of comment
       for (let cmt of this.comments) {
         this.userProvider.getAllUserInfo(cmt.user_id).subscribe(res => {
-          this.commentArr = res;
           for (let i in this.comments) {
             if (this.comments[i].user_id == res['user_id']) {
               this.comments[i].username = res['username'];
             }
           }
-        })
+        });
       }
-    })
+    });
   }
 
+  //navigate to user profile page
   openOtherUser(user_id) {
     if (user_id !== this.my_id) {
       this.navCtrl.push(OtherProfilePage, {
         userId: user_id
-      })
+      });
     } else {
       this.navCtrl.push(ProfilePage);
     }

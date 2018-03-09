@@ -36,6 +36,7 @@ export class LogInPage {
   login() {
     this.userProvider.login(this.user).subscribe(response => {
       console.log(response['token']);
+      //save user data to local storage
       localStorage.setItem('token', response['token']);
       this.navCtrl.setRoot(TabsPage);
       this.userProvider.logged = true;

@@ -34,12 +34,10 @@ export class DetailMediaPage {
   description: any;
   username: any;
   time;
-  likeUsers: any = [];
   type: any;
   likePost: string = "heart-outline";
   likeClicked: boolean;
   avatar_url = "https://api.adorable.io/avatars/40/";
-
 
 
   constructor(public navCtrl: NavController,
@@ -91,13 +89,7 @@ export class DetailMediaPage {
     this.mediaProvider.getLike(this.id).subscribe(data => {
       this.likeArr = data;
       this.checkIsLiked();
-      this.likeUsers = [];
       this.numberOfLike = this.likeArr.length;
-      for (var i = 0; i < (this.numberOfLike); i++) {
-        this.userProvider.getAllUserInfo(data[i]['user_id']).subscribe(data => {
-          this.likeUsers.push(data['username']);
-        });
-      }
     });
   }
 

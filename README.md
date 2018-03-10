@@ -1,4 +1,4 @@
-# Ori: DIY tutorials and products sharing application
+# ORI: DIY tutorials and products sharing application
 Hybrid application with Angular 4 and Ionic 3 framework
 
 ## Technical implementation
@@ -19,15 +19,12 @@ From terminal, run `npm install -g` to install or update npm
 ### 2. Clone or download this repo.
 `git clone https://github.com/hongloans9/Ori---Media-Sharing-Application.git`
 - On your command line, navigate to root folder and install:
-
        `npm install --save`
 ### 3. Deploy the application
 - Deploy the app on web-browsers
-
        `ionic serve`
 - Deploy the app on smart phones
 - Make sure you have your physical device attached or a suitable emulator installed.
-
        `ionic cordova run android` or `ionic cordova run ios`
 
 ## Screenshots

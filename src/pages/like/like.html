@@ -1,0 +1,16 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Likes</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let like of likeArr" (click)="openOtherUser(like.user_id)">
+      <p class="wrap">
+        <img width="23px" [src]="avatar_url + like.username + '.png'">
+        <span id="author">{{like.username}}</span>
+      </p>
+    </ion-item>
+  </ion-list>
+</ion-content>

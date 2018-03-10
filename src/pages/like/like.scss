@@ -1,0 +1,17 @@
+@import "../../theme/variables";
+
+page-like {
+    font-family: $text;
+    .wrap {
+        #author {
+            font-size: 15px;
+            font-weight: 600;
+            color: color($colors, dark); 
+        }
+        img {
+            border-radius: 50%;
+            margin-bottom: -3px;
+            margin-right: 2px;
+        }
+    }
+}

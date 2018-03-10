@@ -1,3 +1,4 @@
+import { LikePage } from './../pages/like/like';
 import { CommentPage } from './../pages/comment/comment';
 import { OtherProfilePage } from './../pages/other-profile/other-profile';
 import { ProfilePage } from './../pages/profile/profile';
@@ -30,6 +31,7 @@ import { MediaProvider } from '../providers/media/media';
     ProfilePage,
     OtherProfilePage,
     CommentPage,
+    LikePage
   ],
   imports: [
     BrowserModule,
@@ -50,6 +52,7 @@ import { MediaProvider } from '../providers/media/media';
     ProfilePage,
     OtherProfilePage,
     CommentPage,
+    LikePage
   ],
   providers: [
     StatusBar,

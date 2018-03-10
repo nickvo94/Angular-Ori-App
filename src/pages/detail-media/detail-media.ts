@@ -1,3 +1,4 @@
+import { LikePage } from './../like/like';
 import { ProfilePage } from './../profile/profile';
 import { OtherProfilePage } from './../other-profile/other-profile';
 import { CommentPage } from './../comment/comment';
@@ -139,6 +140,13 @@ export class DetailMediaPage {
       username: this.username,
       title: this.title,
       des: this.description
+    });
+  }
+
+  //open list of users who liked this post
+  openLikeUser() {
+    this.navCtrl.push(LikePage, {
+      mediaId: this.id,
     });
   }
 

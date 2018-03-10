@@ -31,7 +31,7 @@
         <button id="btn-like" (click)="clickLike()" ion-button clear small icon-start>
         <ion-icon [name]="likePost"></ion-icon>
         </button>
-        <p id="txt-like">{{numberOfLike}} likes </p>
+        <p id="txt-like" (click)="openLikeUser()">{{numberOfLike}} likes </p>
       </div>
     </ion-col>
     <ion-col>

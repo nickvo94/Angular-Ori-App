@@ -1,5 +1,5 @@
 # ORI: DIY tutorials and products sharing application
-Hybrid application with Angular 4 and Ionic 3 framework
+Hybrid application using Angular 4 and Ionic 3 framework
 
 ## Technical implementation
 - [Ionic 3 framework](https://ionicframework.com/framework)
@@ -29,9 +29,15 @@ From terminal, run `npm install -g` to install or update npm
   `ionic cordova run android` or `ionic cordova run ios`
 
 ## Screenshots
+|                  LOG-IN                     |                  HOME                     |                  PROFILE              |       
+| ------------------------------------------- |-------------------------------------------|---------------------------------------|
+|![2145](https://user-images.githubusercontent.com/16826885/37249577-f037a43c-24f2-11e8-89ee-8e9dd7204279.PNG) |  ![5555](https://user-images.githubusercontent.com/16826885/37249588-3d83e1a6-24f3-11e8-80ed-d1daee360a48.PNG) | ![2232](https://user-images.githubusercontent.com/16826885/37249602-5160ca2c-24f3-11e8-8117-249cfe65a045.PNG|
 
 ## Test
-This app was tested successfully on Samsung galaxy S4 Android 5.0 and Chrome browser.
+This app was tested successfully on Samsung galaxy S4, Android emulator and Chrome browser.
 
 ## Bugs and Feedback
 For bugs, questions and discussions please use the [GitHub Issues](https://github.com/hongloans9/Ori---Media-Sharing-Application/issues).
+
+## Liscense
+This project is licensed under the MIT License - see [License](https://github.com/hongloans9/Ori---Media-Sharing-Application/blob/master/LICENSE) 

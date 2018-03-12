@@ -33,6 +33,10 @@ From terminal, run `npm install -g` to install or update npm
 | ------------------------------------------- |-------------------------------------------|---------------------------------------|
 |![2145](https://user-images.githubusercontent.com/16826885/37249577-f037a43c-24f2-11e8-89ee-8e9dd7204279.PNG) |  ![5555](https://user-images.githubusercontent.com/16826885/37249588-3d83e1a6-24f3-11e8-80ed-d1daee360a48.PNG) | ![2232](https://user-images.githubusercontent.com/16826885/37249602-5160ca2c-24f3-11e8-8117-249cfe65a045.PNG)|
 
+## Documentation
+UI/UX documentation can be found [here](https://drive.google.com/drive/folders/1jSUOWjPCEkfk4y4jqujMt2IAjVeiZ3Dl
+)
+
 ## Test
 This app was tested successfully on Samsung galaxy S4, Android emulator and Chrome browser.
 

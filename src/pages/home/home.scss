@@ -1,6 +1,7 @@
 @import "../../theme/variables";
 
-page-home {    
+page-home { 
+    font-family: $text;   
 }
 
 ion-content {
@@ -18,17 +19,17 @@ ion-searchbar {
 }
 
 #title {
-        font-family: $text;
-        color: color($colors, dark);
-        font-size: 20px;
-        font-weight: 900;
+    font-family: $text;
+    color: color($colors, dark);
+    font-size: 20px;
+    font-weight: 900;
 }
 
 #author {
-        font-size: 15px;
-        color: color($colors, grey1);
-        font-weight: 600;
-        font-family: $text;
+    font-size: 15px;
+    color: color($colors, grey1);
+    font-weight: 600;
+    font-family: $text;
 }
 
 ion-row {

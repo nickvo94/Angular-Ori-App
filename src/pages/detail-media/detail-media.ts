@@ -114,7 +114,7 @@ export class DetailMediaPage {
 
   //Display whether current user has liked or not
   checkIsLiked() {
-    this.likeClicked = false;  
+    this.likeClicked = false;
     this.likePost = "heart-outline";
     for (let i in this.likeArr) {
       if (this.likeArr[i].user_id == this.myId) {
@@ -184,12 +184,10 @@ export class DetailMediaPage {
     //create specific tag to save post
     if (this.saveClicked == false) {
       this.mediaProvider.postTag(tag).subscribe(res => {
-        console.log(res)
         this.checkIsSaved();
       });
     } else {
       this.mediaProvider.deleteTag(this.tagId).subscribe(res => {
-        console.log(res)
         this.checkIsSaved();
       });
     }
@@ -200,12 +198,11 @@ export class DetailMediaPage {
   checkIsSaved() {
     this.mediaProvider.getTagbyFileId(this.id).subscribe(res => {
       this.tagArr = res;
+      this.saveClicked = false;
       for (let i in this.tagArr) {
         if (this.tagArr[i].tag == this.tag_content) {
           this.saveClicked = true;
           this.tagId = this.tagArr[i].tag_id;
-        } else {
-          this.saveClicked = false;
         }
       }
     });

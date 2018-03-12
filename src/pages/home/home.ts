@@ -130,9 +130,6 @@ export class HomePage {
           if (this.likeArr[i].user_id == this.currentUser_id) {
             file.like = true;
             file.likePost = "heart";
-          } else {
-            file.like = false;
-            file.likePost = "heart-outline";
           }
         }
       });

@@ -114,13 +114,12 @@ export class DetailMediaPage {
 
   //Display whether current user has liked or not
   checkIsLiked() {
+    this.likeClicked = false;  
+    this.likePost = "heart-outline";
     for (let i in this.likeArr) {
       if (this.likeArr[i].user_id == this.myId) {
         this.likeClicked = true;
         this.likePost = "heart";
-      } else {
-        this.likeClicked = false;
-        this.likePost = "heart-outline";
       }
     }
   }

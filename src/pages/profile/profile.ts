@@ -164,6 +164,10 @@ export class ProfilePage {
       subTitle: 'Delete this post?',
       buttons: [
         {
+          text: 'Cancel',
+          role: 'cancel',
+        },
+        {
           text: 'Delete',
           handler: () => {
             this.mediaProvider.deleteMedia(file_id).subscribe(res => {
@@ -172,10 +176,6 @@ export class ProfilePage {
               this.mediaProvider.reload = true;
             });
           }
-        },
-        {
-          text: 'Cancel',
-          role: 'cancel',
         }
       ]
     });
@@ -188,15 +188,15 @@ export class ProfilePage {
       subTitle: 'Do you want to logout?',
       buttons: [
         {
+          text: 'Cancel',
+          role: 'cancel',
+        },
+        {
           text: 'Yes',
           handler: () => {
             this.userProvider.logout();
             this.app.getRootNav().setRoot(LogInPage);
           }
-        },
-        {
-          text: 'Cancel',
-          role: 'cancel',
         }
       ]
     });

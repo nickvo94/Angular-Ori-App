@@ -147,6 +147,10 @@ export class DetailMediaPage {
       subTitle: 'Delete this post?',
       buttons: [
         {
+          text: 'Cancel',
+          role: 'cancel',
+        },
+        {
           text: 'Delete',
           handler: () => {
             this.mediaProvider.deleteMedia(this.id).subscribe(res => {
@@ -155,10 +159,6 @@ export class DetailMediaPage {
               this.navCtrl.pop();
             });
           }
-        },
-        {
-          text: 'Cancel',
-          role: 'cancel',
         }
       ]
     });

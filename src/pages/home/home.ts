@@ -208,7 +208,6 @@ export class HomePage {
       this.medias = [];
       //this.getOriPost();
       this.start = 0;
-      this.end = 10;
       this.getAllMedia();
       this.doLoadMore = true;
       refresher.complete();

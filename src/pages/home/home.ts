@@ -51,7 +51,7 @@ export class HomePage {
           console.log(error);
         });
     }
-    this.getAllMedia();
+    //this.getAllMedia();
     this.getOriPost();
   }
 
@@ -62,9 +62,10 @@ export class HomePage {
     //reload homepage
     if (this.mediaProvider.reload) {
       this.medias = [];
-      this.start = 0;
-      this.end = 10;
-      this.getAllMedia();
+      this.getOriPost();
+      // this.start = 0;
+      // this.end = 10;
+      // this.getAllMedia();
       this.mediaProvider.reload = false;
     }
   }
@@ -88,8 +89,11 @@ export class HomePage {
   getOriPost() {
     const tag = encodeURIComponent("#ori");
     this.mediaProvider.getPostByTag(tag).subscribe((res: any) => {
-      console.log(res)
       this.OriArray = res.reverse();
+      this.medias = res;
+      this.getNumberOfComment();
+      this.getNumberOfLike();
+      this.getUsername();
     });
   }
 
@@ -185,7 +189,7 @@ export class HomePage {
     setTimeout(() => {
       this.start = this.medias.length;
       if (this.doLoadMore) {
-        this.mediaProvider.getAllMedia(this.start, 10).subscribe((data: any) => {
+        this.mediaProvider.getAllMedia(this.start, 5).subscribe((data: any) => {
           this.medias = this.medias.concat(data);
           this.getNumberOfComment();
           this.getNumberOfLike();
@@ -204,9 +208,10 @@ export class HomePage {
   doRefresh(refresher) {
     setTimeout(() => {
       this.medias = [];
-      this.start = 0;
-      this.end = 10;
-      this.getAllMedia();
+      this.getOriPost();
+      // this.start = 0;
+      // this.end = 10;
+      // this.getAllMedia();
       this.doLoadMore = true;
       refresher.complete();
     }, 2000);

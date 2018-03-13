@@ -24,7 +24,6 @@ export class HomePage {
   numberOfLike: any;
   currentUser_id;
   start: number = 0;
-  end: number = 10;
   doLoadMore: boolean = true;
   toggled: boolean = false;
   search: Search = { title: '' };
@@ -51,8 +50,8 @@ export class HomePage {
           console.log(error);
         });
     }
-    //this.getAllMedia();
-    this.getOriPost();
+    this.getAllMedia();
+    //this.getOriPost();
   }
 
   //auto update number of commnent/like
@@ -62,10 +61,9 @@ export class HomePage {
     //reload homepage
     if (this.mediaProvider.reload) {
       this.medias = [];
-      this.getOriPost();
-      // this.start = 0;
-      // this.end = 10;
-      // this.getAllMedia();
+      //this.getOriPost();
+      this.start = 0;
+      this.getAllMedia();
       this.mediaProvider.reload = false;
     }
   }
@@ -89,8 +87,8 @@ export class HomePage {
   getOriPost() {
     const tag = encodeURIComponent("#ori");
     this.mediaProvider.getPostByTag(tag).subscribe((res: any) => {
-      this.OriArray = res.reverse();
-      this.medias = res;
+      this.OriArray = res;
+      //this.medias = res;
       this.getNumberOfComment();
       this.getNumberOfLike();
       this.getUsername();
@@ -189,7 +187,7 @@ export class HomePage {
     setTimeout(() => {
       this.start = this.medias.length;
       if (this.doLoadMore) {
-        this.mediaProvider.getAllMedia(this.start, 5).subscribe((data: any) => {
+        this.mediaProvider.getAllMedia(this.start, 10).subscribe((data: any) => {
           this.medias = this.medias.concat(data);
           this.getNumberOfComment();
           this.getNumberOfLike();
@@ -199,7 +197,7 @@ export class HomePage {
       }
     }, 2500);
     //limit number of media files (changeable)
-    if (this.medias.length > 30) {
+    if (this.medias.length > 50) {
       this.doLoadMore = false;
     }
   }
@@ -208,10 +206,10 @@ export class HomePage {
   doRefresh(refresher) {
     setTimeout(() => {
       this.medias = [];
-      this.getOriPost();
-      // this.start = 0;
-      // this.end = 10;
-      // this.getAllMedia();
+      //this.getOriPost();
+      this.start = 0;
+      this.end = 10;
+      this.getAllMedia();
       this.doLoadMore = true;
       refresher.complete();
     }, 2000);

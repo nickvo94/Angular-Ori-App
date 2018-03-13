@@ -1,5 +1,6 @@
 # ORI: DIY tutorials and products sharing application
-Hybrid application using Angular 4 and Ionic 3 framework
+Ori is a hybrid app that we created to share photos and videos about DIY’s tutorials and products, which focuses on how to craft and recycle disposed materials in the houses. This app allows users to upload, like, comment, or save photos and videos that they love, just like other social media apps, but targets to arts and craft lovers who need playing-field to practice and increase creativity, householders who spend time most of time at home and love to decorate their living space with homemade items, and to kindergarten teachers who needs new ideas and examples for children.
+Furthermore, by creating this app, we want to raising people awareness of environment.
 
 ## Technical implementation
 - [Ionic 3 framework](https://ionicframework.com/framework)
